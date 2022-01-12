@@ -35,10 +35,12 @@
                 </div>
                 <div class="card-body">
                     <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
-                    <form class="mb-3" id="loginForm" novalidate>
+                    
+                        @using (Html.BeginForm("Login","Home",new { @class = "mb-3" }))
+                        {
                         <div class="form-group">
                             <div class="input-group with-focus">
-                                <input class="form-control border-right-0" id="exampleInputEmail1" type="email" placeholder="Enter email" autocomplete="off" required>
+                                <input class="form-control border-right-0" id="UserEmail" name="UserEmail" type="email" placeholder="Enter email" autocomplete="off" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text fa fa-envelope text-muted bg-transparent border-left-0"></span>
                                 </div>
@@ -46,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group with-focus">
-                                <input class="form-control border-right-0" id="exampleInputPassword1" type="password" placeholder="Password" required>
+                                <input class="form-control border-right-0" id="Password" name="Password" type="password" placeholder="Password" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text fa fa-lock text-muted bg-transparent border-left-0"></span>
                                 </div>
@@ -64,12 +66,14 @@
                             </div>
                         </div>
                         <button class="btn btn-block btn-primary mt-3" type="submit">Login</button>
-                    </form>
+                        }
+                   
                     <p class="pt-3 text-center">Need to Signup?</p><a class="btn btn-block btn-secondary" href="register.html">Register Now</a>
                 </div>
             </div>
             <!-- END card-->
             <div class="p-3 text-center">
+                <span>@ViewBag.ErrorMsg</span>
                 <span class="mr-2">&copy;</span>
                 <span>2022</span>
                 <span class="mr-2">-</span>

@@ -33,10 +33,10 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#/">
                         <div class="brand-logo">
-                            <img class="img-fluid" src="img/logo.png" alt="App Logo">
+                            <img class="img-fluid" src="~/Content/Template/img/logo.png" alt="App Logo">
                         </div>
                         <div class="brand-logo-collapsed">
-                            <img class="img-fluid" src="img/logo-single.png" alt="App Logo">
+                            <img class="img-fluid" src="~/Content/Template/img/logo-single.png" alt="App Logo">
                         </div>
                     </a>
                 </div>
@@ -63,7 +63,7 @@
                     <!-- END User avatar toggle-->
                     <!-- START lock screen-->
                     <li class="nav-item d-none d-md-block">
-                        <a class="nav-link" href="lock.html" title="Lock screen">
+                        <a class="nav-link" href="@Url.Action("Logout","Home")" title="Lock screen">
                             <em class="icon-lock"></em>
                         </a>
                     </li>
@@ -180,14 +180,14 @@
                                     <!-- User picture-->
                                     <div class="user-block-picture">
                                         <div class="user-block-status">
-                                            <img class="img-thumbnail rounded-circle" src="img/user/02.jpg" alt="Avatar" width="60" height="60">
+                                            <img class="img-thumbnail rounded-circle" src="~/Content/Template/img/user/02.jpg" alt="Avatar" width="60" height="60">
                                             <div class="circle bg-success circle-lg"></div>
                                         </div>
                                     </div>
                                     <!-- Name and Job-->
                                     <div class="user-block-info">
-                                        <span class="user-block-name">Hello, Mike</span>
-                                        <span class="user-block-role">Designer</span>
+                                        <span class="user-block-name">@Session["UserName"],@Session["Email"]</span>
+                                        <span class="user-block-role">@Session["UserType"] <span><strong>@Session["IsActive"]</strong></span></span>
                                     </div>
                                 </div>
                             </div>
@@ -499,7 +499,7 @@
                                     </a>
                                 </li>
                                 <li class=" ">
-                                    <a href="lock.html" title="Lock">
+                                    <a href="#" title="Lock">
                                         <span data-localize="sidebar.nav.pages.LOCK">Lock</span>
                                     </a>
                                 </li>
@@ -1004,7 +1004,7 @@
                                 <!-- END list title-->
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/05.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/05.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Juan Sims</strong>
@@ -1019,7 +1019,7 @@
                                 </div>
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/06.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/06.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Maureen Jenkins</strong>
@@ -1034,7 +1034,7 @@
                                 </div>
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/07.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/07.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Billie Dunn</strong>
@@ -1049,7 +1049,7 @@
                                 </div>
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/08.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/08.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Tomothy Roberts</strong>
@@ -1069,7 +1069,7 @@
                                 <!-- END list title-->
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/09.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/09.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Lawrence Robinson</strong>
@@ -1084,7 +1084,7 @@
                                 </div>
                                 <div class="list-group-item list-group-item-action border-0">
                                     <div class="media">
-                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="img/user/10.jpg" alt="Image">
+                                        <img class="align-self-center mr-3 rounded-circle thumb48" src="~/Content/Template/img/user/10.jpg" alt="Image">
                                         <div class="media-body text-truncate">
                                             <a href="#">
                                                 <strong>Tyrone Owens</strong>

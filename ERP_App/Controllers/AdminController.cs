@@ -11,6 +11,10 @@ namespace ERP_App.Controllers
         // GET: Admin
         public ActionResult Dashboard()
         {
+            if(string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login","Home");
+            }
             return View();
         }
     }

@@ -23,7 +23,12 @@ namespace ERP_App.Controllers
                     }
                     else
                     {
-                        if(user.UserTypeID ==1)
+                        Session["UserName"] = user.UserName;
+                        Session["Email"] = user.Email;
+                        Session["UserTypeId"] = user.UserTypeID;
+                        Session["UserType"] = user.tblUserType.UserType;
+                        Session["IsActive"] = Convert.ToBoolean(user.IsActive)==true ? "Active" : "No Active";
+                        if (user.UserTypeID ==1)
                         {
                             return RedirectToAction("Dashboard", "Admin");
                         }
@@ -34,7 +39,21 @@ namespace ERP_App.Controllers
             {
                 ViewBag.ErrorMsg = "Please Fill the Email and Password";
             }
+            Session["UserName"] = string.Empty;
+            Session["Email"] = string.Empty;
+            Session["UserTypeId"] = string.Empty;
+            Session["UserType"] = string.Empty;
+            Session["IsActive"] = string.Empty;
             return View();
         }
+    }
+    public ActionResult Logout()
+    {
+        Session["UserName"] = string.Empty;
+        Session["Email"] = string.Empty;
+        Session["UserTypeId"] = string.Empty;
+        Session["UserType"] = string.Empty;
+        Session["IsActive"] = string.Empty;
+        return RedirectToAction("Login");
     }
 }

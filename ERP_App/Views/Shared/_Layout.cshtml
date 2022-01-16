@@ -1131,50 +1131,71 @@
             </nav>
             <!-- END Off Sidebar (right)-->
         </aside>
-        @RenderBody()
-        <hr />
-        <!-- Page footer-->
-        <footer class="footer-container">
-            <span>&copy; 2018 - Angle</span>
-        </footer>
-    </div>
+        <section class="section-container">
+            <!-- Page content-->
+            <div class="content-wrapper">
+                <div class="content-heading">
+                    <div>
+                        Dashboard
+                        <small data-localize="dashboard.WELCOME"></small>
+                    </div>
+                    <!-- START Language list-->
+                    <div class="ml-auto">
+                        <div class="btn-group">
+                            <button class="btn btn-secondary dropdown-toggle dropdown-toggle-nocaret" type="button" data-toggle="dropdown">English</button>
+                            <div class="dropdown-menu dropdown-menu-right-forced animated fadeInUpShort" role="menu">
+                                <a class="dropdown-item" href="#" data-set-lang="en">English</a><a class="dropdown-item" href="#" data-set-lang="es">Spanish</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Language list-->
+                </div>
+                @RenderBody()
+                </div>
+            </section>
+                <hr />
+                <!-- Page footer-->
+                <footer class="footer-container">
+                    <span>&copy; 2018 - Angle</span>
+                </footer>
+            </div>
 
-    <!-- =============== VENDOR SCRIPTS ===============-->
-    <!-- MODERNIZR-->
-    <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
-    <!-- JQUERY-->
-    <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
-    <!-- BOOTSTRAP-->
-    <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
-    <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
-    <!-- STORAGE API-->
-    <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
-    <!-- JQUERY EASING-->
-    <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
-    <!-- ANIMO-->
-    <script src="~/Content/Template/vendor/animo/animo.js"></script>
-    <!-- SCREENFULL-->
-    <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
-    <!-- LOCALIZE-->
-    <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
-    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
-    <!-- SLIMSCROLL-->
-    <script src="~/Content/Template/vendor/jquery-slimscroll/jquery.slimscroll.js"></script>
-    <!-- SPARKLINE-->
-    <script src="~/Content/Template/vendor/jquery-sparkline/jquery.sparkline.js"></script>
-    <!-- FLOT CHART-->
-    <script src="~/Content/Template/vendor/flot/jquery.flot.js"></script>
-    <script src="~/Content/Template/vendor/jquery.flot.tooltip/js/jquery.flot.tooltip.js"></script>
-    <script src="~/Content/Template/vendor/flot/jquery.flot.resize.js"></script>
-    <script src="~/Content/Template/vendor/flot/jquery.flot.pie.js"></script>
-    <script src="~/Content/Template/vendor/flot/jquery.flot.time.js"></script>
-    <script src="~/Content/Template/vendor/flot/jquery.flot.categories.js"></script>
-    <script src="~/Content/Template/vendor/jquery.flot.spline/jquery.flot.spline.js"></script>
-    <!-- EASY PIE CHART-->
-    <script src="~/Content/Template/vendor/easy-pie-chart/dist/jquery.easypiechart.js"></script>
-    <!-- MOMENT JS-->
-    <script src="~/Content/Template/vendor/moment/min/moment-with-locales.js"></script>
-    <!-- =============== APP SCRIPTS ===============-->
-    <script src="~/Content/Template/js/app.js"></script>
+            <!-- =============== VENDOR SCRIPTS ===============-->
+            <!-- MODERNIZR-->
+            <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
+            <!-- JQUERY-->
+            <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
+            <!-- BOOTSTRAP-->
+            <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
+            <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
+            <!-- STORAGE API-->
+            <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
+            <!-- JQUERY EASING-->
+            <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
+            <!-- ANIMO-->
+            <script src="~/Content/Template/vendor/animo/animo.js"></script>
+            <!-- SCREENFULL-->
+            <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
+            <!-- LOCALIZE-->
+            <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
+            <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+            <!-- SLIMSCROLL-->
+            <script src="~/Content/Template/vendor/jquery-slimscroll/jquery.slimscroll.js"></script>
+            <!-- SPARKLINE-->
+            <script src="~/Content/Template/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+            <!-- FLOT CHART-->
+            <script src="~/Content/Template/vendor/flot/jquery.flot.js"></script>
+            <script src="~/Content/Template/vendor/jquery.flot.tooltip/js/jquery.flot.tooltip.js"></script>
+            <script src="~/Content/Template/vendor/flot/jquery.flot.resize.js"></script>
+            <script src="~/Content/Template/vendor/flot/jquery.flot.pie.js"></script>
+            <script src="~/Content/Template/vendor/flot/jquery.flot.time.js"></script>
+            <script src="~/Content/Template/vendor/flot/jquery.flot.categories.js"></script>
+            <script src="~/Content/Template/vendor/jquery.flot.spline/jquery.flot.spline.js"></script>
+            <!-- EASY PIE CHART-->
+            <script src="~/Content/Template/vendor/easy-pie-chart/dist/jquery.easypiechart.js"></script>
+            <!-- MOMENT JS-->
+            <script src="~/Content/Template/vendor/moment/min/moment-with-locales.js"></script>
+            <!-- =============== APP SCRIPTS ===============-->
+            <script src="~/Content/Template/js/app.js"></script>
 </body>
 </html>

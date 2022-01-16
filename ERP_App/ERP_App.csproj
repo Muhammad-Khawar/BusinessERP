@@ -307,6 +307,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\SubAdmin.cshtml" />
+    <Content Include="Views\Dashboard\HeadOffice.cshtml" />
+    <Content Include="Views\Dashboard\HeadOfficeUser.cshtml" />
+    <Content Include="Views\Dashboard\BranchUser.cshtml" />
+    <Content Include="Views\Dashboard\BranchOperator.cshtml" />
+    <Content Include="Views\Dashboard\Admin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -317,7 +323,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERP.DatabaseLayer\ERP.DatabaseLayer.csproj">

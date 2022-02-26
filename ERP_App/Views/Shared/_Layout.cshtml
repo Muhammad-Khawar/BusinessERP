@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="Bootstrap Admin App + jQuery">
     <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - ERP</title>
     <!-- =============== VENDOR STYLES ===============-->
     <!-- FONT AWESOME-->
     <link rel="stylesheet" href="~/Content/Template/vendor/font-awesome/css/font-awesome.css">
@@ -18,6 +18,10 @@
     <!-- =============== PAGE VENDOR STYLES ===============-->
     <!-- WEATHER ICONS-->
     <link rel="stylesheet" href="~/Content/Template/vendor/weather-icons/css/weather-icons.css">
+    <!-- Datatables-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/datatables.net-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/datatables.net-keytable-bs/css/keyTable.bootstrap.css">
+    <link rel="stylesheet" href="~/Content/Template/vendor/datatables.net-responsive-bs/css/responsive.bootstrap.css">
     <!-- =============== BOOTSTRAP STYLES ===============-->
     <link rel="stylesheet" href="~/Content/Template/css/bootstrap.css" id="bscss">
     <!-- =============== APP STYLES ===============-->
@@ -249,13 +253,13 @@
                         <li class=" ">
                             <a href="#elements" title="Elements" data-toggle="collapse">
                                 <em class="icon-chemistry"></em>
-                                <span data-localize="sidebar.nav.element.ELEMENTS">Elements</span>
+                                <span data-localize="sidebar.nav.element.ELEMENTS">Users</span>
                             </a>
                             <ul class="sidebar-nav sidebar-subnav collapse" id="elements">
-                                <li class="sidebar-subnav-header">Elements</li>
+                                <li class="sidebar-subnav-header">User Settings</li>
                                 <li class=" ">
-                                    <a href="buttons.html" title="Buttons">
-                                        <span data-localize="sidebar.nav.element.BUTTON">Buttons</span>
+                                    <a href="@Url.Content("~/User/AllUserTypes")" title="Buttons">
+                                        <span data-localize="sidebar.nav.element.BUTTON">User Types</span>
                                     </a>
                                 </li>
                                 <li class=" ">
@@ -1151,51 +1155,66 @@
                     <!-- END Language list-->
                 </div>
                 @RenderBody()
-                </div>
-            </section>
-                <hr />
-                <!-- Page footer-->
-                <footer class="footer-container">
-                    <span>&copy; 2018 - Angle</span>
-                </footer>
             </div>
+        </section>
+        <hr />
+        <!-- Page footer-->
+        <footer class="footer-container">
+            <span>&copy; 2018 - Angle</span>
+        </footer>
+    </div>
 
-            <!-- =============== VENDOR SCRIPTS ===============-->
-            <!-- MODERNIZR-->
-            <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
-            <!-- JQUERY-->
-            <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
-            <!-- BOOTSTRAP-->
-            <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
-            <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
-            <!-- STORAGE API-->
-            <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
-            <!-- JQUERY EASING-->
-            <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
-            <!-- ANIMO-->
-            <script src="~/Content/Template/vendor/animo/animo.js"></script>
-            <!-- SCREENFULL-->
-            <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
-            <!-- LOCALIZE-->
-            <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
-            <!-- =============== PAGE VENDOR SCRIPTS ===============-->
-            <!-- SLIMSCROLL-->
-            <script src="~/Content/Template/vendor/jquery-slimscroll/jquery.slimscroll.js"></script>
-            <!-- SPARKLINE-->
-            <script src="~/Content/Template/vendor/jquery-sparkline/jquery.sparkline.js"></script>
-            <!-- FLOT CHART-->
-            <script src="~/Content/Template/vendor/flot/jquery.flot.js"></script>
-            <script src="~/Content/Template/vendor/jquery.flot.tooltip/js/jquery.flot.tooltip.js"></script>
-            <script src="~/Content/Template/vendor/flot/jquery.flot.resize.js"></script>
-            <script src="~/Content/Template/vendor/flot/jquery.flot.pie.js"></script>
-            <script src="~/Content/Template/vendor/flot/jquery.flot.time.js"></script>
-            <script src="~/Content/Template/vendor/flot/jquery.flot.categories.js"></script>
-            <script src="~/Content/Template/vendor/jquery.flot.spline/jquery.flot.spline.js"></script>
-            <!-- EASY PIE CHART-->
-            <script src="~/Content/Template/vendor/easy-pie-chart/dist/jquery.easypiechart.js"></script>
-            <!-- MOMENT JS-->
-            <script src="~/Content/Template/vendor/moment/min/moment-with-locales.js"></script>
-            <!-- =============== APP SCRIPTS ===============-->
-            <script src="~/Content/Template/js/app.js"></script>
+    <!-- =============== VENDOR SCRIPTS ===============-->
+    <!-- MODERNIZR-->
+    <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
+    <!-- JQUERY-->
+    <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
+    <!-- BOOTSTRAP-->
+    <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- STORAGE API-->
+    <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
+    <!-- JQUERY EASING-->
+    <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
+    <!-- ANIMO-->
+    <script src="~/Content/Template/vendor/animo/animo.js"></script>
+    <!-- SCREENFULL-->
+    <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
+    <!-- LOCALIZE-->
+    <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
+    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+    <!-- SLIMSCROLL-->
+    <script src="~/Content/Template/vendor/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- SPARKLINE-->
+    <script src="~/Content/Template/vendor/jquery-sparkline/jquery.sparkline.js"></script>
+    <!-- FLOT CHART-->
+    <script src="~/Content/Template/vendor/flot/jquery.flot.js"></script>
+    <script src="~/Content/Template/vendor/jquery.flot.tooltip/js/jquery.flot.tooltip.js"></script>
+    <script src="~/Content/Template/vendor/flot/jquery.flot.resize.js"></script>
+    <script src="~/Content/Template/vendor/flot/jquery.flot.pie.js"></script>
+    <script src="~/Content/Template/vendor/flot/jquery.flot.time.js"></script>
+    <script src="~/Content/Template/vendor/flot/jquery.flot.categories.js"></script>
+    <script src="~/Content/Template/vendor/jquery.flot.spline/jquery.flot.spline.js"></script>
+    <!-- EASY PIE CHART-->
+    <script src="~/Content/Template/vendor/easy-pie-chart/dist/jquery.easypiechart.js"></script>
+    <!-- MOMENT JS-->
+    <script src="~/Content/Template/vendor/moment/min/moment-with-locales.js"></script>
+    <!-- Datatables-->
+    <script src="~/Content/Template/vendor/datatables.net/js/jquery.dataTables.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons/js/dataTables.buttons.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons-bs/js/buttons.bootstrap.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons/js/buttons.colVis.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons/js/buttons.flash.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons/js/buttons.html5.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-buttons/js/buttons.print.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-keytable/js/dataTables.keyTable.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/Content/Template/vendor/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Content/Template/vendor/jszip/dist/jszip.js"></script>
+    <script src="~/Content/Template/vendor/pdfmake/build/pdfmake.js"></script>
+    <script src="~/Content/Template/vendor/pdfmake/build/vfs_fonts.js"></script>
+    <!-- =============== APP SCRIPTS ===============-->
+    <script src="~/Content/Template/js/app.js"></script>
 </body>
 </html>

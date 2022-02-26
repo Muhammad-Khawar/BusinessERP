@@ -13,10 +13,10 @@ namespace ERP.DatabaseLayer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BusinessERPSystemEntities : DbContext
+    public partial class BusinessERP_DBEntities : DbContext
     {
-        public BusinessERPSystemEntities()
-            : base("name=BusinessERPSystemEntities")
+        public BusinessERP_DBEntities()
+            : base("name=BusinessERP_DBEntities")
         {
         }
     
@@ -25,25 +25,39 @@ namespace ERP.DatabaseLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tblAccountActivity> tblAccountActivities { get; set; }
         public virtual DbSet<tblAccountControl> tblAccountControls { get; set; }
         public virtual DbSet<tblAccountHead> tblAccountHeads { get; set; }
+        public virtual DbSet<tblAccountSetting> tblAccountSettings { get; set; }
         public virtual DbSet<tblAccountSubControl> tblAccountSubControls { get; set; }
+        public virtual DbSet<tblAgent> tblAgents { get; set; }
         public virtual DbSet<tblBranch> tblBranches { get; set; }
         public virtual DbSet<tblBranchType> tblBranchTypes { get; set; }
         public virtual DbSet<tblCategory> tblCategories { get; set; }
+        public virtual DbSet<tblCity> tblCities { get; set; }
         public virtual DbSet<tblCompany> tblCompanies { get; set; }
+        public virtual DbSet<tblCountry> tblCountries { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblCustomerInvoice> tblCustomerInvoices { get; set; }
         public virtual DbSet<tblCustomerInvoiceDetail> tblCustomerInvoiceDetails { get; set; }
         public virtual DbSet<tblCustomerPayment> tblCustomerPayments { get; set; }
+        public virtual DbSet<tblCustomerReturnInvoice> tblCustomerReturnInvoices { get; set; }
+        public virtual DbSet<tblCustomerReturnInvoiceDetail> tblCustomerReturnInvoiceDetails { get; set; }
+        public virtual DbSet<tblCustomerReturnPayment> tblCustomerReturnPayments { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblFinancialYear> tblFinancialYears { get; set; }
         public virtual DbSet<tblPayroll> tblPayrolls { get; set; }
+        public virtual DbSet<tblPurchaseCartDetail> tblPurchaseCartDetails { get; set; }
+        public virtual DbSet<tblSaleCartDetail> tblSaleCartDetails { get; set; }
+        public virtual DbSet<tblState> tblStates { get; set; }
         public virtual DbSet<tblStock> tblStocks { get; set; }
         public virtual DbSet<tblSupplier> tblSuppliers { get; set; }
         public virtual DbSet<tblSupplierInvoice> tblSupplierInvoices { get; set; }
         public virtual DbSet<tblSupplierInvoiceDetail> tblSupplierInvoiceDetails { get; set; }
         public virtual DbSet<tblSupplierPayment> tblSupplierPayments { get; set; }
+        public virtual DbSet<tblSupplierReturnInvoice> tblSupplierReturnInvoices { get; set; }
+        public virtual DbSet<tblSupplierReturnInvoiceDetail> tblSupplierReturnInvoiceDetails { get; set; }
+        public virtual DbSet<tblSupplierReturnPayment> tblSupplierReturnPayments { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }

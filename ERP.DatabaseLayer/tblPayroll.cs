@@ -18,11 +18,11 @@ namespace ERP.DatabaseLayer
         public int EmployeeID { get; set; }
         public int BranchID { get; set; }
         public int CompanyID { get; set; }
-        public int TransferAmount { get; set; }
-        public int PayrollInvoiceNo { get; set; }
+        public double TransferAmount { get; set; }
+        public string PayrollInvoiceNo { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public string SalaryMonth { get; set; }
-        public System.DateTime SalaryYear { get; set; }
+        public string SalaryYear { get; set; }
         public int UserID { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }

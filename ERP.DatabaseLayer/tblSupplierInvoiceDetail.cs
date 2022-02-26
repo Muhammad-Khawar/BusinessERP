@@ -14,13 +14,21 @@ namespace ERP.DatabaseLayer
     
     public partial class tblSupplierInvoiceDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblSupplierInvoiceDetail()
+        {
+            this.tblSupplierReturnInvoiceDetails = new HashSet<tblSupplierReturnInvoiceDetail>();
+        }
+    
         public int SupplierInvoiceDetailID { get; set; }
         public int SupplierInvoiceID { get; set; }
         public int ProductID { get; set; }
         public int PurchaseQuantity { get; set; }
-        public int purchaseUnitPrice { get; set; }
+        public double purchaseUnitPrice { get; set; }
     
         public virtual tblStock tblStock { get; set; }
         public virtual tblSupplierInvoice tblSupplierInvoice { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSupplierReturnInvoiceDetail> tblSupplierReturnInvoiceDetails { get; set; }
     }
 }

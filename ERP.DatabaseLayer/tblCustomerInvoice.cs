@@ -19,15 +19,18 @@ namespace ERP.DatabaseLayer
         {
             this.tblCustomerInvoiceDetails = new HashSet<tblCustomerInvoiceDetail>();
             this.tblCustomerPayments = new HashSet<tblCustomerPayment>();
+            this.tblCustomerReturnInvoices = new HashSet<tblCustomerReturnInvoice>();
+            this.tblCustomerReturnInvoiceDetails = new HashSet<tblCustomerReturnInvoiceDetail>();
+            this.tblCustomerReturnPayments = new HashSet<tblCustomerReturnPayment>();
         }
     
         public int CustomerInvoiceID { get; set; }
         public int CustomerID { get; set; }
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
-        public int InvoiceNo { get; set; }
+        public string InvoiceNo { get; set; }
         public string Title { get; set; }
-        public int TotalAmount { get; set; }
+        public double TotalAmount { get; set; }
         public System.DateTime InvoiceDate { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
@@ -40,5 +43,11 @@ namespace ERP.DatabaseLayer
         public virtual ICollection<tblCustomerInvoiceDetail> tblCustomerInvoiceDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblCustomerPayment> tblCustomerPayments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblCustomerReturnInvoice> tblCustomerReturnInvoices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblCustomerReturnInvoiceDetail> tblCustomerReturnInvoiceDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblCustomerReturnPayment> tblCustomerReturnPayments { get; set; }
     }
 }

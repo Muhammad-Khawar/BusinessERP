@@ -14,7 +14,7 @@ namespace ERP_App.Controllers
         {
             if(!string.IsNullOrEmpty(UserEmail) && !string.IsNullOrEmpty(Password))
             {
-                using (BusinessERPSystemEntities db = new BusinessERPSystemEntities())
+                using (BusinessERP_DBEntities db = new BusinessERP_DBEntities())
                 {
                     var user = db.tblUsers.Where(u => u.Email == UserEmail && u.Password == Password).FirstOrDefault();
                     if(user == null)

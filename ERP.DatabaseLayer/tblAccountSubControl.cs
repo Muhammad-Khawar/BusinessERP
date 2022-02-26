@@ -17,6 +17,7 @@ namespace ERP.DatabaseLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblAccountSubControl()
         {
+            this.tblAccountSettings = new HashSet<tblAccountSetting>();
             this.tblTransactions = new HashSet<tblTransaction>();
         }
     
@@ -30,6 +31,8 @@ namespace ERP.DatabaseLayer
     
         public virtual tblAccountControl tblAccountControl { get; set; }
         public virtual tblAccountHead tblAccountHead { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAccountSetting> tblAccountSettings { get; set; }
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblUser tblUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

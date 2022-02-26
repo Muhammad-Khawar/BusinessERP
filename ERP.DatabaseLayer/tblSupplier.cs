@@ -19,11 +19,13 @@ namespace ERP.DatabaseLayer
         {
             this.tblSupplierInvoices = new HashSet<tblSupplierInvoice>();
             this.tblSupplierPayments = new HashSet<tblSupplierPayment>();
+            this.tblSupplierReturnInvoices = new HashSet<tblSupplierReturnInvoice>();
+            this.tblSupplierReturnPayments = new HashSet<tblSupplierReturnPayment>();
         }
     
         public int SupplierID { get; set; }
         public string SupplierName { get; set; }
-        public int SupplierConatctNo { get; set; }
+        public string SupplierConatctNo { get; set; }
         public string SupplierAddress { get; set; }
         public string SupplierEmail { get; set; }
         public string Discription { get; set; }
@@ -38,5 +40,9 @@ namespace ERP.DatabaseLayer
         public virtual ICollection<tblSupplierInvoice> tblSupplierInvoices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSupplierPayment> tblSupplierPayments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSupplierReturnInvoice> tblSupplierReturnInvoices { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSupplierReturnPayment> tblSupplierReturnPayments { get; set; }
     }
 }

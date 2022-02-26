@@ -19,11 +19,11 @@ namespace ERP.DatabaseLayer
         public int AccountHeadID { get; set; }
         public int AccountControlID { get; set; }
         public int AccountSubControlID { get; set; }
-        public int InvoiceNo { get; set; }
+        public string InvoiceNo { get; set; }
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
-        public int Credit { get; set; }
-        public int Debit { get; set; }
+        public double Credit { get; set; }
+        public double Debit { get; set; }
         public System.DateTime TransectionDate { get; set; }
         public string TransectionTitle { get; set; }
         public int UserID { get; set; }

@@ -44,10 +44,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Web.DynamicData" />
@@ -274,12 +274,48 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountActivityMV.cs" />
+    <Compile Include="Models\AccountControlMV.cs" />
+    <Compile Include="Models\AccountHeadMV.cs" />
+    <Compile Include="Models\AccountSettingMV.cs" />
+    <Compile Include="Models\AccountSubControlMV.cs" />
+    <Compile Include="Models\AgentMV.cs" />
+    <Compile Include="Models\BranchMV.cs" />
+    <Compile Include="Models\BranchTypeMV.cs" />
+    <Compile Include="Models\CategoryMV.cs" />
+    <Compile Include="Models\CityMV.cs" />
+    <Compile Include="Models\CompanyMV.cs" />
+    <Compile Include="Models\CountryMV.cs" />
+    <Compile Include="Models\CustomerInvoiceDetailMV.cs" />
+    <Compile Include="Models\CustomerInvoiceMV.cs" />
+    <Compile Include="Models\CustomerMV.cs" />
+    <Compile Include="Models\CustomerPaymentMV.cs" />
+    <Compile Include="Models\CustomerReturnInvoiceDetailMV.cs" />
+    <Compile Include="Models\CustomerReturnInvoiceMV.cs" />
+    <Compile Include="Models\CustomerReturnPaymentMV.cs" />
+    <Compile Include="Models\EmployeeMV.cs" />
+    <Compile Include="Models\FinancialYearMV.cs" />
+    <Compile Include="Models\PayrollMV.cs" />
+    <Compile Include="Models\PurchaseCartDetailMV.cs" />
+    <Compile Include="Models\SaleCartDetailMV.cs" />
+    <Compile Include="Models\StateMV.cs" />
+    <Compile Include="Models\StockMV.cs" />
+    <Compile Include="Models\SupplierInvoiceDetailMV.cs" />
+    <Compile Include="Models\SupplierInvoiceMV.cs" />
+    <Compile Include="Models\SupplierMV.cs" />
+    <Compile Include="Models\SupplierPaymentMV.cs" />
+    <Compile Include="Models\SupplierReturnInvoiceDetailMV.cs" />
+    <Compile Include="Models\SupplierReturnInvoiceMV.cs" />
+    <Compile Include="Models\SupplierReturnPaymentMV.cs" />
+    <Compile Include="Models\TransactionMV.cs" />
+    <Compile Include="Models\UserMV.cs" />
+    <Compile Include="Models\UserTypeMV.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +349,8 @@
     <Content Include="Views\Dashboard\BranchUser.cshtml" />
     <Content Include="Views\Dashboard\BranchOperator.cshtml" />
     <Content Include="Views\Dashboard\Admin.cshtml" />
+    <Content Include="Views\User\AllUserTypes.cshtml" />
+    <Content Include="Views\User\CreateUserType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -322,7 +360,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERP.DatabaseLayer\ERP.DatabaseLayer.csproj">

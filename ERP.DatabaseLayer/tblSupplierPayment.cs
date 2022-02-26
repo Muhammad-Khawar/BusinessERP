@@ -19,11 +19,12 @@ namespace ERP.DatabaseLayer
         public int SupplierInvoiceID { get; set; }
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
-        public int invoiceNo { get; set; }
-        public int TotalAmount { get; set; }
-        public int PaymentAmount { get; set; }
-        public int RemainingBalance { get; set; }
+        public string InvoiceNo { get; set; }
+        public double TotalAmount { get; set; }
+        public double PaymentAmount { get; set; }
+        public double RemainingBalance { get; set; }
         public int UserID { get; set; }
+        public Nullable<System.DateTime> InvoiceDate { get; set; }
     
         public virtual tblSupplier tblSupplier { get; set; }
         public virtual tblUser tblUser { get; set; }

@@ -18,7 +18,11 @@ namespace ERP.DatabaseLayer
         public tblStock()
         {
             this.tblCustomerInvoiceDetails = new HashSet<tblCustomerInvoiceDetail>();
+            this.tblCustomerReturnInvoiceDetails = new HashSet<tblCustomerReturnInvoiceDetail>();
+            this.tblPurchaseCartDetails = new HashSet<tblPurchaseCartDetail>();
+            this.tblSaleCartDetails = new HashSet<tblSaleCartDetail>();
             this.tblSupplierInvoiceDetails = new HashSet<tblSupplierInvoiceDetail>();
+            this.tblSupplierReturnInvoiceDetails = new HashSet<tblSupplierReturnInvoiceDetail>();
         }
     
         public int ProductID { get; set; }
@@ -27,22 +31,30 @@ namespace ERP.DatabaseLayer
         public int BranchID { get; set; }
         public string ProductName { get; set; }
         public int Quantity { get; set; }
-        public int SaleUnitPrice { get; set; }
-        public int CurrentPurchaseUnitPrice { get; set; }
+        public double SaleUnitPrice { get; set; }
+        public double CurrentPurchaseUnitPrice { get; set; }
         public System.DateTime ExpiryDate { get; set; }
         public System.DateTime Manufacture { get; set; }
         public int StockTreshHoldQuantity { get; set; }
         public string Description { get; set; }
-        public Nullable<int> Barcode { get; set; }
         public int UserID { get; set; }
+        public bool IsActive { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCategory tblCategory { get; set; }
         public virtual tblCompany tblCompany { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblCustomerInvoiceDetail> tblCustomerInvoiceDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblCustomerReturnInvoiceDetail> tblCustomerReturnInvoiceDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPurchaseCartDetail> tblPurchaseCartDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSaleCartDetail> tblSaleCartDetails { get; set; }
         public virtual tblUser tblUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSupplierInvoiceDetail> tblSupplierInvoiceDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblSupplierReturnInvoiceDetail> tblSupplierReturnInvoiceDetails { get; set; }
     }
 }

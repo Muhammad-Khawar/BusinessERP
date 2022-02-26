@@ -21,17 +21,18 @@ namespace ERP.DatabaseLayer
         }
     
         public int EmployeeID { get; set; }
-        public byte[] Name { get; set; }
-        public int ContactNo { get; set; }
+        public string Name { get; set; }
+        public string ContactNo { get; set; }
+        public string Photo { get; set; }
         public string Email { get; set; }
-        public byte[] Photo { get; set; }
         public string Address { get; set; }
-        public int CNIC { get; set; }
+        public string CNIC { get; set; }
         public string Designation { get; set; }
-        public byte[] Description { get; set; }
-        public int MonthlySalary { get; set; }
+        public string Description { get; set; }
+        public double MonthlySalary { get; set; }
         public int BranchID { get; set; }
         public int CompanyID { get; set; }
+        public Nullable<int> UserID { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCompany tblCompany { get; set; }

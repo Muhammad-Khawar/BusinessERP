@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BusinessERP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BusinessERP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblAccountActivity">
           <Key>
             <PropertyRef Name="AccountActivityID" />
@@ -455,6 +455,7 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -1673,18 +1674,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblUser_tblUserType">
-          <End Role="tblUserType" Type="Self.tblUserType" Multiplicity="1" />
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUserType">
-              <PropertyRef Name="UserTypeID" />
-            </Principal>
-            <Dependent Role="tblUser">
-              <PropertyRef Name="UserTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BusinessERP_DBModelStoreContainer">
           <EntitySet Name="tblAccountActivity" EntityType="Self.tblAccountActivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccountControl" EntityType="Self.tblAccountControl" Schema="dbo" store:Type="Tables" />
@@ -2114,13 +2103,8 @@
             <End Role="tblFinancialYear" EntitySet="tblFinancialYear" />
             <End Role="tblTransaction" EntitySet="tblTransaction" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblUser_tblUserType" Association="Self.FK_tblUser_tblUserType">
-            <End Role="tblUserType" EntitySet="tblUserType" />
-            <End Role="tblUser" EntitySet="tblUser" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BusinessERP_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2771,6 +2755,7 @@
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnPayment" />
           <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblUser" FromRole="tblUser" ToRole="tblTransaction" />
           <NavigationProperty Name="tblUserType" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -4917,6 +4902,7 @@
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />

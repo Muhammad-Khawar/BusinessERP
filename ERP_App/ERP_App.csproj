@@ -274,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Models\CategoryMV.cs" />
     <Compile Include="Models\CityMV.cs" />
     <Compile Include="Models\CompanyMV.cs" />
+    <Compile Include="Models\CompanyRequestMV.cs" />
     <Compile Include="Models\CountryMV.cs" />
     <Compile Include="Models\CustomerInvoiceDetailMV.cs" />
     <Compile Include="Models\CustomerInvoiceMV.cs" />
@@ -338,6 +340,11 @@
     <Content Include="Content\Template\vendor\weather-icons\font\weathericons-regular-webfont.ttf" />
     <Content Include="Content\Template\vendor\weather-icons\font\weathericons-regular-webfont.woff" />
     <Content Include="Content\Template\vendor\weather-icons\font\weathericons-regular-webfont.woff2" />
+    <Content Include="Company\server\datatable.json" />
+    <Content Include="Company\server\documentation\readme.md" />
+    <Content Include="Company\server\i18n\site-en.json" />
+    <Content Include="Company\server\i18n\site-es.json" />
+    <Content Include="Company\server\xeditable-groups.json" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -351,6 +358,9 @@
     <Content Include="Views\Dashboard\Admin.cshtml" />
     <Content Include="Views\User\AllUserTypes.cshtml" />
     <Content Include="Views\User\CreateUserType.cshtml" />
+    <Content Include="Views\User\EditUserType.cshtml" />
+    <Content Include="Views\Company\NewCompany.cshtml" />
+    <Content Include="Views\Company\Companies.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

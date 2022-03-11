@@ -1,0 +1,158 @@
+﻿@model ERP_App.Models.CompanyMV
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Bootstrap Admin App + jQuery">
+    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
+    <title>New Company</title>
+    <!-- =============== VENDOR STYLES ===============-->
+    <!-- FONT AWESOME-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/font-awesome/css/font-awesome.css">
+    <!-- SIMPLE LINE ICONS-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/simple-line-icons/css/simple-line-icons.css">
+    <!-- ANIMATE.CSS-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/animate.css/animate.css">
+    <!-- WHIRL (spinners)-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/whirl/dist/whirl.css">
+    <!-- =============== PAGE VENDOR STYLES ===============-->
+    <!-- =============== BOOTSTRAP STYLES ===============-->
+    <link rel="stylesheet" href="~/Content/Template/css/bootstrap.css" id="bscss">
+    <!-- =============== APP STYLES ===============-->
+    <link rel="stylesheet" href="~/Content/Template/css/app.css" id="maincss">
+</head>
+
+<body>
+    <div class="wrapper">
+
+
+        <div class="card card-default">
+            <div class="card-header">
+                Registration
+                @ViewBag.Message
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("NewCompany", "Company", FormMethod.Post, new { @id = "example-form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div>
+                        <h4>
+                            User Profile
+                            <br>
+                            <small>Enter User Details</small>
+                        </h4>
+                        <fieldset>
+                            <label for="userName">User name *</label>
+                            <input class="form-control required" id="UserName" name="UserName" type="text">
+                            <label for="password">Password *</label>
+                            <input class="form-control required" id="Password" name="Password" type="password">
+                            <label for="confirm">Confirm Password *</label>
+                            <input class="form-control required" id="CPassword" name="CPassword" type="password">
+                            <p>(*) Mandatory</p>
+                        </fieldset>
+                        <h4>
+                            Person Profile
+                            <br>
+                            <small>Enter Focal Person Details</small>
+                        </h4>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="name">Employee Name *</label>
+                                    <input class="form-control required" id="EName" name="EName" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="phone">Contact No *</label>
+                                    <input class="form-control required" id="EContactNo" name="EContactNo" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="email">Email *</label>
+                                    <input class="form-control required" id="EEmail" name="EEmail" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>CNIC</label>
+                                    <input class="form-control required" id="ECNIC" name="ECNIC" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Designation</label>
+                                    <input required class="form-control required" id="EDesignation" name="EDesignation" type="text">
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Basic Salary</label>
+                                    <input required class="form-control required" id="EMonthlySalary" name="EMonthlySalary" type="number">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="address">Address</label>
+                                    <input class="form-control required" id="EAddress" name="EAddress" type="text" />
+                                </div>
+                            </div>
+                            <p>(*) Mandatory</p>
+                        </fieldset>
+                        <h4>
+                            Company Profiles
+                            <br>
+                            <small>Enter Company Details</small>
+                        </h4>
+                        <fieldset>
+                            <label for="name">Company *</label>
+                            <input for="name" class="form-control required" id="CName" name="CName" type="text">
+                            <label>Branch Title *</label>
+                            <input class="form-control required" id="BranchName" name="BranchName" type="text">
+                            <label>Branch Contact *</label>
+                            <input class="form-control required" id="BranchContact" name="BranchContact" type="text">
+                            <label>Branch Address</label>
+                            <input class="form-control required" id="BranchAddress" name="BranchAddress" type="text">
+                            <p>(*) Mandatory</p>
+                        </fieldset>
+                        <h4>
+
+                            <br>
+                            <small>Plz Check Before Submission</small>
+                        </h4>
+                        <fieldset>
+                            <p class="lead">One last check</p>
+                            <input type="submit" value="Submit Registration" class="btn btn-outline-success" />
+                        </fieldset>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- =============== VENDOR SCRIPTS ===============-->
+    <!-- MODERNIZR-->
+    <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
+    <!-- JQUERY-->
+    <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
+    <!-- BOOTSTRAP-->
+    <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- STORAGE API-->
+    <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
+    <!-- JQUERY EASING-->
+    <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
+    <!-- ANIMO-->
+    <script src="~/Content/Template/vendor/animo/animo.js"></script>
+    <!-- SCREENFULL-->
+    <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
+    <!-- LOCALIZE-->
+    <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
+    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+    <!-- JQUERY VALIDATE-->
+    <script src="~/Content/Template/vendor/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/Content/Template/vendor/jquery-validation/dist/additional-methods.js"></script>
+    <!-- JQUERY STEPS-->
+    <script src="~/Content/Template/vendor/jquery-steps/build/jquery.steps.js"></script>
+    <!-- =============== APP SCRIPTS ===============-->
+    <script src="~/Content/Template/js/app.js"></script>
+</body>
+
+</html>
+</body>
+</html>

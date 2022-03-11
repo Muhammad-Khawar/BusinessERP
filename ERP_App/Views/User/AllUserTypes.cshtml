@@ -34,7 +34,7 @@
                             @Html.DisplayFor(modelItem => item.UserType)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.UserTypeID }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Edit", "EditUserType", new { usertypeid = item.UserTypeID }, new { @class = "btn btn-warning" })
                             @Html.ActionLink("Delete", "Delete", new { id = item.UserTypeID }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>

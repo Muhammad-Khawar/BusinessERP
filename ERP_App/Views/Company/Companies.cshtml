@@ -64,9 +64,18 @@
 @foreach (var item in Model) {
 <tr>
     <th>
-        @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID },new { @class = "btn btn-primary"}) 
-        @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }, new { @class = "btn btn-info" }) 
-        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID }, new { @class = "btn btn-danger" })
+        @{
+            if (item.Status == "De-Active")
+            {
+                @Html.ActionLink("Approve", "Approve", new { userid = item.UserID }, new { @class = "btn btn-outline-success" })
+            }
+
+            else
+            {
+                @Html.ActionLink("De-Active", "DeApprove", new { userid = item.UserID }, new { @class = "btn btn-outline-danger" })
+            }
+        }
+
     </th>
     <td>
         @Html.DisplayFor(modelItem => item.Status)

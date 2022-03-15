@@ -202,5 +202,21 @@ namespace ERP_App.Controllers
                     return View();
                 }
         }
+        public ActionResult Approve(int? userid)
+        {
+            var user = DB.tblUsers.Find(userid);
+            user.IsActive = true;
+            DB.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Companies");
+        }
+        public ActionResult DeApprove(int? userid)
+        {
+            var user = DB.tblUsers.Find(userid);
+            user.IsActive = false;
+            DB.Entry(user).State = System.Data.Entity.EntityState.Modified;
+            DB.SaveChanges();
+            return RedirectToAction("Companies");
+        }
     }
 }

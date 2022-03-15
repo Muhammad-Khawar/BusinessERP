@@ -274,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -361,6 +362,10 @@
     <Content Include="Views\User\EditUserType.cshtml" />
     <Content Include="Views\Company\NewCompany.cshtml" />
     <Content Include="Views\Company\Companies.cshtml" />
+    <Content Include="Views\AdminConfig\AllBranchTypes.cshtml" />
+    <Content Include="Views\AdminConfig\CreateBranchType.cshtml" />
+    <Content Include="Views\AdminConfig\EditBranchType.cshtml" />
+    <Content Include="Views\AdminConfig\AllAccountActivity.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

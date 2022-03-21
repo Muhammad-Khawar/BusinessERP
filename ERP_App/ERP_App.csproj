@@ -366,6 +366,14 @@
     <Content Include="Views\AdminConfig\CreateBranchType.cshtml" />
     <Content Include="Views\AdminConfig\EditBranchType.cshtml" />
     <Content Include="Views\AdminConfig\AllAccountActivity.cshtml" />
+    <Content Include="Views\AdminConfig\CreateAccountActivity.cshtml" />
+    <Content Include="Views\AdminConfig\EditAccountActivity.cshtml" />
+    <Content Include="Views\AdminConfig\AllAccountHeads.cshtml" />
+    <Content Include="Views\AdminConfig\CreateAccountHead.cshtml" />
+    <Content Include="Views\AdminConfig\EditAccountHead.cshtml" />
+    <Content Include="Views\AdminConfig\AllFinancialYears.cshtml" />
+    <Content Include="Views\AdminConfig\CreateFinancialYear.cshtml" />
+    <Content Include="Views\AdminConfig\EditFinancialYear.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

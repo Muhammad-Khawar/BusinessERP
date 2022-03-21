@@ -14,9 +14,11 @@ namespace ERP_App.Models
         [Display(Name = "Account Head")]
         public string AccountHeadName { get; set; }
         public int Code { get; set; }
-        public int UserID { get; set; }
 
         [Required(ErrorMessage = "Required*")]
+        public int UserID { get; set; }
+
+       
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
     }

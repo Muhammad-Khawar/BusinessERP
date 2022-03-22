@@ -4,15 +4,12 @@
     ViewBag.Title = "New Branch Type";
 }
 
-<h2>User Type</h2>
+<h2>Branch Type</h2>
 
 @using (Html.BeginForm("CreateBranchType", "AdminConfig", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
-
     <div class="form-horizontal">
-        <h4>User Type</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(u => u.BranchTypeID)

@@ -30,6 +30,99 @@ namespace ERP_App.Controllers
                         Session["UserType"] = user.tblUserType.UserType;
                         Session["IsActive"] = Convert.ToBoolean(user.IsActive)==true ? "Active" : "No Active";
                         var usertypeid = user.UserTypeID;
+
+                        if (user.UserTypeID > 2) // Means k woh jis b branch ka ho. es liye greater than 2 hai.
+                        {
+                            var employee = db.tblEmployees.Where(u => u.UserID == user.UserID).FirstOrDefault(); //user kis company ka hai.
+                            if(employee == null)
+                            {
+                                ViewBag.ErrorMsg = "Email or Passsword is incorrect";
+                                Session["UserID"] = string.Empty;
+                                Session["UserName"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["UserTypeId"] = string.Empty;
+                                Session["UserType"] = string.Empty;
+                                Session["IsActive"] = string.Empty;
+                                //Employee
+                                Session["EmployeeID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["ContactNo"] = string.Empty;
+                                Session["Photo"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["Address"] = string.Empty;
+                                Session["CNIC"] = string.Empty;
+                                Session["Designation"] = string.Empty;
+                                Session["Description"] = string.Empty;
+                                Session["MonthlySalary"] = string.Empty;
+                                Session["BranchID"] = string.Empty;
+                                Session["CompanyID"] = string.Empty;
+                                Session["EmployeeUserID"] = string.Empty;
+                                Session["BranchTypeID"] = string.Empty;
+
+                                //Company
+                                Session["CompanyID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["Logo"] = string.Empty;
+                                return View();
+                            }
+                            else
+                            {
+                                //Login user ka full detail chahiye.
+                                Session["EmployeeID"] = employee.EmployeeID;
+                                Session["Name"] = employee.Name;
+                                Session["ContactNo"] = employee.ContactNo;
+                                Session["Photo"] = employee.Photo;
+                                Session["Email"] = employee.Email;
+                                Session["Address"] = employee.Address;
+                                Session["CNIC"] = employee.CNIC;
+                                Session["Designation"] = employee.Designation;
+                                Session["Description"] = employee.Description;
+                                Session["MonthlySalary"] = employee.MonthlySalary;
+                                Session["BranchID"] = employee.BranchID;
+                                Session["CompanyID"] = employee.CompanyID;
+                                Session["EmployeeUserID"] = employee.UserID;
+                                Session["BranchTypeID"] = db.tblBranches.Find(employee.BranchID).BranchTypeID;
+                            }
+                            var company = db.tblCompanies.Find(employee.CompanyID); // Woh employee kis company ka hai.
+                            if (company == null)
+                            {
+                                ViewBag.ErrorMsg = "Email or Passsword is incorrect";
+                                Session["UserID"] = string.Empty;
+                                Session["UserName"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["UserTypeId"] = string.Empty;
+                                Session["UserType"] = string.Empty;
+                                Session["IsActive"] = string.Empty;
+                                //Employee
+                                Session["EmployeeID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["ContactNo"] = string.Empty;
+                                Session["Photo"] = string.Empty;
+                                Session["Email"] = string.Empty;
+                                Session["Address"] = string.Empty;
+                                Session["CNIC"] = string.Empty;
+                                Session["Designation"] = string.Empty;
+                                Session["Description"] = string.Empty;
+                                Session["MonthlySalary"] = string.Empty;
+                                Session["BranchID"] = string.Empty;
+                                Session["CompanyID"] = string.Empty;
+                                Session["EmployeeUserID"] = string.Empty;
+                                Session["BranchTypeID"] = string.Empty;
+
+                                //Company
+                                Session["CompanyID"] = string.Empty;
+                                Session["Name"] = string.Empty;
+                                Session["Logo"] = string.Empty;
+                                return View();
+                            }
+                            else
+                            {
+                                Session["CompanyID"] = company.CompanyID;
+                                Session["Name"] = company.Name;
+                                Session["Logo"] = company.Logo;
+                            }
+
+                        }
                         if (user.UserTypeID ==1)
                         {
                             return RedirectToAction("Admin", "Dashboard");
@@ -67,6 +160,28 @@ namespace ERP_App.Controllers
             Session["UserTypeId"] = string.Empty;
             Session["UserType"] = string.Empty;
             Session["IsActive"] = string.Empty;
+
+            //Employee
+            Session["EmployeeID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["ContactNo"] = string.Empty;
+            Session["Photo"] = string.Empty;
+            Session["Email"] = string.Empty;
+            Session["Address"] = string.Empty;
+            Session["CNIC"] = string.Empty;
+            Session["Designation"] = string.Empty;
+            Session["Description"] = string.Empty;
+            Session["MonthlySalary"] = string.Empty;
+            Session["BranchID"] = string.Empty;
+            Session["CompanyID"] = string.Empty;
+            Session["EmployeeUserID"] = string.Empty;
+            Session["BranchTypeID"] = string.Empty;
+
+            //Company
+            Session["CompanyID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["Logo"] = string.Empty;
+
             return View();
         }
         public ActionResult Logout()
@@ -77,6 +192,26 @@ namespace ERP_App.Controllers
             Session["UserTypeId"] = string.Empty;
             Session["UserType"] = string.Empty;
             Session["IsActive"] = string.Empty;
+            //Employee
+            Session["EmployeeID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["ContactNo"] = string.Empty;
+            Session["Photo"] = string.Empty;
+            Session["Email"] = string.Empty;
+            Session["Address"] = string.Empty;
+            Session["CNIC"] = string.Empty;
+            Session["Designation"] = string.Empty;
+            Session["Description"] = string.Empty;
+            Session["MonthlySalary"] = string.Empty;
+            Session["BranchID"] = string.Empty;
+            Session["CompanyID"] = string.Empty;
+            Session["EmployeeUserID"] = string.Empty;
+            Session["BranchTypeID"] = string.Empty;
+
+            //Company
+            Session["CompanyID"] = string.Empty;
+            Session["Name"] = string.Empty;
+            Session["Logo"] = string.Empty;
             return RedirectToAction("Login");
         }
     }

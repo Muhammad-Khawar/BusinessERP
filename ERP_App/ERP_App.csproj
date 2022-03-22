@@ -137,6 +137,7 @@
     <Content Include="Content\Template\img\user\11.jpg" />
     <Content Include="Content\Template\img\user\12.jpg" />
     <Content Include="Content\Template\img\user\13.jpg" />
+    <Content Include="Content\Template\img\user\employee.png" />
     <Content Include="Content\Template\js\app.js" />
     <Content Include="Content\Template\vendor\%40ttskch\select2-bootstrap4-theme\dist\select2-bootstrap4.css" />
     <Content Include="Content\Template\vendor\animate.css\animate.css" />
@@ -275,8 +276,10 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminConfigController.cs" />
+    <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -374,6 +377,11 @@
     <Content Include="Views\AdminConfig\AllFinancialYears.cshtml" />
     <Content Include="Views\AdminConfig\CreateFinancialYear.cshtml" />
     <Content Include="Views\AdminConfig\EditFinancialYear.cshtml" />
+    <Content Include="Views\Branch\CreateCompanyBranch.cshtml" />
+    <Content Include="Views\Branch\AllCompanyBranches.cshtml" />
+    <Content Include="Views\Branch\EditCompanyBranch.cshtml" />
+    <Content Include="Views\Employee\BranchEmployees.cshtml" />
+    <Content Include="Views\Employee\NewBranchEmployee.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

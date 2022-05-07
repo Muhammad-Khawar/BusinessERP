@@ -1,0 +1,73 @@
+﻿@model ERP_App.Models.AccountSubControlMV
+
+@{
+    ViewBag.Title = "Account Control";
+}
+<h2>Edit Account Control</h2>
+
+@using (Html.BeginForm("EditAccountSubControl", "Accounts", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(u => u.BranchID)
+    @Html.HiddenFor(u => u.AccountSubControlID)
+    @Html.HiddenFor(u => u.CompanyID)
+    @Html.HiddenFor(u => u.UserID)
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccountHeadID, "Account Head", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AccountHeadID", null, "---Select---", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })
+            @Html.ValidationMessageFor(model => model.AccountHeadID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccountControlID, "Account Control", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("AccountControlID", null, "---Select---", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.AccountControlID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.AccountSubControlName, "Account Sub Control", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.AccountSubControlName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AccountSubControlName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+}
+<div>
+    @Html.ActionLink("Back", "AllAccountSubControls", "Accounts", null, new { @class = "btn btn-outline-default" })
+</div>
+
+
+<script type="text/javascript">
+    function myFunction() {
+        var accountheadID = $("#AccountHeadID").val();
+        $.ajax({
+            type: "GET",
+            url: "GetAccountControl?accountheadID=" + accountheadID,
+            data: [],
+            success: function (data) {
+                var s = '<option value ="-1">---Select---</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value ="' + data[i].AccountControlID + '">' + data[i].AccountControlName + '</option>';
+                }
+                $("#AccountControlID").html(s);
+            }
+        });
+    }
+</script>

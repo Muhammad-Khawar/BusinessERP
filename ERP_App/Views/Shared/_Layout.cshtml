@@ -253,15 +253,16 @@
                             <li class="nav-heading ">
                                 <span data-localize="sidebar.heading.COMPONENTS">Components</span>
                             </li>
-                            <li class=" ">
-                                <a href="#elements" title="Elements" data-toggle="collapse">
-                                    <em class="icon-chemistry"></em>
-                                    <span data-localize="sidebar.nav.element.ELEMENTS">Users</span>
-                                </a>
-                                <ul class="sidebar-nav sidebar-subnav collapse" id="elements">
+                            @if (usertypeid == 1 || usertypeid == 2)
+                            {
+                                <li class=" ">
+                                    <a href="#elements" title="Elements" data-toggle="collapse">
+                                        <em class="icon-chemistry"></em>
+                                        <span data-localize="sidebar.nav.element.ELEMENTS">Users</span>
+                                    </a>
+                                    <ul class="sidebar-nav sidebar-subnav collapse" id="elements">
 
-                                    @if (usertypeid == 1 || usertypeid == 2)
-                                    {
+
                                         <li class="sidebar-subnav-header">User Settings</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/User/AllUserTypes")" title="Buttons">
@@ -273,10 +274,11 @@
                                                 <span data-localize="sidebar.nav.element.NOTIFICATION">Notifications</span>
                                             </a>
                                         </li>
-                                    }
 
-                                </ul>
-                            </li>
+
+                                    </ul>
+                                </li>
+                            }
                             @if (usertypeid == 1 || usertypeid == 2)
                             {
                                 <li class=" ">
@@ -284,7 +286,9 @@
                                         <em class="icon-note"></em>
                                         <span data-localize="sidebar.nav.form.FORM">Companies</span>
                                     </a>
+
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="forms">
+
                                         <li class="sidebar-subnav-header">Companies</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/company/companies")" title="Standard">
@@ -321,11 +325,12 @@
                                                 <span>Cropper</span>
                                             </a>
                                         </li>
+
                                     </ul>
+
                                 </li>
                             }
-                            @if (usertypeid == 1 || usertypeid == 2)
-                            {
+                           
                                 <li class=" ">
                                     <a href="#charts" title="Charts" data-toggle="collapse">
                                         <em class="icon-graph"></em>
@@ -333,41 +338,56 @@
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
                                         <li class="sidebar-subnav-header">Setting</li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Flot">
-                                                <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Radial">
-                                                <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Chart JS">
-                                                <span>Financial Years</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-rickshaw.html" title="Rickshaw">
-                                                <span>Rickshaw</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-morris.html" title="MorrisJS">
-                                                <span>MorrisJS</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="chart-chartist.html" title="Chartist">
-                                                <span>Chartist</span>
-                                            </a>
-                                        </li>
+                                        @if (usertypeid == 1 || usertypeid == 2)
+                                        {
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Flot">
+                                                    <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Radial">
+                                                    <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Chart JS">
+                                                    <span>Financial Years</span>
+                                                </a>
+                                            </li>
+                                        }
+                                        @if (usertypeid > 2)
+                                        {
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/Accounts/AllAccountControls")" title="All Account Control">
+                                                    <span>Account Control</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/Accounts/AllAccountSubControls")" title="All Account Control">
+                                                    <span>Account Sub Control</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="@Url.Content("~/AccountsSettiing/BranchAccountSetting")" title="Account Flow Setting">
+                                                    <span>Account Flow Setting</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="chart-morris.html" title="MorrisJS">
+                                                    <span>MorrisJS</span>
+                                                </a>
+                                            </li>
+                                            <li class=" ">
+                                                <a href="chart-chartist.html" title="Chartist">
+                                                    <span>Chartist</span>
+                                                </a>
+                                            </li>
+                                        }
                                     </ul>
                                 </li>
-                            }
-                            @{
-                                if (usertypeid >= 3)
+                            
+                            @if (usertypeid >= 3)
                                 {
                                     <li class=" ">
                                         <a href="#tables" title="Tables" data-toggle="collapse">
@@ -399,114 +419,122 @@
                                         </ul>
                                     </li>
                                 }
+                            @if (usertypeid >= 3)
+                            {
+                                <li class=" ">
+                                    <a href="#maps" title="Stock" data-toggle="collapse">
+                                        <em class="icon-map"></em>
+                                        <span data-localize="sidebar.nav.map.MAP">Stock</span>
+                                    </a>
+                                    <ul class="sidebar-nav sidebar-subnav collapse" id="maps">
+                                        <li class="sidebar-subnav-header">Stock</li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Stock/AllCategories")" title="Stock Categories">
+                                                <span data-localize="sidebar.nav.map.GOOGLE">Categories</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Stock/StockProducts")" title="Product item's">
+                                                <span data-localize="sidebar.nav.map.VECTOR">Products</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             }
 
-                            <li class=" ">
-                                <a href="#maps" title="Maps" data-toggle="collapse">
-                                    <em class="icon-map"></em>
-                                    <span data-localize="sidebar.nav.map.MAP">Maps</span>
-                                </a>
-                                <ul class="sidebar-nav sidebar-subnav collapse" id="maps">
-                                    <li class="sidebar-subnav-header">Maps</li>
-                                    <li class=" ">
-                                        <a href="maps-google.html" title="Google Maps">
-                                            <span data-localize="sidebar.nav.map.GOOGLE">Google Maps</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="maps-vector.html" title="Vector Maps">
-                                            <span data-localize="sidebar.nav.map.VECTOR">Vector Maps</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li class="nav-heading ">
-                                <span data-localize="sidebar.heading.MORE">More</span>
+                                <span data-localize="sidebar.heading.MORE">Customer</span>
                             </li>
                             <li class=" ">
-                                <a href="#pages" title="Pages" data-toggle="collapse">
+                                <a href="#pages" title="Customer" data-toggle="collapse">
                                     <em class="icon-doc"></em>
-                                    <span data-localize="sidebar.nav.pages.PAGES">Pages</span>
+                                    <span data-localize="sidebar.nav.pages.PAGES">Customer</span>
                                 </a>
                                 <ul class="sidebar-nav sidebar-subnav collapse" id="pages">
-                                    <li class="sidebar-subnav-header">Pages</li>
-                                    <li class=" ">
-                                        <a href="login.html" title="Login">
-                                            <span data-localize="sidebar.nav.pages.LOGIN">Login</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="register.html" title="Sign up">
-                                            <span data-localize="sidebar.nav.pages.REGISTER">Sign up</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="recover.html" title="Recover Password">
-                                            <span data-localize="sidebar.nav.pages.RECOVER">Recover Password</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="#" title="Lock">
-                                            <span data-localize="sidebar.nav.pages.LOCK">Lock</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="template.html" title="Starter Template">
-                                            <span data-localize="sidebar.nav.pages.STARTER">Starter Template</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="404.html" title="404">
-                                            <span>404</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="500.html" title="500">
-                                            <span>500</span>
-                                        </a>
-                                    </li>
-                                    <li class=" ">
-                                        <a href="maintenance.html" title="Maintenance">
-                                            <span>Maintenance</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                    @if (usertypeid >= 3)
+                                    {
+                                        <li class="sidebar-subnav-header">Customer</li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Customer/AllBranchCustomer")" title="Login">
+                                                <span data-localize="sidebar.nav.pages.LOGIN">Customer</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Supplier/AllBranchSupplier")" title="Supplier">
+                                                <span data-localize="sidebar.nav.pages.REGISTER">Supplier</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="recover.html" title="Recover Password">
+                                                <span data-localize="sidebar.nav.pages.RECOVER">Recover Password</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="#" title="Lock">
+                                                <span data-localize="sidebar.nav.pages.LOCK">Lock</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="template.html" title="Starter Template">
+                                                <span data-localize="sidebar.nav.pages.STARTER">Starter Template</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="404.html" title="404">
+                                                <span>404</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="500.html" title="500">
+                                                <span>500</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="maintenance.html" title="Maintenance">
+                                                <span>Maintenance</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    </ul>
                             </li>
                             <li class=" ">
-                                <a href="#extras" title="Extras" data-toggle="collapse">
+                                <a href="#extras" title="Supplier" data-toggle="collapse">
                                     <em class="icon-cup"></em>
-                                    <span data-localize="sidebar.nav.extra.EXTRA">Extras</span>
+                                    <span data-localize="sidebar.nav.extra.EXTRA">Purchase</span>
                                 </a>
                                 <ul class="sidebar-nav sidebar-subnav collapse" id="extras">
-                                    <li class="sidebar-subnav-header">Extras</li>
+                                    <li class="sidebar-subnav-header">Purchase</li>
                                     <li class=" ">
                                         <a href="#blog" title="Blog" data-toggle="collapse">
                                             <em class="fa fa-angle-right"></em>
-                                            <span>Blog</span>
+                                            <span>Supplier</span>
                                         </a>
                                         <ul class="sidebar-nav sidebar-subnav collapse" id="blog">
-                                            <li class="sidebar-subnav-header">Blog</li>
-                                            <li class=" ">
-                                                <a href="blog.html" title="List">
-                                                    <span>List</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="blog-post.html" title="Post">
-                                                    <span>Post</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="blog-articles.html" title="Articles">
-                                                    <span>Articles</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="blog-article-view.html" title="Article View">
-                                                    <span>Article View</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                            @if (usertypeid >= 3)
+                                            {
+                                                <li class="sidebar-subnav-header">Supplier</li>
+                                                <li class=" ">
+                                                    <a href="@Url.Content("~/Supplier/AllBranchSupplier")" title="List">
+                                                        <span>Supplier</span>
+                                                    </a>
+                                                </li>
+                                                <li class=" ">
+                                                    <a href="blog-post.html" title="Post">
+                                                        <span>Post</span>
+                                                    </a>
+                                                </li>
+                                                <li class=" ">
+                                                    <a href="blog-articles.html" title="Articles">
+                                                        <span>Articles</span>
+                                                    </a>
+                                                </li>
+                                                <li class=" ">
+                                                    <a href="blog-article-view.html" title="Article View">
+                                                        <span>Article View</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            </ul>
                                     </li>
                                     <li class=" ">
                                         <a href="#ecommerce" title="eCommerce" data-toggle="collapse">
@@ -568,8 +596,8 @@
                                         </ul>
                                     </li>
                                     <li class=" ">
-                                        <a href="contacts.html" title="Contacts">
-                                            <span>Contacts</span>
+                                        <a href="@Url.Content("~/Purchase/PurchaseStockProducts")" title="New Purchase">
+                                            <span>New Purchase</span>
                                         </a>
                                     </li>
                                     <li class=" ">

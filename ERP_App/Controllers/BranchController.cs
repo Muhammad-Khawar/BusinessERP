@@ -47,6 +47,23 @@ namespace ERP_App.Controllers
                 addbranch.Company = company;
                 addbranch.BrchID = branch.BrchID;
 
+                var employee = branch.tblEmployees.Where(b => b.Designation.ToLower().Contains("focal")).FirstOrDefault();
+                if (employee !=null)
+                {
+                    var user = DB.tblUsers.Find(employee.UserID);
+                    if(user.IsActive == true)
+                    {
+                        addbranch.IsHaveFocalPerson = true;
+                    }
+                    else
+                    {
+                        addbranch.IsHaveFocalPerson = false;
+                    }
+                }
+                else
+                {
+                    addbranch.IsHaveFocalPerson = false;
+                }
                 list.Add(addbranch);
             }
             return View(list);

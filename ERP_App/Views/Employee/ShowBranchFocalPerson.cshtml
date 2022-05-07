@@ -1,0 +1,127 @@
+﻿@model ERP_App.Models.FocalPersonMV
+
+@{
+    ViewBag.Title = "Focal Person";
+}
+
+<h2>ShowBranchFocalPerson</h2>
+
+<div>
+    <h4>Employee Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.ContactNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.ContactNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Photo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Photo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.CNIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.CNIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.employeeMV.MonthlySalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.employeeMV.MonthlySalary)
+        </dd>
+
+
+    </dl>
+</div>
+<div>
+<h4>User Details</h4>
+<hr />
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.userMV.FullName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.userMV.FullName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.userMV.ContactNo)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.userMV.ContactNo)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.userMV.Email)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.userMV.Email)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.employeeMV.Address)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.userMV.Address)
+    </dd>
+</dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "AllCompanyBranches", "Branch",null,new { @class = "btn btn-default"})
+</p>

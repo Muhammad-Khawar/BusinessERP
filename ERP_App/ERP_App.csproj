@@ -275,12 +275,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\AccountsSettiingController.cs" />
     <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -307,8 +313,11 @@
     <Compile Include="Models\CustomerReturnPaymentMV.cs" />
     <Compile Include="Models\EmployeeMV.cs" />
     <Compile Include="Models\FinancialYearMV.cs" />
+    <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\PayrollMV.cs" />
     <Compile Include="Models\PurchaseCartDetailMV.cs" />
+    <Compile Include="Models\PurchaseCartMV.cs" />
+    <Compile Include="Models\PurchaseItemsMV.cs" />
     <Compile Include="Models\SaleCartDetailMV.cs" />
     <Compile Include="Models\StateMV.cs" />
     <Compile Include="Models\StockMV.cs" />
@@ -382,6 +391,28 @@
     <Content Include="Views\Branch\EditCompanyBranch.cshtml" />
     <Content Include="Views\Employee\BranchEmployees.cshtml" />
     <Content Include="Views\Employee\NewBranchEmployee.cshtml" />
+    <Content Include="Views\Employee\EditBranchEmployee.cshtml" />
+    <Content Include="Views\Employee\CreateBranchFocalPerson.cshtml" />
+    <Content Include="Views\Employee\ShowBranchFocalPerson.cshtml" />
+    <Content Include="Views\Stock\AllCategories.cshtml" />
+    <Content Include="Views\Stock\CreateCategory.cshtml" />
+    <Content Include="Views\Stock\EditCategory.cshtml" />
+    <Content Include="Views\Stock\StockProducts.cshtml" />
+    <Content Include="Views\Stock\CreateProduct.cshtml" />
+    <Content Include="Views\Stock\EditProduct.cshtml" />
+    <Content Include="Views\AccountsSettiing\BranchAccountSetting.cshtml" />
+    <Content Include="Views\AccountsSettiing\CreateBranchAccountSetting.cshtml" />
+    <Content Include="Views\Accounts\CreateAccountControl.cshtml" />
+    <Content Include="Views\Accounts\EditAccountControl.cshtml" />
+    <Content Include="Views\Accounts\AllAccountControls.cshtml" />
+    <Content Include="Views\Accounts\AllAccountSubControls.cshtml" />
+    <Content Include="Views\Accounts\CreateAccountSubControl.cshtml" />
+    <Content Include="Views\Accounts\EditAccountSubControl.cshtml" />
+    <Content Include="Views\Customer\AllBranchCustomer.cshtml" />
+    <Content Include="Views\Customer\CreateBranchCustomer.cshtml" />
+    <Content Include="Views\Supplier\AllBranchSupplier.cshtml" />
+    <Content Include="Views\Supplier\CreateBranchSupplier.cshtml" />
+    <Content Include="Views\Purchase\PurchaseStockProducts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

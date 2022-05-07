@@ -54,6 +54,16 @@
                     </td>
 
                     <td>
+                        @if (item.IsHaveFocalPerson == true)
+                        {
+                            @Html.ActionLink("Focal Person", "ShowBranchFocalPerson", "Employee", new { BranchID = item.BranchID }, new { @class = "btn btn-success" })
+                        }
+                        else 
+                        {
+                            
+                            @Html.ActionLink("Add Focal Person", "CreateBranchFocalPerson", "Employee", new { BranchID = item.BranchID }, new { @class = "btn btn-primary" })
+                        }
+
                         @Html.ActionLink("Edit", "EditCompanyBranch", new { branchID = item.BranchID }, new { @class = "btn btn-warning" })
 
                     </td>

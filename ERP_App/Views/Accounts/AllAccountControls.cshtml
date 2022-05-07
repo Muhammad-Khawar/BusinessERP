@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ERP_App.Models.AccountControlMV>
+
+@{
+    ViewBag.Title = "Accounts";
+}
+<!-- DATATABLE DEMO 2-->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Account Controls</div>
+    </div>
+    <div class="card-body">
+        <div>@Html.ActionLink("New Account Control", "CreateAccountControl", null, new { @class = "btn btn-primary" })</div>
+        <hr />
+        <table class="table table-striped my-4 w-100" id="datatable2">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountHead)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountControlName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountHead)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountControlName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditAccountControl", new { id = item.AccountControlID }, new { @class = "btn btn-warning" })
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

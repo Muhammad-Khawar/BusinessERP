@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ERP_App.Models.CustomerMV>
+
+@{
+    ViewBag.Title = "AllBranchCustomer";
+}
+
+<!-- DATATABLE DEMO 2-->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Branch Customer</div>
+    </div>
+    <div class="card-body">
+        <div>@Html.ActionLink("New Branch Customer", "CreateBranchCustomer", null, new { @class = "btn btn-primary" })</div>
+        <hr />
+        <table class="table table-striped my-4 w-100" id="datatable2">
+            <thead>
+                <tr>
+                    <th>
+                        Customer
+                    </th>
+                    <th>
+                        Contact No
+                    </th>
+                    <th>
+                        Area
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Created By
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customername)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerContact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerArea)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditBranchCustomer", new { id = item.CustomerID }, new { @class = "btn btn-warning" })
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

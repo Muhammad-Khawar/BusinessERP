@@ -16,6 +16,7 @@ namespace ERP_App.Models
         public int BranchID { get; set; }
         public int CompanyID { get; set; }
         public int UserID { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

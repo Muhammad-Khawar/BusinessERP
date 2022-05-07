@@ -16,7 +16,7 @@ namespace ERP_App.Controllers
             {
                 using (BusinessERP_DBEntities db = new BusinessERP_DBEntities())
                 {
-                    var user = db.tblUsers.Where(u => u.Email == UserEmail && u.Password == Password).FirstOrDefault();
+                    var user = db.tblUsers.Where(u => u.Email == UserEmail && u.Password == Password && u.IsActive==true).FirstOrDefault();
                     if(user == null)
                     {
                         ViewBag.ErrorMsg = "Email or Passsword is incorrect";
@@ -28,7 +28,7 @@ namespace ERP_App.Controllers
                         Session["Email"] = user.Email;
                         Session["UserTypeId"] = user.UserTypeID;
                         Session["UserType"] = user.tblUserType.UserType;
-                        Session["IsActive"] = Convert.ToBoolean(user.IsActive)==true ? "Active" : "No Active";
+                        Session["IsActive"] = user.IsActive==true ? "Active" : "No-Active";
                         var usertypeid = user.UserTypeID;
 
                         if (user.UserTypeID > 2) // Means k woh jis b branch ka ho. es liye greater than 2 hai.

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ERP_App.Models.StockMV>
+
+@{
+    ViewBag.Title = "Stock Products";
+}
+<!-- DATATABLE DEMO 2-->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Stock</div>
+    </div>
+    <div class="card-body">
+        <div>@Html.ActionLink("New Product", "CreateProduct", null, new { @class = "btn btn-primary" })</div>
+        <hr />
+        <table class="table table-striped my-4 w-100" id="datatable2">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CategoryName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SaleUnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CurrentPurchaseUnitPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExpiryDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Manufacture)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StockTreshHoldQuantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SaleUnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentPurchaseUnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ExpiryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Manufacture)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockTreshHoldQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditProduct", new { productID = item.ProductID }, new { @class = "btn btn-warning" })
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

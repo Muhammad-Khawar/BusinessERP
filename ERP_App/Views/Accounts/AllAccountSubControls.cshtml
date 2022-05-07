@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ERP_App.Models.AccountSubControlMV>
+
+@{
+    ViewBag.Title = "AllAccountSubControls";
+}
+<!-- DATATABLE DEMO 2-->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">Account Sub Controls</div>
+    </div>
+    <div class="card-body">
+        <div>@Html.ActionLink("New Account Sub Control", "CreateAccountSubControl", null, new { @class = "btn btn-primary" })</div>
+        <hr />
+        <table class="table table-striped my-4 w-100" id="datatable2">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountHead)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountControl)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AccountSubControlName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountHead)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountControl)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountSubControlName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedBy)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditAccountSubControl", new { accountsubcontrolID = item.AccountSubControlID }, new { @class = "btn btn-warning" })
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

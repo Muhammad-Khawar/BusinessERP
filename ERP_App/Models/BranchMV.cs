@@ -33,6 +33,7 @@ namespace ERP_App.Models
       
         [Display(Name = "Company")]
         public string Company { get; set; }
+        public bool IsHaveFocalPerson { get; set; }
         public Nullable<int> BrchID { get; set; }
     }
 }

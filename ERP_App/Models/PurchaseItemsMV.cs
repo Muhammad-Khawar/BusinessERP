@@ -6,23 +6,27 @@ using System.Web;
 
 namespace ERP_App.Models
 {
-    public class StockMV
+    public class PurchaseItemsMV
     {
         public int ProductID { get; set; }
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
-        [Required(ErrorMessage ="*Required")]
-        [Display(Name ="Product Name")]
+        [Required(ErrorMessage = "*Required")]
+        [Display(Name = "Product Name")]
         public string ProductName { get; set; }
         [Required(ErrorMessage = "*Required")]
         public int Quantity { get; set; }
         [Required(ErrorMessage = "*Required")]
-        [Display(Name ="Sale Price")]
+        [Display(Name = "Sale Price")]
         public double SaleUnitPrice { get; set; }
+
+        [Display(Name = "Previous Purchase Unit Price")]
+        public double PreviousPurchaseUnitPrice { get; set; }
+
         [Required(ErrorMessage = "*Required")]
-        [Display(Name = "Purchase Unit Price")]
+        [Display(Name = "Cuurent Purchase Unit Price")]
         public double CurrentPurchaseUnitPrice { get; set; }
         [Required(ErrorMessage = "*Required")]
         [Display(Name = "Expire Date")]
@@ -40,6 +44,7 @@ namespace ERP_App.Models
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
+       
 
     }
 }

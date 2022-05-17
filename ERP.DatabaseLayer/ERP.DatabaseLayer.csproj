@@ -129,6 +129,12 @@
     <Compile Include="tblFinancialYear.cs">
       <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tblOrder.cs">
+      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblOrderDetail.cs">
+      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblPayroll.cs">
       <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
     </Compile>

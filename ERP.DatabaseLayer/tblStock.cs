@@ -23,6 +23,7 @@ namespace ERP.DatabaseLayer
             this.tblSaleCartDetails = new HashSet<tblSaleCartDetail>();
             this.tblSupplierInvoiceDetails = new HashSet<tblSupplierInvoiceDetail>();
             this.tblSupplierReturnInvoiceDetails = new HashSet<tblSupplierReturnInvoiceDetail>();
+            this.tblOrderDetails = new HashSet<tblOrderDetail>();
         }
     
         public int ProductID { get; set; }
@@ -39,6 +40,7 @@ namespace ERP.DatabaseLayer
         public string Description { get; set; }
         public int UserID { get; set; }
         public bool IsActive { get; set; }
+        public string ProductPicture { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCategory tblCategory { get; set; }
@@ -56,5 +58,7 @@ namespace ERP.DatabaseLayer
         public virtual ICollection<tblSupplierInvoiceDetail> tblSupplierInvoiceDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSupplierReturnInvoiceDetail> tblSupplierReturnInvoiceDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblOrderDetail> tblOrderDetails { get; set; }
     }
 }

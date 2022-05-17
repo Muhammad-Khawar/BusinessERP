@@ -61,5 +61,7 @@ namespace ERP.DatabaseLayer
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
+        public virtual DbSet<tblOrder> tblOrders { get; set; }
+        public virtual DbSet<tblOrderDetail> tblOrderDetails { get; set; }
     }
 }

@@ -32,6 +32,9 @@ namespace ERP.DatabaseLayer
         public System.DateTime InvoiceDate { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
+        public Nullable<double> SubTotalAmount { get; set; }
+        public double EstimatedTax { get; set; }
+        public double ShippingFee { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCompany tblCompany { get; set; }

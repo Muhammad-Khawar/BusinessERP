@@ -25,6 +25,9 @@ namespace ERP.DatabaseLayer
         public int ProductID { get; set; }
         public int PurchaseQuantity { get; set; }
         public double purchaseUnitPrice { get; set; }
+        public double PreviousPurchaseUnitPrice { get; set; }
+        public System.DateTime ManufactureDate { get; set; }
+        public System.DateTime ExpiryDate { get; set; }
     
         public virtual tblStock tblStock { get; set; }
         public virtual tblSupplierInvoice tblSupplierInvoice { get; set; }

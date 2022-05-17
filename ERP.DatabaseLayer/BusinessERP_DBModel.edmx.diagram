@@ -140,6 +140,10 @@
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblSupplierReturnPayment_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblTransaction_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblUser_tblUserType" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrder" Width="1.5" PointX="13.5" PointY="41.125" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrderDetail" Width="1.5" PointX="15.75" PointY="40.25" />
+        <AssociationConnector Association="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder" />
+        <AssociationConnector Association="BusinessERP_DBModel.FK_tblOrderDetail_tblStock" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

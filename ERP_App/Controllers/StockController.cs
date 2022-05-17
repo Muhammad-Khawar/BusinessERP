@@ -218,6 +218,7 @@ namespace ERP_App.Controllers
                 item.StockTreshHoldQuantity = product.StockTreshHoldQuantity;
                 item.UserID = product.UserID;
                 item.CategoryName = product.tblCategory.categoryName;
+                item.ProductPicture = product.ProductPicture;
                 list.Add(item);
             }
 
@@ -284,6 +285,8 @@ namespace ERP_App.Controllers
                     newproduct.Description = stockMV.Description;
                     newproduct.UserID =userid;
                     newproduct.IsActive = stockMV.IsActive;
+                    stockMV.Pro_Pic.SaveAs(Server.MapPath("~/ProductPicture/" + stockMV.Pro_Pic.FileName));
+                    newproduct.ProductPicture = "~/ProductPicture/"+stockMV.Pro_Pic.FileName;
                     DB.tblStocks.Add(newproduct);
                     DB.SaveChanges();
                     return RedirectToAction("StockProducts");
@@ -328,6 +331,7 @@ namespace ERP_App.Controllers
             stockMV.SaleUnitPrice = product.SaleUnitPrice;
             stockMV.StockTreshHoldQuantity = product.StockTreshHoldQuantity;
             stockMV.IsActive = product.IsActive;
+            stockMV.ProductPicture = product.ProductPicture;
             ViewBag.CategoryID = new SelectList(DB.tblCategories.Where(c => c.CompanyID == companyid && c.BranchID == branchid), "CategoryID", "categoryName",product.CategoryID);
             return View(stockMV);
         }
@@ -368,6 +372,12 @@ namespace ERP_App.Controllers
                     editproduct.Description = stockMV.Description;
                     editproduct.UserID = userid;
                     editproduct.IsActive = stockMV.IsActive;
+                    if(stockMV.Pro_Pic != null)
+                    {
+                        stockMV.Pro_Pic.SaveAs(Server.MapPath("~/ProductPicture/" + stockMV.Pro_Pic.FileName));
+                        editproduct.ProductPicture = "~/ProductPicture/" + stockMV.Pro_Pic.FileName;
+                    }
+                    
                     DB.Entry(editproduct).State = System.Data.Entity.EntityState.Modified;
                     DB.SaveChanges();
                     return RedirectToAction("StockProducts");
@@ -380,5 +390,28 @@ namespace ERP_App.Controllers
             ViewBag.CategoryID = new SelectList(DB.tblCategories.Where(c => c.CompanyID == companyid && c.BranchID == branchid), "CategoryID", "categoryName", stockMV.CategoryID);
             return View(stockMV);
         }
+        public JsonResult GetSelectProductDetails(int? productid)
+        {
+            var data = new SelectProduct();
+            if(productid > 0)
+            {
+                var product = DB.tblStocks.Find(productid);
+                data.SaleUnitPrice = product.SaleUnitPrice;
+                data.CurrentPurchaseUnitPrice = product.CurrentPurchaseUnitPrice;
+            }
+            else
+            {
+                data.SaleUnitPrice = 0;
+                data.CurrentPurchaseUnitPrice = 0;
+            }
+            
+            
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
+}
+class SelectProduct
+{
+    public double SaleUnitPrice { get; set; }
+    public double CurrentPurchaseUnitPrice { get; set; }
 }

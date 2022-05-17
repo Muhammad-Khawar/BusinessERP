@@ -16,6 +16,9 @@ namespace ERP_App.Models
         public System.DateTime InvoiceDate { get; set; }
         public string Description { get; set; }
         public int UserID { get; set; }
+        public Nullable<double> SubTotalAmount { get; set; }
+        public double EstimatedTax { get; set; }
+        public double ShippingFee { get; set; }
 
     }
 }

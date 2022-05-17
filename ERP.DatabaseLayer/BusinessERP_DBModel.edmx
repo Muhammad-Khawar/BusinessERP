@@ -261,6 +261,30 @@
           <Property Name="EndDate" Type="date" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderType" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderContact" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderFID" Type="int" />
+          <Property Name="ProductFID" Type="int" />
+          <Property Name="SalePrice" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="PurchasePrice" Type="numeric" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
         <EntityType Name="tblPayroll">
           <Key>
             <PropertyRef Name="PayrollID" />
@@ -287,6 +311,11 @@
           <Property Name="CompanyID" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PrevoiusPurchaseUnitPrice" Type="float" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ManufactureDate" Type="date" />
+          <Property Name="ExpireDate" Type="date" />
+          <Property Name="SaleUnitPrice" Type="float" />
         </EntityType>
         <EntityType Name="tblSaleCartDetail">
           <Key>
@@ -326,6 +355,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="300" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ProductPicture" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tblSupplier">
           <Key>
@@ -350,10 +380,13 @@
           <Property Name="CompanyID" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="InvoiceNo" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="TotalAmount" Type="float" Nullable="false" />
           <Property Name="InvoiceDate" Type="date" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="SubTotalAmount" Type="float" />
+          <Property Name="EstimatedTax" Type="float" Nullable="false" />
+          <Property Name="ShippingFee" Type="float" Nullable="false" />
+          <Property Name="TotalAmount" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierInvoiceDetail">
           <Key>
@@ -364,6 +397,9 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="PurchaseQuantity" Type="int" Nullable="false" />
           <Property Name="purchaseUnitPrice" Type="float" Nullable="false" />
+          <Property Name="PreviousPurchaseUnitPrice" Type="float" Nullable="false" />
+          <Property Name="ManufactureDate" Type="date" Nullable="false" />
+          <Property Name="ExpiryDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierPayment">
           <Key>
@@ -1064,6 +1100,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblOrderDetail_tblOrder">
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblStock">
+          <End Role="tblStock" Type="Self.tblStock" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStock">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="ProductFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblPayroll_tblBranch">
           <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1696,6 +1756,8 @@
           <EntitySet Name="tblCustomerReturnPayment" EntityType="Self.tblCustomerReturnPayment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEmployee" EntityType="Self.tblEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFinancialYear" EntityType="Self.tblFinancialYear" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrderDetail" EntityType="Self.tblOrderDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPayroll" EntityType="Self.tblPayroll" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPurchaseCartDetail" EntityType="Self.tblPurchaseCartDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSaleCartDetail" EntityType="Self.tblSaleCartDetail" Schema="dbo" store:Type="Tables" />
@@ -1906,6 +1968,14 @@
           <AssociationSet Name="FK_tblFinancialYear_tblUser" Association="Self.FK_tblFinancialYear_tblUser">
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblFinancialYear" EntitySet="tblFinancialYear" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="Self.FK_tblOrderDetail_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrder" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblStock" Association="Self.FK_tblOrderDetail_tblStock">
+            <End Role="tblStock" EntitySet="tblStock" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPayroll_tblBranch" Association="Self.FK_tblPayroll_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranch" />
@@ -2508,6 +2578,11 @@
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblPurchaseCartDetail_tblCompany" FromRole="tblPurchaseCartDetail" ToRole="tblCompany" />
           <NavigationProperty Name="tblStock" Relationship="Self.FK_tblPurchaseCartDetail_tblStock" FromRole="tblPurchaseCartDetail" ToRole="tblStock" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPurchaseCartDetail_tblUser" FromRole="tblPurchaseCartDetail" ToRole="tblUser" />
+          <Property Name="PrevoiusPurchaseUnitPrice" Type="Double" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
+          <Property Name="ExpireDate" Type="DateTime" Precision="0" />
+          <Property Name="SaleUnitPrice" Type="Double" />
         </EntityType>
         <EntityType Name="tblSaleCartDetail">
           <Key>
@@ -2561,6 +2636,8 @@
           <NavigationProperty Name="tblUser" Relationship="Self.FK_tblStock_tblUser" FromRole="tblStock" ToRole="tblUser" />
           <NavigationProperty Name="tblSupplierInvoiceDetails" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblSupplierInvoiceDetail" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblSupplierReturnInvoiceDetail" />
+          <Property Name="ProductPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblStock" FromRole="tblStock" ToRole="tblOrderDetail" />
         </EntityType>
         <EntityType Name="tblSupplier">
           <Key>
@@ -2604,6 +2681,9 @@
           <NavigationProperty Name="tblSupplierReturnInvoices" Relationship="Self.FK_tblSupplierReturnInvoice_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoice" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoiceDetail" />
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnPayment" />
+          <Property Name="SubTotalAmount" Type="Double" />
+          <Property Name="EstimatedTax" Type="Double" Nullable="false" />
+          <Property Name="ShippingFee" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierInvoiceDetail">
           <Key>
@@ -2617,6 +2697,9 @@
           <NavigationProperty Name="tblStock" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblSupplierInvoiceDetail" ToRole="tblStock" />
           <NavigationProperty Name="tblSupplierInvoice" Relationship="Self.FK_tblSupplierInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierInvoice" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoiceDetail" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierReturnInvoiceDetail" />
+          <Property Name="PreviousPurchaseUnitPrice" Type="Double" Nullable="false" />
+          <Property Name="ManufactureDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="tblSupplierPayment">
           <Key>
@@ -4420,7 +4503,68 @@
             <End Role="tblUserType" EntitySet="tblUserTypes" />
             <End Role="tblUser" EntitySet="tblUsers" />
           </AssociationSet>
+          <EntitySet Name="tblOrders" EntityType="BusinessERP_DBModel.tblOrder" />
+          <EntitySet Name="tblOrderDetails" EntityType="BusinessERP_DBModel.tblOrderDetail" />
+          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrders" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblStock" Association="BusinessERP_DBModel.FK_tblOrderDetail_tblStock">
+            <End Role="tblStock" EntitySet="tblStocks" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
+          <Property Name="OrderName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderFID" Type="Int32" />
+          <Property Name="ProductFID" Type="Int32" />
+          <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="tblOrder" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrderDetail" ToRole="tblOrder" />
+          <NavigationProperty Name="tblStock" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblStock" FromRole="tblOrderDetail" ToRole="tblStock" />
+        </EntityType>
+        <Association Name="FK_tblOrderDetail_tblOrder">
+          <End Type="BusinessERP_DBModel.tblOrder" Role="tblOrder" Multiplicity="0..1" />
+          <End Type="BusinessERP_DBModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblStock">
+          <End Type="BusinessERP_DBModel.tblStock" Role="tblStock" Multiplicity="0..1" />
+          <End Type="BusinessERP_DBModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStock">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="ProductFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4723,6 +4867,11 @@
           <EntitySetMapping Name="tblPurchaseCartDetails">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblPurchaseCartDetail">
               <MappingFragment StoreEntitySet="tblPurchaseCartDetail">
+                <ScalarProperty Name="SaleUnitPrice" ColumnName="SaleUnitPrice" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PrevoiusPurchaseUnitPrice" ColumnName="PrevoiusPurchaseUnitPrice" />
                 <ScalarProperty Name="PurchaseCartDetailID" ColumnName="PurchaseCartDetailID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
@@ -4758,6 +4907,7 @@
           <EntitySetMapping Name="tblStocks">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblStock">
               <MappingFragment StoreEntitySet="tblStock">
+                <ScalarProperty Name="ProductPicture" ColumnName="ProductPicture" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
@@ -4793,6 +4943,9 @@
           <EntitySetMapping Name="tblSupplierInvoices">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblSupplierInvoice">
               <MappingFragment StoreEntitySet="tblSupplierInvoice">
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="EstimatedTax" ColumnName="EstimatedTax" />
+                <ScalarProperty Name="SubTotalAmount" ColumnName="SubTotalAmount" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
@@ -4808,6 +4961,9 @@
           <EntitySetMapping Name="tblSupplierInvoiceDetails">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblSupplierInvoiceDetail">
               <MappingFragment StoreEntitySet="tblSupplierInvoiceDetail">
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="PreviousPurchaseUnitPrice" ColumnName="PreviousPurchaseUnitPrice" />
                 <ScalarProperty Name="SupplierInvoiceDetailID" ColumnName="SupplierInvoiceDetailID" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -4919,6 +5075,32 @@
               <MappingFragment StoreEntitySet="tblUserType">
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="OrderAddress" ColumnName="OrderAddress" />
+                <ScalarProperty Name="OrderContact" ColumnName="OrderContact" />
+                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
+                <ScalarProperty Name="OrderName" ColumnName="OrderName" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrderDetails">
+            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrderDetail">
+              <MappingFragment StoreEntitySet="tblOrderDetail">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="ProductFID" ColumnName="ProductFID" />
+                <ScalarProperty Name="OrderFID" ColumnName="OrderFID" />
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

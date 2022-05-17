@@ -1,0 +1,212 @@
+﻿@using ERP_App.Models
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+@{
+    int row = 0;
+    int totalQty = 0;
+    decimal totalBill = 0;
+}
+
+<!-- cart section end -->
+<section class="cart-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <h3 style="text-align:center;">Your Cart</h3>
+                    <div class="cart-table-warp">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="font-weight:bold; font-size: medium;" class="product-th">Product Picture</th>
+                                    <th style="font-weight:bold; font-size: medium;" class="product-th">Product Name</th>
+                                    <th style="font-weight:bold; font-size: medium;" class="product-th">Sale Price</th>
+                                    <th style="font-weight:bold; font-size: medium;" class="quy-th">Quantity</th>
+                                    <th style="font-weight:bold; font-size: medium;" class="total-th">Price</th>
+                                    <th style="font-weight:bold; font-size: medium;" class="total-th">Remove</th>
+                                </tr>
+                            </thead>
+                            @if (Session["myCart"] != null)
+                            {
+                                foreach (var item in (List<StockMV>)Session["MyCart"])
+                                {
+                                    <tbody>
+                                        <tr>
+                                            <td class="product-col">
+                                                <img src="@Url.Content(item.ProductPicture)" width="50px" height="50px" alt="">
+                                            </td>
+                                            <td>
+                                                <div class="pc-title">
+                                                    <h3>@item.ProductName</h3>
+                                                    <p>@item.Description</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="pc-title">
+                                                    <p>@item.SaleUnitPrice</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("MinusToCart","Home",new { RowNo = row })" class="btn btn-danger fa fa-minus"></a>
+                                                <b>@item.Quantity</b>
+                                                <a href="@Url.Action("PlusToCart","Home",new { RowNo = row })" class="btn btn-danger fa fa-plus"></a>
+                                            </td>
+                                            <td class="total-col">
+                                                <h4>@( (decimal.Parse(item.SaleUnitPrice.ToString())) * (int.Parse(item.Quantity.ToString())))</h4>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("RemoveFromCart","Home",new { RowNo = row })" class="btn btn-danger fa fa-times"></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    row++;
+                                    totalQty += item.Quantity;
+                                    totalBill += (decimal.Parse(item.SaleUnitPrice.ToString())) * (int.Parse(item.Quantity.ToString()));
+                                    Session["totalAmount"] = totalBill;
+                                }
+                            }
+                            @if (Session["myCart"] == null || row == 0)
+                            {
+                                <tr>
+                                    <td colspan="6" align="center" style="color:red">Your Shopping Cart is Empty...<a href="@Url.Action("Shop","Home")">Click here to Buy</a></td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                    <div class="total-cost">
+                        <div class="row">
+                            <div class="col-9">
+                                <h6><span>@totalQty</span></h6>
+                            </div>
+                            <div class="col-3">
+                                <h6><span>@totalBill</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @using (Html.BeginForm("PayNow", "Home", FormMethod.Post, new { @class = "promo-code-form" }))
+            {
+                <div class="col-lg-6" style="float:right;">
+                    <h4 style="text-align:center;">Customer Information</h4><br />
+                    <input type="text" placeholder="Enter Customer Name" name="OrderName" required>
+                    <input type="text" placeholder="Enter your Email" name="OrderEmail" required>
+                    <input type="text" placeholder="Enter your Phone No" name="OrderContact" required>
+                    <input type="text" placeholder="Enter your Address" name="OrderAddress" required>
+                </div>
+                <div class="col-lg-6" style="float:left;">
+                    <h4 style="text-align:center;">Order Summary</h4><br />
+                    <div class="d-flex">
+                        <h6>Sub Total</h6>
+                        <div class="ml-auto font-weight-bold">Rs: @totalBill</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Discount</h6>
+                        <div class="ml-auto font-weight-bold">Rs: 0</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Coupon Discount</h6>
+                        <div class="ml-auto font-weight-bold">Rs: 0</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Tax</h6>
+                        <div class="ml-auto font-weight-bold">Rs: 0</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Shipping Cost</h6>
+                        <div class="ml-auto font-weight-bold">Free</div>
+                    </div>
+                    <div class="d-flex">
+                        <h5>Grand Total</h5>
+                        <div class="ml-auto font-weight-bold">Rs: @totalBill</div>
+                    </div>
+                </div>
+                <input class="site-btn" type="submit" value="CHeckout & Pay Now">
+            }
+
+
+
+        </div>
+    </div>
+</section>
+<!-- cart section end -->
+<!-- Related product section -->
+<section class="related-product-section">
+    <div class="container">
+        <div class="section-title text-uppercase">
+            <h2>Continue Shopping</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <div class="tag-new">New</div>
+                        <img src="./img/product/2.jpg" alt="">
+                        <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>$35,00</h6>
+                        <p>Black and White Stripes Dress</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img src="./img/product/5.jpg" alt="">
+                        <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>$35,00</h6>
+                        <p>Flamboyant Pink Top </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img src="./img/product/9.jpg" alt="">
+                        <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>$35,00</h6>
+                        <p>Flamboyant Pink Top </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img src="./img/product/1.jpg" alt="">
+                        <div class="pi-links">
+                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>$35,00</h6>
+                        <p>Flamboyant Pink Top </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Related product section end -->
+<script type="text/javascript">
+    window.onload = function ()
+    { window.scrollBy(0, 180); }
+</script>

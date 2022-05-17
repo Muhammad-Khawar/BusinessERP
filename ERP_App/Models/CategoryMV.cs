@@ -16,5 +16,6 @@ namespace ERP_App.Models
         public int UserID { get; set; }
         [Display(Name ="Created By")]
         public string CreatedBy { get; set; }
+        public int ProductCount { get; set; }
     }
 }

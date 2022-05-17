@@ -8,35 +8,36 @@ namespace ERP_App.Models
 {
     public class PurchaseItemsMV
     {
+        public int PurchaseCartDetailID { get; set; }
         public int ProductID { get; set; }
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public int CompanyID { get; set; }
         public int BranchID { get; set; }
-        [Required(ErrorMessage = "*Required")]
+      
         [Display(Name = "Product Name")]
         public string ProductName { get; set; }
-        [Required(ErrorMessage = "*Required")]
+      
         public int Quantity { get; set; }
-        [Required(ErrorMessage = "*Required")]
+    
         [Display(Name = "Sale Price")]
         public double SaleUnitPrice { get; set; }
 
         [Display(Name = "Previous Purchase Unit Price")]
         public double PreviousPurchaseUnitPrice { get; set; }
 
-        [Required(ErrorMessage = "*Required")]
+
         [Display(Name = "Cuurent Purchase Unit Price")]
         public double CurrentPurchaseUnitPrice { get; set; }
-        [Required(ErrorMessage = "*Required")]
+   
         [Display(Name = "Expire Date")]
         [DataType(DataType.Date)]
-        public System.DateTime ExpiryDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
         [Required(ErrorMessage = "*Required")]
         [Display(Name = "Manufacture Date")]
         [DataType(DataType.Date)]
-        public System.DateTime Manufacture { get; set; }
-        [Required(ErrorMessage = "*Required")]
+        public Nullable<System.DateTime> Manufacture { get; set; }
+      
         [Display(Name = "Stock Treshhold Quantity")]
         public int StockTreshHoldQuantity { get; set; }
         public string Description { get; set; }

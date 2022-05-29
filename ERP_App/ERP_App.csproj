@@ -370,6 +370,7 @@
     <Compile Include="Models\CustomerReturnInvoiceMV.cs" />
     <Compile Include="Models\CustomerReturnPaymentMV.cs" />
     <Compile Include="Models\EmployeeMV.cs" />
+    <Compile Include="Models\FilterModel.cs" />
     <Compile Include="Models\FinancialYearMV.cs" />
     <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\OrderDetailMV.cs" />

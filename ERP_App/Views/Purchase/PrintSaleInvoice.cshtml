@@ -3,6 +3,12 @@
     ViewBag.Title = "PrintSaleInvoice";
     Layout = null;
 }
+@{ 
+    var companyid = 0;
+    var branchid = 0;
+    int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+    int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +59,7 @@
                                         <em class="fa fa-plane fa-4x text-muted"></em>
                                     </div>
                                     <div class="col-lg-10">
-                                        @foreach (var b in o.tblOrderDetails)
+                                        @foreach (var b in o.tblOrderDetails.Where(x=>x.CompanyFID == companyid && x.BranchFID == branchid))
                                         {
                                             if (b != null)
                                             {
@@ -104,7 +110,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var od in o.tblOrderDetails)
+                                    @foreach (var od in o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid))
                                     {
                                         <tr>
                                             <td>@od.tblStock.ProductName</td>

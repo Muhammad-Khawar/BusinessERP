@@ -138,7 +138,7 @@ namespace ERP_App.Controllers
                 //item.BranchID = product.BranchID;
                 //item.CategoryID = product.CategoryID;
                 //item.CompanyID = product.CompanyID;
-                item.CreatedBy = product.tblUser.UserName;
+                //item.CreatedBy = product.tblUser.UserName;
                 item.PreviousPurchaseUnitPrice = product.PrevoiusPurchaseUnitPrice;
                 item.CurrentPurchaseUnitPrice = product.purchaseUnitPrice;
                 item.Description = product.Description;
@@ -156,10 +156,11 @@ namespace ERP_App.Controllers
                 item.PurchaseCartDetailID = product.PurchaseCartDetailID;
                 item.UserID = product.UserID;
                 item.CategoryName = product.tblStock.tblCategory.categoryName;
-
+                
                 list.Add(item);
             }
             purchaseCartMV.PurchaseItemList = list;
+            
             ViewBag.ProductID = new SelectList(DB.tblStocks.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "ProductID", "ProductName", purchaseCartMV.ProductID);
             ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", purchaseCartMV.SupplierID);
             return View(purchaseCartMV);
@@ -415,7 +416,7 @@ namespace ERP_App.Controllers
                 }
             }
 
-                return View();
+            return View();
         }
         public ActionResult PrintPurchaseInvoice(int? supplierinvoiceid)
         {
@@ -582,7 +583,7 @@ namespace ERP_App.Controllers
             }
             return View(purchaselist);
         }
-        public ActionResult AllSales()
+        public ActionResult AllSales(FilterModel fm)
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             {
@@ -601,10 +602,51 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
 
+            if (fm.DateFrom == null)
+            {
+                ViewBag.DateFrom = System.DateTime.Today.ToString("s");
+                fm.DateFrom = System.DateTime.Today;
+            }
+            else
+            {
+                ViewBag.DateFrom = Convert.ToDateTime(fm.DateFrom).ToString("s");
+            }
+
+            if (fm.DateTo == null)
+            {
+                ViewBag.DateTo = System.DateTime.Now.ToString("s");
+                fm.DateTo = System.DateTime.Now;
+            }
+            else
+            {
+                ViewBag.DateTo = Convert.ToDateTime(fm.DateTo).ToString("s");
+            }
+
+            ViewBag.Category = DB.tblCategories.Where(x=>x.CompanyID == companyid && x.BranchID == branchid).Select(x => new SelectListItem { Value = x.CategoryID.ToString(), Text = x.categoryName }).ToList();
+
+            if (fm.Category == null)
+            {
+                ViewBag.Product = DB.tblStocks.Where(x => x.CompanyID == companyid && x.BranchID == branchid).Select(x => new SelectListItem { Value = x.ProductID.ToString(), Text = x.ProductName + " (" + x.Description + ")" }).ToList();
+            }
+            else
+            {
+                ViewBag.Product = DB.tblStocks.Where(x => x.CategoryID == fm.Category && x.CompanyID == companyid && x.BranchID == branchid).Select(x => new SelectListItem { Value = x.ProductID.ToString(), Text = x.ProductName + " (" + x.Description + ")" }).ToList();
+            }
+
+            var od = DB.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Select(x => x.OrderFID).ToList();
+
+            if (fm.Category != null)
+            {
+                var p = DB.tblStocks.Where(x => x.CategoryID == fm.Category && x.CompanyID == companyid && x.BranchID == branchid).Select(x => x.ProductID).ToList();
+                if (fm.Product != null)
+                {
+                    p = DB.tblStocks.Where(x => x.ProductID == fm.Product && x.CompanyID == companyid && x.BranchID == branchid).Select(x => x.ProductID).ToList();
+                }
+                od = DB.tblOrderDetails.Where(x => p.Contains(x.ProductFID) && x.CompanyFID == companyid && x.BranchFID == branchid).Select(x => x.OrderFID).ToList();
+            }
+
             var salelist = new List<OrderMV>();
-
-            var allsales = DB.tblOrders.ToList();
-
+            var allsales = DB.tblOrders.Where(x=>x.OrderType =="Sale" && x.OrderDate >= fm.DateFrom && x.OrderDate <= fm.DateTo && od.Contains(x.OrderID)).ToList();
             foreach (var sale in allsales)
             {
                 var order = new OrderMV();
@@ -638,6 +680,7 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
+           
             var o = DB.tblOrders.Where(O=>O.OrderID==id).ToList();
             return View(o);
         }
@@ -659,7 +702,9 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
-            var o = DB.tblOrders.Where(x => x.OrderType == "Sale").ToList();
+            var od = DB.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Select(x => x.OrderFID).ToList();
+
+            var o = DB.tblOrders.Where(x => x.OrderType == "Sale" && od.Contains(x.OrderID)).ToList();
             
             return View(o);
         }
@@ -681,7 +726,7 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
-            var p = DB.tblStocks.ToList();
+            var p = DB.tblStocks.Where(x=>x.CompanyID == companyid && x.BranchID == branchid).ToList();
             return View(p);
         }
     }

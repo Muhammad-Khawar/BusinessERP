@@ -15,8 +15,8 @@ namespace ERP.DatabaseLayer
     public partial class tblOrderDetail
     {
         public int OrderDetailID { get; set; }
-        public Nullable<int> OrderFID { get; set; }
-        public Nullable<int> ProductFID { get; set; }
+        public int OrderFID { get; set; }
+        public int ProductFID { get; set; }
         public Nullable<decimal> SalePrice { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<int> Quantity { get; set; }

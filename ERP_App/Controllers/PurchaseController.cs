@@ -582,5 +582,107 @@ namespace ERP_App.Controllers
             }
             return View(purchaselist);
         }
+        public ActionResult AllSales()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+
+            var salelist = new List<OrderMV>();
+
+            var allsales = DB.tblOrders.ToList();
+
+            foreach (var sale in allsales)
+            {
+                var order = new OrderMV();
+                order.OrderID = sale.OrderID;
+                order.OrderDate = sale.OrderDate;
+                order.OrderStatus = sale.OrderStatus;
+                order.OrderType = sale.OrderType;
+                order.OrderName = sale.OrderName;
+                order.OrderEmail = sale.OrderEmail;
+                order.OrderContact = sale.OrderContact;
+                order.OrderAddress = sale.OrderAddress;
+                salelist.Add(order);
+    }
+                return View(salelist);
+        }
+        public ActionResult PrintSaleInvoice(int ? id)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var o = DB.tblOrders.Where(O=>O.OrderID==id).ToList();
+            return View(o);
+        }
+        public ActionResult ProfitAndLossReport()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var o = DB.tblOrders.Where(x => x.OrderType == "Sale").ToList();
+            
+            return View(o);
+        }
+        public ActionResult StockReport()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var p = DB.tblStocks.ToList();
+            return View(p);
+        }
     }
 }

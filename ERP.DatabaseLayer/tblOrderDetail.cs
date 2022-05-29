@@ -20,7 +20,11 @@ namespace ERP.DatabaseLayer
         public Nullable<decimal> SalePrice { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> CompanyFID { get; set; }
+        public Nullable<int> BranchFID { get; set; }
     
+        public virtual tblBranch tblBranch { get; set; }
+        public virtual tblCompany tblCompany { get; set; }
         public virtual tblOrder tblOrder { get; set; }
         public virtual tblStock tblStock { get; set; }
     }

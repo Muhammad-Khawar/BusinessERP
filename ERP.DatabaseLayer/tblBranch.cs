@@ -27,6 +27,7 @@ namespace ERP.DatabaseLayer
             this.tblCustomerReturnInvoices = new HashSet<tblCustomerReturnInvoice>();
             this.tblCustomerReturnPayments = new HashSet<tblCustomerReturnPayment>();
             this.tblEmployees = new HashSet<tblEmployee>();
+            this.tblOrderDetails = new HashSet<tblOrderDetail>();
             this.tblPayrolls = new HashSet<tblPayroll>();
             this.tblPurchaseCartDetails = new HashSet<tblPurchaseCartDetail>();
             this.tblSaleCartDetails = new HashSet<tblSaleCartDetail>();
@@ -66,6 +67,8 @@ namespace ERP.DatabaseLayer
         public virtual ICollection<tblCustomerReturnPayment> tblCustomerReturnPayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblEmployee> tblEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblOrderDetail> tblOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPayroll> tblPayrolls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -501,6 +501,10 @@
     <Content Include="Views\Purchase\PrintPurchaseInvoice.cshtml" />
     <Content Include="Views\Purchase\AllPurchases.cshtml" />
     <Content Include="Views\Home\OrderBooked.cshtml" />
+    <Content Include="Views\Purchase\AllSales.cshtml" />
+    <Content Include="Views\Purchase\PrintSaleInvoice.cshtml" />
+    <Content Include="Views\Purchase\ProfitAndLossReport.cshtml" />
+    <Content Include="Views\Purchase\StockReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -514,7 +518,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERP.DatabaseLayer\ERP.DatabaseLayer.csproj">
-      <Project>{27d3b009-913a-447b-b6f5-33217bca68c4}</Project>
+      <Project>{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}</Project>
       <Name>ERP.DatabaseLayer</Name>
     </ProjectReference>
   </ItemGroup>

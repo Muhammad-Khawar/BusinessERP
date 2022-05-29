@@ -1,5 +1,6 @@
-﻿@model ERP_App.Models.PrintPurchaseInvoiceMV
-@{ 
+﻿@model IEnumerable<ERP.DatabaseLayer.tblOrder>
+@{
+    ViewBag.Title = "PrintSaleInvoice";
     Layout = null;
 }
 <!DOCTYPE html>
@@ -29,15 +30,19 @@
 
 <body>
     <div class="wrapper">
-            <!-- Page content-->
-            <div class="content-wrapper">
-                <div class="content-heading">
-                    Purchase Invoice
-                </div>
-                <div class="card">
-                    <div class="card-body">
+        <!-- Page content-->
+        <div class="content-wrapper">
+            <div class="content-heading">
+                Sale Invoice
+            </div>
+            <div class="card">
+                
+
+                <div class="card-body">
+                    @foreach (var o in Model)
+                    {
                         <div class="d-flex align-items-center">
-                            <h3 class="m-0">Invoice @Model.InvoiceHeader.InvoiceNo</h3>
+                            <h3 class="m-0">Invoice @o.OrderID</h3>
 
                         </div>
                         <hr>
@@ -48,10 +53,15 @@
                                         <em class="fa fa-plane fa-4x text-muted"></em>
                                     </div>
                                     <div class="col-lg-10">
-                                        <h4>@Model.branch.BranchName</h4>
-                                        <address></address>@Model.branch.BranchContact
-                                        <br>@Model.branch.BranchAddress
-
+                                        @foreach (var b in o.tblOrderDetails)
+                                        {
+                                            if (b != null)
+                                            {
+                                                <h4>@b.tblBranch.BranchName</h4>
+                                                <address></address>@b.tblBranch.BranchContact
+                                                <br>@b.tblBranch.BranchAddress
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -61,10 +71,10 @@
                                         <em class="fa fa-truck fa-4x text-muted"></em>
                                     </div>
                                     <div class="col-lg-10">
-                                        <h4>@Model.supplier.SupplierName</h4>
-                                        <address></address>@Model.supplier.SupplierConatctNo
-                                        <br>@Model.supplier.SupplierEmail
-                                        <br>@Model.supplier.SupplierAddress
+                                        <h4>@o.OrderName</h4>
+                                        <address></address>@o.OrderContact
+                                        <br>@o.OrderEmail
+                                        <br>@o.OrderAddress
                                     </div>
                                 </div>
                             </div>
@@ -72,42 +82,65 @@
                             <div class="col-xl-4 col-12 py-2">
                                 <div class="clearfix">
                                     <p class="float-left">INVOICE NO.</p>
-                                    <p class="float-right mr-2">@Model.InvoiceHeader.InvoiceNo</p>
+                                    <p class="float-right mr-2">@o.OrderID</p>
                                 </div>
                                 <div class="clearfix">
                                     <p class="float-left">Date</p>
-                                    <p class="float-right mr-2">@Model.InvoiceHeader.InvoiceDate</p>
-                                </div>
-                                <div class="clearfix">
-                                    <p class="float-left">Due Date</p>
-                                    <p class="float-right mr-2">@Model.InvoiceHeader.InvoiceDate</p>
+                                    <p class="float-right mr-2">@o.OrderDate</p>
                                 </div>
                             </div>
                         </div>
+                        double totalAmount = 0;
+                        int totalQty = 0;
                         <div class="table-responsive table-bordered mb-3">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Item #</th>
-
-                                        <th>Manufacture Date</th>
-                                        <th>Expiry Date</th>
-                                        <th>Purchase Quantity</th>
-                                        <th>Purchase Unit Price</th>
-                                        <th class="text-right">Item Cost</th>
+                                        <th>Product Name</th>
+                                        <th>Product Description</th>
+                                        <th>Product Price</th>
+                                        <th>Product Quantity</th>
+                                        <th>Product Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.InvoiceDetails)
+                                    @foreach (var od in o.tblOrderDetails)
                                     {
                                         <tr>
-                                            <td>@item.ProductName</td>
-                                            <td>@item.ManufactureDate</td>
-                                            <td>@item.ExpiryDate</td>
-                                            <td>@item.PurchaseQuantity</td>
-                                            <td>@item.purchaseUnitPrice</td>
-                                            <td class="text-right">@item.ItemCost</td>
+                                            <td>@od.tblStock.ProductName</td>
+                                            <td>@od.tblStock.Description</td>
+                                            <td>
+                                                @if (o.OrderType == "Purchase")
+                                                {
+                                                    @od.PurchasePrice
+                                                }
+                                                else
+                                                {
+                                                    @od.SalePrice;
+                                                }
+                                            </td>
+                                            <td>@Math.Abs(Convert.ToInt32(od.Quantity))</td>
+                                            <td>
+                                                @if (o.OrderType == "Purchase")
+                                                {
+                                                    @(double.Parse(od.PurchasePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())))
+                                                }
+                                                else
+                                                {
+                                                    @(double.Parse(od.SalePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())))
+                                                }
+                                            </td>
                                         </tr>
+                                        totalQty += Math.Abs(int.Parse(od.Quantity.ToString()));
+
+                                        if (o.OrderType == "Purchase")
+                                        {
+                                            totalAmount += (double.Parse(od.PurchasePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())));
+                                        }
+                                        else
+                                        {
+                                            totalAmount += (double.Parse(od.SalePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())));
+                                        }
                                     }
 
                                 </tbody>
@@ -117,21 +150,21 @@
                             <div class="col-lg-6"></div>
                             <div class="col-lg-6 py-2">
                                 <div class="row mb-3">
-                                    <div class="col-8">Subtotal</div>
+                                    <div class="col-8">Total Quantity</div>
                                     <div class="col-4">
-                                        <div class="text-right">@Model.InvoiceHeader.SubTotalAmount</div>
+                                        <div class="text-right">@Math.Abs(Convert.ToInt32(totalQty))</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-8">Tax (3%)</div>
                                     <div class="col-4">
-                                        <div class="text-right">@Model.InvoiceHeader.EstimatedTax</div>
+                                        <div class="text-right">0.00</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-8">Shipping Fee</div>
                                     <div class="col-4">
-                                        <div class="text-right">@Model.InvoiceHeader.ShippingFee</div>
+                                        <div class="text-right">0.00</div>
                                     </div>
                                 </div>
                                 <div class="row mb-3 align-items-center">
@@ -139,7 +172,7 @@
                                         <div class="h3">GRAND TOTAL</div>
                                     </div>
                                     <div class="col-5">
-                                        <div class="text-right h3">@Model.InvoiceHeader.TotalAmount</div>
+                                        <div class="text-right h3">@Math.Abs(Convert.ToInt32(totalAmount))</div>
                                     </div>
                                 </div>
                             </div>
@@ -150,9 +183,11 @@
                             <button class="btn btn-secondary float-left" type="button" onclick="window.print();">Print</button>
 
                         </div>
-                    </div>
+                    }
+
                 </div>
             </div>
+        </div>
     </div>
     <!-- =============== VENDOR SCRIPTS ===============-->
     <!-- MODERNIZR-->

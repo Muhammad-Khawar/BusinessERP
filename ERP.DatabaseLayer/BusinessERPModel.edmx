@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BusinessERP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tblAccountActivity">
           <Key>
             <PropertyRef Name="AccountActivityID" />
@@ -284,6 +294,8 @@
           <Property Name="SalePrice" Type="numeric" Precision="18" Scale="2" />
           <Property Name="PurchasePrice" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="CompanyFID" Type="int" />
+          <Property Name="BranchFID" Type="int" />
         </EntityType>
         <EntityType Name="tblPayroll">
           <Key>
@@ -1100,6 +1112,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblOrderDetail_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="BranchFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblCompany">
+          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompany">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="CompanyFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblOrderDetail_tblOrder">
           <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="0..1" />
           <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
@@ -1734,7 +1770,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblUser_tblUserType">
+          <End Role="tblUserType" Type="Self.tblUserType" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="UserTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="BusinessERP_DBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccountActivity" EntityType="Self.tblAccountActivity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccountControl" EntityType="Self.tblAccountControl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccountHead" EntityType="Self.tblAccountHead" Schema="dbo" store:Type="Tables" />
@@ -1969,6 +2018,14 @@
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblFinancialYear" EntitySet="tblFinancialYear" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblBranch" Association="Self.FK_tblOrderDetail_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranch" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblCompany" Association="Self.FK_tblOrderDetail_tblCompany">
+            <End Role="tblCompany" EntitySet="tblCompany" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="Self.FK_tblOrderDetail_tblOrder">
             <End Role="tblOrder" EntitySet="tblOrder" />
             <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
@@ -2173,11 +2230,25 @@
             <End Role="tblFinancialYear" EntitySet="tblFinancialYear" />
             <End Role="tblTransaction" EntitySet="tblTransaction" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblUser_tblUserType" Association="Self.FK_tblUser_tblUserType">
+            <End Role="tblUserType" EntitySet="tblUserType" />
+            <End Role="tblUser" EntitySet="tblUser" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BusinessERP_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="tblAccountActivity">
           <Key>
             <PropertyRef Name="AccountActivityID" />
@@ -2292,6 +2363,7 @@
           <NavigationProperty Name="tblCustomerReturnInvoices" Relationship="Self.FK_tblCustomerReturnInvoice_tblBranch" FromRole="tblBranch" ToRole="tblCustomerReturnInvoice" />
           <NavigationProperty Name="tblCustomerReturnPayments" Relationship="Self.FK_tblCustomerReturnPayment_tblBranch" FromRole="tblBranch" ToRole="tblCustomerReturnPayment" />
           <NavigationProperty Name="tblEmployees" Relationship="Self.FK_tblEmployee_tblBranch" FromRole="tblBranch" ToRole="tblEmployee" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblBranch" FromRole="tblBranch" ToRole="tblOrderDetail" />
           <NavigationProperty Name="tblPayrolls" Relationship="Self.FK_tblPayroll_tblBranch" FromRole="tblBranch" ToRole="tblPayroll" />
           <NavigationProperty Name="tblPurchaseCartDetails" Relationship="Self.FK_tblPurchaseCartDetail_tblBranch" FromRole="tblBranch" ToRole="tblPurchaseCartDetail" />
           <NavigationProperty Name="tblSaleCartDetails" Relationship="Self.FK_tblSaleCartDetail_tblStock" FromRole="tblBranch" ToRole="tblSaleCartDetail" />
@@ -2351,6 +2423,7 @@
           <NavigationProperty Name="tblCustomerReturnInvoices" Relationship="Self.FK_tblCustomerReturnInvoice_tblCompany" FromRole="tblCompany" ToRole="tblCustomerReturnInvoice" />
           <NavigationProperty Name="tblCustomerReturnPayments" Relationship="Self.FK_tblCustomerReturnPayment_tblCompany" FromRole="tblCompany" ToRole="tblCustomerReturnPayment" />
           <NavigationProperty Name="tblEmployees" Relationship="Self.FK_tblEmployee_tblCompany" FromRole="tblCompany" ToRole="tblEmployee" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblCompany" FromRole="tblCompany" ToRole="tblOrderDetail" />
           <NavigationProperty Name="tblPayrolls" Relationship="Self.FK_tblPayroll_tblCompany" FromRole="tblCompany" ToRole="tblPayroll" />
           <NavigationProperty Name="tblPurchaseCartDetails" Relationship="Self.FK_tblPurchaseCartDetail_tblCompany" FromRole="tblCompany" ToRole="tblPurchaseCartDetail" />
           <NavigationProperty Name="tblSaleCartDetails" Relationship="Self.FK_tblSaleCartDetail_tblCompany" FromRole="tblCompany" ToRole="tblSaleCartDetail" />
@@ -2544,6 +2617,37 @@
           <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblFinancialYear" FromRole="tblFinancialYear" ToRole="tblTransaction" />
           <NavigationProperty Name="tblTransactions1" Relationship="Self.FK_tblTransection_tblFinancialYear" FromRole="tblFinancialYear" ToRole="tblTransaction" />
         </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderFID" Type="Int32" />
+          <Property Name="ProductFID" Type="Int32" />
+          <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="CompanyFID" Type="Int32" />
+          <Property Name="BranchFID" Type="Int32" />
+          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblOrderDetail_tblBranch" FromRole="tblOrderDetail" ToRole="tblBranch" />
+          <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblOrderDetail_tblCompany" FromRole="tblOrderDetail" ToRole="tblCompany" />
+          <NavigationProperty Name="tblOrder" Relationship="Self.FK_tblOrderDetail_tblOrder" FromRole="tblOrderDetail" ToRole="tblOrder" />
+          <NavigationProperty Name="tblStock" Relationship="Self.FK_tblOrderDetail_tblStock" FromRole="tblOrderDetail" ToRole="tblStock" />
+        </EntityType>
         <EntityType Name="tblPayroll">
           <Key>
             <PropertyRef Name="PayrollID" />
@@ -2574,15 +2678,15 @@
           <Property Name="CompanyID" Type="Int32" Nullable="false" />
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblPurchaseCartDetail_tblBranch" FromRole="tblPurchaseCartDetail" ToRole="tblBranch" />
-          <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblPurchaseCartDetail_tblCompany" FromRole="tblPurchaseCartDetail" ToRole="tblCompany" />
-          <NavigationProperty Name="tblStock" Relationship="Self.FK_tblPurchaseCartDetail_tblStock" FromRole="tblPurchaseCartDetail" ToRole="tblStock" />
-          <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPurchaseCartDetail_tblUser" FromRole="tblPurchaseCartDetail" ToRole="tblUser" />
           <Property Name="PrevoiusPurchaseUnitPrice" Type="Double" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ManufactureDate" Type="DateTime" Precision="0" />
           <Property Name="ExpireDate" Type="DateTime" Precision="0" />
           <Property Name="SaleUnitPrice" Type="Double" />
+          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblPurchaseCartDetail_tblBranch" FromRole="tblPurchaseCartDetail" ToRole="tblBranch" />
+          <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblPurchaseCartDetail_tblCompany" FromRole="tblPurchaseCartDetail" ToRole="tblCompany" />
+          <NavigationProperty Name="tblStock" Relationship="Self.FK_tblPurchaseCartDetail_tblStock" FromRole="tblPurchaseCartDetail" ToRole="tblStock" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPurchaseCartDetail_tblUser" FromRole="tblPurchaseCartDetail" ToRole="tblUser" />
         </EntityType>
         <EntityType Name="tblSaleCartDetail">
           <Key>
@@ -2626,18 +2730,18 @@
           <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="ProductPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblStock_tblBranch" FromRole="tblStock" ToRole="tblBranch" />
           <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblStock_tblCategory" FromRole="tblStock" ToRole="tblCategory" />
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblStock_tblCompany" FromRole="tblStock" ToRole="tblCompany" />
           <NavigationProperty Name="tblCustomerInvoiceDetails" Relationship="Self.FK_tblCustomerInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblCustomerInvoiceDetail" />
           <NavigationProperty Name="tblCustomerReturnInvoiceDetails" Relationship="Self.FK_tblCustomerReturnInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblCustomerReturnInvoiceDetail" />
+          <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblStock" FromRole="tblStock" ToRole="tblOrderDetail" />
           <NavigationProperty Name="tblPurchaseCartDetails" Relationship="Self.FK_tblPurchaseCartDetail_tblStock" FromRole="tblStock" ToRole="tblPurchaseCartDetail" />
           <NavigationProperty Name="tblSaleCartDetails" Relationship="Self.FK_tblSaleCartDetail_tblStock1" FromRole="tblStock" ToRole="tblSaleCartDetail" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK_tblStock_tblUser" FromRole="tblStock" ToRole="tblUser" />
           <NavigationProperty Name="tblSupplierInvoiceDetails" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblSupplierInvoiceDetail" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblStock" FromRole="tblStock" ToRole="tblSupplierReturnInvoiceDetail" />
-          <Property Name="ProductPicture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblOrderDetails" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblStock" FromRole="tblStock" ToRole="tblOrderDetail" />
         </EntityType>
         <EntityType Name="tblSupplier">
           <Key>
@@ -2669,10 +2773,13 @@
           <Property Name="CompanyID" Type="Int32" Nullable="false" />
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="InvoiceNo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TotalAmount" Type="Double" Nullable="false" />
           <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="SubTotalAmount" Type="Double" />
+          <Property Name="EstimatedTax" Type="Double" Nullable="false" />
+          <Property Name="ShippingFee" Type="Double" Nullable="false" />
+          <Property Name="TotalAmount" Type="Double" Nullable="false" />
           <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblSupplierInvoiceTable_tblBranch" FromRole="tblSupplierInvoice" ToRole="tblBranch" />
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblSupplierInvoiceTable_tblCompany" FromRole="tblSupplierInvoice" ToRole="tblCompany" />
           <NavigationProperty Name="tblSupplier" Relationship="Self.FK_tblSupplierInvoiceTable_tblSupplier" FromRole="tblSupplierInvoice" ToRole="tblSupplier" />
@@ -2681,9 +2788,6 @@
           <NavigationProperty Name="tblSupplierReturnInvoices" Relationship="Self.FK_tblSupplierReturnInvoice_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoice" />
           <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnInvoiceDetail" />
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblSupplierInvoice" FromRole="tblSupplierInvoice" ToRole="tblSupplierReturnPayment" />
-          <Property Name="SubTotalAmount" Type="Double" />
-          <Property Name="EstimatedTax" Type="Double" Nullable="false" />
-          <Property Name="ShippingFee" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="tblSupplierInvoiceDetail">
           <Key>
@@ -2694,12 +2798,12 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="PurchaseQuantity" Type="Int32" Nullable="false" />
           <Property Name="purchaseUnitPrice" Type="Double" Nullable="false" />
-          <NavigationProperty Name="tblStock" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblSupplierInvoiceDetail" ToRole="tblStock" />
-          <NavigationProperty Name="tblSupplierInvoice" Relationship="Self.FK_tblSupplierInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierInvoice" />
-          <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoiceDetail" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierReturnInvoiceDetail" />
           <Property Name="PreviousPurchaseUnitPrice" Type="Double" Nullable="false" />
           <Property Name="ManufactureDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblStock" Relationship="Self.FK_tblSupplierInvoiceDetail_tblStock" FromRole="tblSupplierInvoiceDetail" ToRole="tblStock" />
+          <NavigationProperty Name="tblSupplierInvoice" Relationship="Self.FK_tblSupplierInvoiceDetail_tblSupplierInvoice" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierInvoice" />
+          <NavigationProperty Name="tblSupplierReturnInvoiceDetails" Relationship="Self.FK_tblSupplierReturnInvoiceDetail_tblSupplierInvoiceDetail" FromRole="tblSupplierInvoiceDetail" ToRole="tblSupplierReturnInvoiceDetail" />
         </EntityType>
         <EntityType Name="tblSupplierPayment">
           <Key>
@@ -2817,6 +2921,7 @@
           <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tblAccountControls" Relationship="Self.FK_tblAccountControl_tblUser" FromRole="tblUser" ToRole="tblAccountControl" />
           <NavigationProperty Name="tblAccountHeads" Relationship="Self.FK_tblAccountHead_tblUser" FromRole="tblUser" ToRole="tblAccountHead" />
           <NavigationProperty Name="tblAccountSubControls" Relationship="Self.FK_tblAccountSubControl_tblUser" FromRole="tblUser" ToRole="tblAccountSubControl" />
@@ -2837,8 +2942,7 @@
           <NavigationProperty Name="tblSupplierReturnInvoices" Relationship="Self.FK_tblSupplierReturnInvoice_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnInvoice" />
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnPayment" />
           <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblUser" FromRole="tblUser" ToRole="tblTransaction" />
-          <NavigationProperty Name="tblUserType" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
-          <Property Name="Address" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblUserType" Relationship="BusinessERP_DBModel.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -2846,7 +2950,7 @@
           </Key>
           <Property Name="UserTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblUsers" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUserType" ToRole="tblUser" />
+          <NavigationProperty Name="tblUsers" Relationship="BusinessERP_DBModel.FK_tblUser_tblUserType" FromRole="tblUserType" ToRole="tblUser" />
         </EntityType>
         <Association Name="FK_tblAccountSetting_tblAccountActivity">
           <End Role="tblAccountActivity" Type="Self.tblAccountActivity" Multiplicity="1" />
@@ -3168,6 +3272,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblOrderDetail_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="BranchFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblPayroll_tblBranch">
           <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -3375,6 +3491,18 @@
             </Principal>
             <Dependent Role="tblEmployee">
               <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblCompany">
+          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCompany">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="CompanyFID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3750,6 +3878,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblOrderDetail_tblOrder">
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblStock">
+          <End Role="tblStock" Type="Self.tblStock" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStock">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="ProductFID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblPayroll_tblUser">
           <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
           <End Role="tblPayroll" Type="Self.tblPayroll" Multiplicity="*" />
@@ -4058,19 +4210,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblUser_tblUserType">
-          <End Role="tblUserType" Type="Self.tblUserType" Multiplicity="1" />
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUserType">
-              <PropertyRef Name="UserTypeID" />
-            </Principal>
-            <Dependent Role="tblUser">
-              <PropertyRef Name="UserTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BusinessERP_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="tblAccountActivities" EntityType="Self.tblAccountActivity" />
           <EntitySet Name="tblAccountControls" EntityType="Self.tblAccountControl" />
           <EntitySet Name="tblAccountHeads" EntityType="Self.tblAccountHead" />
@@ -4092,6 +4233,8 @@
           <EntitySet Name="tblCustomerReturnPayments" EntityType="Self.tblCustomerReturnPayment" />
           <EntitySet Name="tblEmployees" EntityType="Self.tblEmployee" />
           <EntitySet Name="tblFinancialYears" EntityType="Self.tblFinancialYear" />
+          <EntitySet Name="tblOrders" EntityType="Self.tblOrder" />
+          <EntitySet Name="tblOrderDetails" EntityType="Self.tblOrderDetail" />
           <EntitySet Name="tblPayrolls" EntityType="Self.tblPayroll" />
           <EntitySet Name="tblPurchaseCartDetails" EntityType="Self.tblPurchaseCartDetail" />
           <EntitySet Name="tblSaleCartDetails" EntityType="Self.tblSaleCartDetail" />
@@ -4211,6 +4354,10 @@
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblEmployee" EntitySet="tblEmployees" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblBranch" Association="Self.FK_tblOrderDetail_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranches" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblPayroll_tblBranch" Association="Self.FK_tblPayroll_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblPayroll" EntitySet="tblPayrolls" />
@@ -4278,6 +4425,10 @@
           <AssociationSet Name="FK_tblEmployee_tblCompany" Association="Self.FK_tblEmployee_tblCompany">
             <End Role="tblCompany" EntitySet="tblCompanies" />
             <End Role="tblEmployee" EntitySet="tblEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblCompany" Association="Self.FK_tblOrderDetail_tblCompany">
+            <End Role="tblCompany" EntitySet="tblCompanies" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPayroll_tblCompany" Association="Self.FK_tblPayroll_tblCompany">
             <End Role="tblCompany" EntitySet="tblCompanies" />
@@ -4399,6 +4550,14 @@
             <End Role="tblFinancialYear" EntitySet="tblFinancialYears" />
             <End Role="tblTransaction" EntitySet="tblTransactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="Self.FK_tblOrderDetail_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrders" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblStock" Association="Self.FK_tblOrderDetail_tblStock">
+            <End Role="tblStock" EntitySet="tblStocks" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblPayroll_tblUser" Association="Self.FK_tblPayroll_tblUser">
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblPayroll" EntitySet="tblPayrolls" />
@@ -4499,69 +4658,20 @@
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblTransaction" EntitySet="tblTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblUser_tblUserType" Association="Self.FK_tblUser_tblUserType">
+          <AssociationSet Name="FK_tblUser_tblUserType" Association="BusinessERP_DBModel.FK_tblUser_tblUserType">
             <End Role="tblUserType" EntitySet="tblUserTypes" />
             <End Role="tblUser" EntitySet="tblUsers" />
           </AssociationSet>
-          <EntitySet Name="tblOrders" EntityType="BusinessERP_DBModel.tblOrder" />
-          <EntitySet Name="tblOrderDetails" EntityType="BusinessERP_DBModel.tblOrderDetail" />
-          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder">
-            <End Role="tblOrder" EntitySet="tblOrders" />
-            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblOrderDetail_tblStock" Association="BusinessERP_DBModel.FK_tblOrderDetail_tblStock">
-            <End Role="tblStock" EntitySet="tblStocks" />
-            <End Role="tblOrderDetail" EntitySet="tblOrderDetails" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="tblOrder">
-          <Key>
-            <PropertyRef Name="OrderID" />
-          </Key>
-          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblOrderDetails" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
-          <Property Name="OrderName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderAddress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="tblOrderDetail">
-          <Key>
-            <PropertyRef Name="OrderDetailID" />
-          </Key>
-          <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderFID" Type="Int32" />
-          <Property Name="ProductFID" Type="Int32" />
-          <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Quantity" Type="Int32" />
-          <NavigationProperty Name="tblOrder" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrderDetail" ToRole="tblOrder" />
-          <NavigationProperty Name="tblStock" Relationship="BusinessERP_DBModel.FK_tblOrderDetail_tblStock" FromRole="tblOrderDetail" ToRole="tblStock" />
-        </EntityType>
-        <Association Name="FK_tblOrderDetail_tblOrder">
-          <End Type="BusinessERP_DBModel.tblOrder" Role="tblOrder" Multiplicity="0..1" />
-          <End Type="BusinessERP_DBModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+        <Association Name="FK_tblUser_tblUserType">
+          <End Type="BusinessERP_DBModel.tblUserType" Role="tblUserType" Multiplicity="1" />
+          <End Type="BusinessERP_DBModel.tblUser" Role="tblUser" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblOrder">
-              <PropertyRef Name="OrderID" />
+            <Principal Role="tblUserType">
+              <PropertyRef Name="UserTypeID" />
             </Principal>
-            <Dependent Role="tblOrderDetail">
-              <PropertyRef Name="OrderFID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblOrderDetail_tblStock">
-          <End Type="BusinessERP_DBModel.tblStock" Role="tblStock" Multiplicity="0..1" />
-          <End Type="BusinessERP_DBModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblStock">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="tblOrderDetail">
-              <PropertyRef Name="ProductFID" />
+            <Dependent Role="tblUser">
+              <PropertyRef Name="UserTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4571,6 +4681,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="BusinessERP_DBModelStoreContainer" CdmEntityContainer="BusinessERP_DBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BusinessERP_DBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblAccountActivities">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblAccountActivity">
               <MappingFragment StoreEntitySet="tblAccountActivity">
@@ -4848,6 +4969,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="OrderName" ColumnName="OrderName" />
+                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
+                <ScalarProperty Name="OrderContact" ColumnName="OrderContact" />
+                <ScalarProperty Name="OrderAddress" ColumnName="OrderAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrderDetails">
+            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrderDetail">
+              <MappingFragment StoreEntitySet="tblOrderDetail">
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+                <ScalarProperty Name="OrderFID" ColumnName="OrderFID" />
+                <ScalarProperty Name="ProductFID" ColumnName="ProductFID" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CompanyFID" ColumnName="CompanyFID" />
+                <ScalarProperty Name="BranchFID" ColumnName="BranchFID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblPayrolls">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblPayroll">
               <MappingFragment StoreEntitySet="tblPayroll">
@@ -4867,11 +5016,6 @@
           <EntitySetMapping Name="tblPurchaseCartDetails">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblPurchaseCartDetail">
               <MappingFragment StoreEntitySet="tblPurchaseCartDetail">
-                <ScalarProperty Name="SaleUnitPrice" ColumnName="SaleUnitPrice" />
-                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
-                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PrevoiusPurchaseUnitPrice" ColumnName="PrevoiusPurchaseUnitPrice" />
                 <ScalarProperty Name="PurchaseCartDetailID" ColumnName="PurchaseCartDetailID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
@@ -4879,6 +5023,11 @@
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="PrevoiusPurchaseUnitPrice" ColumnName="PrevoiusPurchaseUnitPrice" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="SaleUnitPrice" ColumnName="SaleUnitPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4907,7 +5056,6 @@
           <EntitySetMapping Name="tblStocks">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblStock">
               <MappingFragment StoreEntitySet="tblStock">
-                <ScalarProperty Name="ProductPicture" ColumnName="ProductPicture" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
@@ -4922,6 +5070,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProductPicture" ColumnName="ProductPicture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4943,32 +5092,32 @@
           <EntitySetMapping Name="tblSupplierInvoices">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblSupplierInvoice">
               <MappingFragment StoreEntitySet="tblSupplierInvoice">
-                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
-                <ScalarProperty Name="EstimatedTax" ColumnName="EstimatedTax" />
-                <ScalarProperty Name="SubTotalAmount" ColumnName="SubTotalAmount" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SubTotalAmount" ColumnName="SubTotalAmount" />
+                <ScalarProperty Name="EstimatedTax" ColumnName="EstimatedTax" />
+                <ScalarProperty Name="ShippingFee" ColumnName="ShippingFee" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblSupplierInvoiceDetails">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblSupplierInvoiceDetail">
               <MappingFragment StoreEntitySet="tblSupplierInvoiceDetail">
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
-                <ScalarProperty Name="PreviousPurchaseUnitPrice" ColumnName="PreviousPurchaseUnitPrice" />
                 <ScalarProperty Name="SupplierInvoiceDetailID" ColumnName="SupplierInvoiceDetailID" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="PurchaseQuantity" ColumnName="PurchaseQuantity" />
                 <ScalarProperty Name="purchaseUnitPrice" ColumnName="purchaseUnitPrice" />
+                <ScalarProperty Name="PreviousPurchaseUnitPrice" ColumnName="PreviousPurchaseUnitPrice" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5058,7 +5207,6 @@
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="BusinessERP_DBModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
-                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
@@ -5067,6 +5215,7 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5075,32 +5224,6 @@
               <MappingFragment StoreEntitySet="tblUserType">
                 <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblOrders">
-            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrder">
-              <MappingFragment StoreEntitySet="tblOrder">
-                <ScalarProperty Name="OrderAddress" ColumnName="OrderAddress" />
-                <ScalarProperty Name="OrderContact" ColumnName="OrderContact" />
-                <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
-                <ScalarProperty Name="OrderName" ColumnName="OrderName" />
-                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
-                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblOrderDetails">
-            <EntityTypeMapping TypeName="BusinessERP_DBModel.tblOrderDetail">
-              <MappingFragment StoreEntitySet="tblOrderDetail">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-                <ScalarProperty Name="ProductFID" ColumnName="ProductFID" />
-                <ScalarProperty Name="OrderFID" ColumnName="OrderFID" />
-                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

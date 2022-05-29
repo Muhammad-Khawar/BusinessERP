@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ERP.DatabaseLayer.tblStock>
+
+@{
+    int number = 0;
+    ViewBag.Title = "Stock Report";
+}
+
+<div id="printArea">
+
+    <center><h2>Stock Report</h2></center>
+
+    <table class="tabel table-bordered table-responsive" width="1000px">
+        <tr style="background-color:red; color:floralwhite">
+            <th style="text-align: center">Sr #</th>
+            <th style="text-align: center">Product Picture</th>
+            <th style="text-align: center">Product Name</th>
+            <th style="text-align: center">Product Description</th>
+            <th style="text-align: center">Purchase Price</th>
+            <th style="text-align: center">Sale Price</th>
+            <th style="text-align: center">Available Stock</th>
+        </tr>
+
+        @foreach (var p in Model)
+        {
+            number++;
+            <tr>
+                <td align="center">@number</td>
+                <td align="center"><img height="120px" width="120px" src="@Url.Content(p.ProductPicture)" /></td>
+                <td align="center">@p.ProductName</td>
+                <td align="center">@p.Description</td>
+                <td align="center">@p.CurrentPurchaseUnitPrice</td>
+                <td align="center">@p.SaleUnitPrice</td>
+                <td align="center">@p.tblOrderDetails.Where(x => x.tblOrder.OrderDate <= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity)</td>
+            </tr>
+        }
+    </table>
+
+</div>

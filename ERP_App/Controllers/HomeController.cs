@@ -172,8 +172,9 @@ namespace ERP_App.Controllers
             o.OrderType = "Sale";
             Session["Order"] = o;
 
-            return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 190);
-
+            //return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 190);
+            
+            return RedirectToAction("OrderBooked");
         }
         public ActionResult OrderBooked()
         {
@@ -218,9 +219,11 @@ namespace ERP_App.Controllers
                 int orderID = DB.tblOrders.Max(x => x.OrderID);
                 od.OrderFID = orderID;
                 od.ProductFID = p[i].ProductID;
-                od.Quantity = p[i].Quantity * -1;
+                od.Quantity = p[i].Quantity;
                 od.PurchasePrice = (decimal)p[i].CurrentPurchaseUnitPrice;
                 od.SalePrice = (decimal)p[i].SaleUnitPrice;
+                od.CompanyFID = p[i].CompanyID;
+                od.BranchFID = p[i].BranchID;
                 DB.tblOrderDetails.Add(od);
                 DB.SaveChanges();
             }

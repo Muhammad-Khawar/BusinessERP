@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ERP.DatabaseLayer.tblOrder>
+
+@{
+    int number = 0;
+    ViewBag.Title = "Profit & Loss Report";
+}
+
+<div id="printArea">
+    <center><h2>Profit & Loss Report</h2></center>
+
+    @{decimal? NetProfit = 0;}
+
+
+    <table class="tabel table-bordered table-responsive" width="1000px">
+        <tr style="background-color:red; color:floralwhite; ">
+            <th style="text-align: center">Sr #</th>
+            <th style="text-align: center">Order Number</th>
+            <th style="text-align: center">Order Date</th>
+            <th style="text-align: center">Customer Name</th>
+            <th style="text-align: center">Order Sale Cost</th>
+            <th style="text-align: center">Order Purchase Cost</th>
+            <th style="text-align: center">Gross Profit & Loss</th>
+            <th style="text-align: center">Action</th>
+        </tr>
+
+        @foreach (var o in Model)
+        {
+            number++;
+            <tr>
+                <td align="center">@number</td>
+                <td align="center">Order-@o.OrderID</td>
+                <td align="center">@DateTime.Parse(o.OrderDate.ToString()).ToLongDateString()</td>
+                <td align="center">@o.OrderName</td>
+                <td align="center">@o.tblOrderDetails.Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
+                <td align="center">@o.tblOrderDetails.Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
+                <td align="center">@(o.tblOrderDetails.Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))))</td>
+
+                <td align="center"><a href="@Url.Action("PrintSaleInvoice","Purchase", new { id = o.OrderID })" class="btn btn-danger">View Invoice</a></td>
+            </tr>
+            NetProfit += (o.tblOrderDetails.Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))));
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td align="center">Net Profit & Loss</td>
+            <td align="center">@NetProfit</td>
+            <td></td>
+        </tr>
+    </table>
+
+</div>

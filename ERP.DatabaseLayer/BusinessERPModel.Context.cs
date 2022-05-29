@@ -25,6 +25,7 @@ namespace ERP.DatabaseLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblAccountActivity> tblAccountActivities { get; set; }
         public virtual DbSet<tblAccountControl> tblAccountControls { get; set; }
         public virtual DbSet<tblAccountHead> tblAccountHeads { get; set; }
@@ -46,6 +47,8 @@ namespace ERP.DatabaseLayer
         public virtual DbSet<tblCustomerReturnPayment> tblCustomerReturnPayments { get; set; }
         public virtual DbSet<tblEmployee> tblEmployees { get; set; }
         public virtual DbSet<tblFinancialYear> tblFinancialYears { get; set; }
+        public virtual DbSet<tblOrder> tblOrders { get; set; }
+        public virtual DbSet<tblOrderDetail> tblOrderDetails { get; set; }
         public virtual DbSet<tblPayroll> tblPayrolls { get; set; }
         public virtual DbSet<tblPurchaseCartDetail> tblPurchaseCartDetails { get; set; }
         public virtual DbSet<tblSaleCartDetail> tblSaleCartDetails { get; set; }
@@ -61,7 +64,5 @@ namespace ERP.DatabaseLayer
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserType> tblUserTypes { get; set; }
-        public virtual DbSet<tblOrder> tblOrders { get; set; }
-        public virtual DbSet<tblOrderDetail> tblOrderDetails { get; set; }
     }
 }

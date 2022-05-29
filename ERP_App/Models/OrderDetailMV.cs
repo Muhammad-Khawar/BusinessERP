@@ -13,6 +13,8 @@ namespace ERP_App.Models
         public Nullable<decimal> SalePrice { get; set; }
         public Nullable<decimal> PurchasePrice { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<int> CompanyFID { get; set; }
+        public Nullable<int> BranchFID { get; set; }
 
     }
 }

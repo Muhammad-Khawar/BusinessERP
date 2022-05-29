@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{27D3B009-913A-447B-B6F5-33217BCA68C4}</ProjectGuid>
+    <ProjectGuid>{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ERP.DatabaseLayer</RootNamespace>
@@ -50,162 +50,167 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessERP_DBModel.Context.cs">
+    <Compile Include="BusinessERPModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessERP_DBModel.Context.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="BusinessERP_DBModel.cs">
+    <Compile Include="BusinessERPModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="BusinessERP_DBModel.Designer.cs">
+    <Compile Include="BusinessERPModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BusinessERP_DBModel.edmx</DependentUpon>
+      <DependentUpon>BusinessERPModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblAccountActivity.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAccountControl.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAccountHead.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAccountSetting.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAccountSubControl.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAgent.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblBranch.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblBranchType.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCategory.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCity.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCompany.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCountry.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomer.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerInvoice.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerInvoiceDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerPayment.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerReturnInvoice.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerReturnInvoiceDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblCustomerReturnPayment.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblEmployee.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblFinancialYear.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblOrder.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblOrderDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblPayroll.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblPurchaseCartDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSaleCartDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblState.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblStock.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplier.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierInvoice.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierInvoiceDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierPayment.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierReturnInvoice.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierReturnInvoiceDetail.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblSupplierReturnPayment.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblTransaction.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblUser.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblUserType.cs">
-      <DependentUpon>BusinessERP_DBModel.tt</DependentUpon>
+      <DependentUpon>BusinessERPModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
-    <EntityDeploy Include="BusinessERP_DBModel.edmx">
+    <EntityDeploy Include="BusinessERPModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BusinessERP_DBModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>BusinessERPModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="BusinessERP_DBModel.edmx.diagram">
-      <DependentUpon>BusinessERP_DBModel.edmx</DependentUpon>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="BusinessERPModel.edmx.diagram">
+      <DependentUpon>BusinessERPModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="BusinessERPModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BusinessERPModel.Context.cs</LastGenOutput>
+      <DependentUpon>BusinessERPModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="BusinessERPModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BusinessERPModel.edmx</DependentUpon>
+      <LastGenOutput>BusinessERPModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BusinessERP_DBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BusinessERP_DBModel.edmx</DependentUpon>
-      <LastGenOutput>BusinessERP_DBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="BusinessERP_DBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BusinessERP_DBModel.edmx</DependentUpon>
-      <LastGenOutput>BusinessERP_DBModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

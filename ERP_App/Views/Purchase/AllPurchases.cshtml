@@ -1,6 +1,30 @@
 ﻿@model IEnumerable<ERP_App.Models.PrintPurchaseInvoiceMV>
 
 
+
+@using (Html.BeginForm("AllPurchases", "Purchase", FormMethod.Post))
+{
+    <table class="table table-striped table-hover w-100">
+        <tr>
+            <th style="padding:3px;">Date From:</th>
+            <td style="padding:5px;"><input type="datetime-local" name="DateFrom" class="form-control" value="@ViewBag.DateFrom" /></td>
+            <th style="padding:3px;">Data To:</th>
+            <td style="padding:5px;"><input type="datetime-local" name="DateTo" class="form-control" value="@ViewBag.DateTo" /></td>
+            <td style="padding:5px;"><input id="btn1" type="submit" value="Generate Report" class="btn btn-danger btn-block" /></td>
+        </tr>
+        <tr>
+            <th style="padding:3px;">Category:</th>
+            <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })</td>
+            <th style="padding:3px;">Product:</th>
+            <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
+            <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-danger btn-block" /></td>
+        </tr>
+    </table>
+}
+<br />
+
+
+
 <div class="content-heading" style="text-align:center">Purchase Orders</div>
 <table class="table table-striped table-hover w-100" id="datatable1">
     <thead>
@@ -40,42 +64,59 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>@item.InvoiceHeader.InvoiceNo</td>
-            <td>@item.InvoiceHeader.InvoiceDate.ToString("dd//mm/yyyy")</td>
-            <td>@item.supplier.SupplierName</td>
-            <td>@item.InvoiceHeader.SubTotalAmount</td>
-            <td>@item.InvoiceHeader.EstimatedTax</td>
-            <td>@item.InvoiceHeader.ShippingFee</td>
-            <td>@item.InvoiceHeader.TotalAmount</td>
-            <td>@item.PaidAmount</td>
-            <td class="text-center">
-                @{
-                    if (item.InvoiceHeader.TotalAmount == item.PaidAmount)
-                    {
-                        <span class="badge badge-success">Clear</span>
+            <tr>
+                <td>@item.InvoiceHeader.InvoiceNo</td>
+                <td>@item.InvoiceHeader.InvoiceDate.ToString("dd//mm/yyyy")</td>
+                <td>@item.supplier.SupplierName</td>
+                <td>@item.InvoiceHeader.SubTotalAmount</td>
+                <td>@item.InvoiceHeader.EstimatedTax</td>
+                <td>@item.InvoiceHeader.ShippingFee</td>
+                <td>@item.InvoiceHeader.TotalAmount</td>
+                <td>@item.PaidAmount</td>
+                <td class="text-center">
+                    @{
+                        if (item.InvoiceHeader.TotalAmount == item.PaidAmount)
+                        {
+                            <span class="badge badge-success">Clear</span>
+                        }
+                        else if (item.PaidAmount == 0)
+                        {
+                            <span class="badge badge-danger">Payment Pending</span>
+                        }
+                        else if (item.InvoiceHeader.TotalAmount > item.PaidAmount)
+                        {
+                            <span class="badge badge-warning">In Progress</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">Stop</span>
+                        }
                     }
-                    else if (item.PaidAmount == 0)
-                    {
-                        <span class="badge badge-danger">Payment Pending</span>
-                    }
-                    else if (item.InvoiceHeader.TotalAmount > item.PaidAmount)
-                    {
-                        <span class="badge badge-warning">In Progress</span>
-                    }
-                    else
-                    {
-                        <span class="badge badge-danger">Stop</span>
-                    }
-                }
 
-            </td>
-            <td class="text-center">
-                <a href="@Url.Content("~/Purchase/PrintPurchaseInvoice?supplierinvoiceid="+item.InvoiceHeader.SupplierInvoiceID)" class="btn btn-sm btn-secondary" type="button">
-                    <em class="fa fa-search"></em>
-                </a>
-            </td>
-        </tr>
+                </td>
+                <td class="text-center">
+                    <a href="@Url.Content("~/Purchase/PrintPurchaseInvoice?supplierinvoiceid="+item.InvoiceHeader.SupplierInvoiceID)" class="btn btn-sm btn-secondary" type="button">
+                        <em class="fa fa-search"></em>
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+<script type="text/javascript">
+    function myFunction() {
+        var CategoryID = $("#Category").val();
+        $.ajax({
+            type: "GET",
+            url: "/Purchase/GetProduct?categoryID=" + CategoryID,
+            data: [],
+            success: function (data) {
+                var s = '<option value ="-1">---Select---</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value ="' + data[i].ProductID + '">' + data[i].ProductName + '</option>';
+                }
+                $("#Product").html(s);
+            }
+        });
+    }
+</script>

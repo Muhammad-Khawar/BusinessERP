@@ -215,6 +215,14 @@ namespace ERP_App.Controllers
             List<StockMV> p = (List<StockMV>)Session["myCart"];
             for (int i = 0; i < p.Count; i++)
             {
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                var stockproduct = DB.tblStocks.Find(p[i].ProductID);
+                stockproduct.Quantity = stockproduct.Quantity - p[i].Quantity;
+                DB.Entry(stockproduct).State = System.Data.Entity.EntityState.Modified;
+                DB.SaveChanges();
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
+
                 var od = new tblOrderDetail();
                 int orderID = DB.tblOrders.Max(x => x.OrderID);
                 od.OrderFID = orderID;
@@ -226,6 +234,7 @@ namespace ERP_App.Controllers
                 od.BranchFID = p[i].BranchID;
                 DB.tblOrderDetails.Add(od);
                 DB.SaveChanges();
+
             }
 
             return View();

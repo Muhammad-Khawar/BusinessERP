@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <th style="padding:3px;">Category:</th>
-            <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control" })</td>
+            <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })</td>
             <th style="padding:3px;">Product:</th>
             <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
             <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-danger btn-block" /></td>
@@ -67,3 +67,20 @@
     </tbody>
 </table>
 
+<script type="text/javascript">
+    function myFunction() {
+        var CategoryID = $("#Category").val();
+        $.ajax({
+            type: "GET",
+            url: "/Purchase/GetProduct?categoryID=" + CategoryID,
+            data: [],
+            success: function (data) {
+                var s = '<option value ="-1">---Select---</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value ="' + data[i].ProductID + '">' + data[i].ProductName + '</option>';
+                }
+                $("#Product").html(s);
+            }
+        });
+    }
+</script>

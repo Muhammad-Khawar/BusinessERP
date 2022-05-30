@@ -729,5 +729,32 @@ namespace ERP_App.Controllers
             var p = DB.tblStocks.Where(x=>x.CompanyID == companyid && x.BranchID == branchid).ToList();
             return View(p);
         }
+        public JsonResult GetProduct(int? categoryID)
+        {
+
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var list = new List<tblStock>();
+            var stocks = DB.tblStocks.Where(a => a.CompanyID == companyid && a.BranchID == branchid && a.CategoryID == categoryID).ToList();
+            foreach (var stock in stocks)
+            {
+                var c = new tblStock();
+
+                c.ProductID = stock.ProductID;
+                c.ProductName = stock.ProductName;
+                list.Add(c);
+            }
+            return Json(list, JsonRequestBehavior.AllowGet);
+        }
     }
 }

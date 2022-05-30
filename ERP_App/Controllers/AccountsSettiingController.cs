@@ -72,8 +72,8 @@ namespace ERP_App.Controllers
             accountSettingMV.BranchID = branchid;
 
             ViewBag.AccountHeadID = new SelectList(DB.tblAccountHeads.ToList(), "AccountHeadID", "AccountHeadName", "0");
-            ViewBag.AccountControlID = new SelectList(DB.tblAccountControls.ToList(), "AccountControlID", "AccountControlName", "0");
-            ViewBag.AccountSubControlID = new SelectList(DB.tblAccountSubControls.ToList(), "AccountSubControlID", "AccountSubControlName", "0");
+            ViewBag.AccountControlID = new SelectList(DB.tblAccountControls.Where(x=>x.CompanyID == companyid && x.BranchID == branchid).ToList(), "AccountControlID", "AccountControlName", "0");
+            ViewBag.AccountSubControlID = new SelectList(DB.tblAccountSubControls.Where(x => x.CompanyID == companyid && x.BranchID == branchid).ToList(), "AccountSubControlID", "AccountSubControlName", "0");
             ViewBag.AccountActivityID = new SelectList(DB.tblAccountActivities.ToList(), "AccountActivityID", "Name", "0");
             return View(accountSettingMV);
         }
@@ -100,7 +100,7 @@ namespace ERP_App.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var checkaccountsetting = DB.tblAccountSettings.Where(e => e.AccountActivityID == accountSettingMV.AccountActivityID).FirstOrDefault();//kisi b company mein employee aeek h baar register ho ga.
+                    var checkaccountsetting = DB.tblAccountSettings.Where(e => e.AccountActivityID == accountSettingMV.AccountActivityID && e.CompanyID == companyid && e.BranchID == branchid).FirstOrDefault();//kisi b company mein employee aeek h baar register ho ga.
                     if (checkaccountsetting == null)
                     {
                         var newsetting = new tblAccountSetting();
@@ -130,8 +130,8 @@ namespace ERP_App.Controllers
                
             }
             ViewBag.AccountHeadID = new SelectList(DB.tblAccountHeads.ToList(), "AccountHeadID", "AccountHeadName", accountSettingMV.AccountHeadID);
-            ViewBag.AccountControlID = new SelectList(DB.tblAccountControls.ToList(), "AccountControlID", "AccountControlName", accountSettingMV.AccountControlID);
-            ViewBag.AccountSubControlID = new SelectList(DB.tblAccountSubControls.ToList(), "AccountSubControlID", "AccountSubControlName", accountSettingMV.AccountSubControlID);
+            ViewBag.AccountControlID = new SelectList(DB.tblAccountControls.Where(x => x.CompanyID == companyid && x.BranchID == branchid).ToList(), "AccountControlID", "AccountControlName", accountSettingMV.AccountControlID);
+            ViewBag.AccountSubControlID = new SelectList(DB.tblAccountSubControls.Where(x => x.CompanyID == companyid && x.BranchID == branchid).ToList(), "AccountSubControlID", "AccountSubControlName", accountSettingMV.AccountSubControlID);
             ViewBag.AccountActivityID = new SelectList(DB.tblAccountActivities.ToList(), "AccountActivityID", "Name", accountSettingMV.AccountActivityID);
             return View(accountSettingMV);
         }

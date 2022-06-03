@@ -276,7 +276,7 @@ namespace ERP_App.Controllers
                     newproduct.CompanyID = companyid;
                     newproduct.BranchID = branchid;
                     newproduct.ProductName = stockMV.ProductName;
-                    newproduct.Quantity = stockMV.Quantity;
+                    newproduct.Quantity = 0;
                     newproduct.SaleUnitPrice = stockMV.SaleUnitPrice;
                     newproduct.CurrentPurchaseUnitPrice = stockMV.CurrentPurchaseUnitPrice;
                     newproduct.ExpiryDate = stockMV.ExpiryDate;

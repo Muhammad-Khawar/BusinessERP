@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP_App", "ERP_App\ERP_App.csproj", "{927F9EF1-286C-4DC1-AA1C-E19B1D0C1202}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP.DatabaseLayer", "ERP.DatabaseLayer\ERP.DatabaseLayer.csproj", "{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ERP.DatabaseLayer", "ERP.DatabaseLayer\ERP.DatabaseLayer.csproj", "{F312966E-659B-4CB1-AC50-FBB84848F74E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{927F9EF1-286C-4DC1-AA1C-E19B1D0C1202}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{927F9EF1-286C-4DC1-AA1C-E19B1D0C1202}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{927F9EF1-286C-4DC1-AA1C-E19B1D0C1202}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B732C4B-21C0-4B5C-B99A-747F27D4E0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F312966E-659B-4CB1-AC50-FBB84848F74E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F312966E-659B-4CB1-AC50-FBB84848F74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F312966E-659B-4CB1-AC50-FBB84848F74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F312966E-659B-4CB1-AC50-FBB84848F74E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

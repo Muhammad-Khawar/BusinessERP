@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ERP_App.Models.PrintPurchaseInvoiceMV>
-
+@{ 
+    int no = 0;
+}
 
 
 @using (Html.BeginForm("AllPurchases", "Purchase", FormMethod.Post))
@@ -29,6 +31,9 @@
 <table class="table table-striped table-hover w-100" id="datatable1">
     <thead>
         <tr>
+            <th style="width:80px;">
+                <strong>S# No</strong>
+            </th>
             <th style="width:80px;">
                 <strong>ORDER ID</strong>
             </th>
@@ -64,42 +69,44 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.InvoiceHeader.InvoiceNo</td>
-                <td>@item.InvoiceHeader.InvoiceDate.ToString("dd//mm/yyyy")</td>
-                <td>@item.supplier.SupplierName</td>
-                <td>@item.InvoiceHeader.SubTotalAmount</td>
-                <td>@item.InvoiceHeader.EstimatedTax</td>
-                <td>@item.InvoiceHeader.ShippingFee</td>
-                <td>@item.InvoiceHeader.TotalAmount</td>
-                <td>@item.PaidAmount</td>
-                <td class="text-center">
-                    @{
-                        if (item.InvoiceHeader.TotalAmount == item.PaidAmount)
-                        {
-                            <span class="badge badge-success">Clear</span>
-                        }
-                        else if (item.PaidAmount == 0)
-                        {
-                            <span class="badge badge-danger">Payment Pending</span>
-                        }
-                        else if (item.InvoiceHeader.TotalAmount > item.PaidAmount)
-                        {
-                            <span class="badge badge-warning">In Progress</span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-danger">Stop</span>
-                        }
+            no++;
+        <tr>
+            <td>@no</td>
+            <td>@item.InvoiceHeader.InvoiceNo</td>
+            <td>@item.InvoiceHeader.InvoiceDate.ToString("dd//mm/yyyy")</td>
+            <td>@item.supplier.SupplierName</td>
+            <td>@item.InvoiceHeader.SubTotalAmount</td>
+            <td>@item.InvoiceHeader.EstimatedTax</td>
+            <td>@item.InvoiceHeader.ShippingFee</td>
+            <td>@item.InvoiceHeader.TotalAmount</td>
+            <td>@item.PaidAmount</td>
+            <td class="text-center">
+                @{
+                    if (item.InvoiceHeader.TotalAmount == item.PaidAmount)
+                    {
+                        <span class="badge badge-success">Clear</span>
                     }
+                    else if (item.PaidAmount == 0)
+                    {
+                        <span class="badge badge-danger">Payment Pending</span>
+                    }
+                    else if (item.InvoiceHeader.TotalAmount > item.PaidAmount)
+                    {
+                        <span class="badge badge-warning">In Progress</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-danger">Stop</span>
+                    }
+                }
 
-                </td>
-                <td class="text-center">
-                    <a href="@Url.Content("~/Purchase/PrintPurchaseInvoice?supplierinvoiceid="+item.InvoiceHeader.SupplierInvoiceID)" class="btn btn-sm btn-secondary" type="button">
-                        <em class="fa fa-search"></em>
-                    </a>
-                </td>
-            </tr>
+            </td>
+            <td class="text-center">
+                <a href="@Url.Content("~/Purchase/PrintPurchaseInvoice?supplierinvoiceid="+item.InvoiceHeader.SupplierInvoiceID)" class="btn btn-sm btn-secondary" type="button">
+                    <em class="fa fa-search"></em>
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

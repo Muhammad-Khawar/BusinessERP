@@ -10,7 +10,7 @@
     int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
 }
 
-@using (Html.BeginForm("AllSales", "Purchase", FormMethod.Post))
+@using (Html.BeginForm("ProfitAndLossReport", "Purchase", FormMethod.Post))
 {
     <table class="table table-striped table-hover w-100">
         <tr>
@@ -64,16 +64,18 @@
                     </a>
                 </td>
             </tr>
+            NetProfit += (o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))));
         }
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>Net Profit & Loss</td>
-            <td>@NetProfit</td>
-            <td></td>
-        </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Net Profit & Loss</td>
+        <td>@NetProfit</td>
+
+    </tr>
     </tbody>
 </table>
 <script type="text/javascript">

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BusinessERP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BusinessERP_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -279,18 +279,18 @@
           <Property Name="OrderDate" Type="datetime" />
           <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
           <Property Name="OrderType" Type="nvarchar" MaxLength="50" />
-          <Property Name="OrderName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="OrderEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="OrderEmail" Type="nvarchar" MaxLength="150" />
           <Property Name="OrderContact" Type="nvarchar" MaxLength="50" />
-          <Property Name="OrderAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderAddress" Type="nvarchar" MaxLength="150" Nullable="false" />
         </EntityType>
         <EntityType Name="tblOrderDetail">
           <Key>
             <PropertyRef Name="OrderDetailID" />
           </Key>
           <Property Name="OrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OrderFID" Type="int" />
-          <Property Name="ProductFID" Type="int" />
+          <Property Name="OrderFID" Type="int" Nullable="false" />
+          <Property Name="ProductFID" Type="int" Nullable="false" />
           <Property Name="SalePrice" Type="numeric" Precision="18" Scale="2" />
           <Property Name="PurchasePrice" Type="numeric" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="int" />
@@ -1137,7 +1137,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblOrderDetail_tblOrder">
-          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="0..1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="1" />
           <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblOrder">
@@ -1149,7 +1149,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblOrderDetail_tblStock">
-          <End Role="tblStock" Type="Self.tblStock" Multiplicity="0..1" />
+          <End Role="tblStock" Type="Self.tblStock" Multiplicity="1" />
           <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblStock">
@@ -2235,7 +2235,8 @@
             <End Role="tblUser" EntitySet="tblUser" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BusinessERP_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2625,10 +2626,10 @@
           <Property Name="OrderDate" Type="DateTime" Precision="3" />
           <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrderType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="OrderContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OrderAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OrderAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
         </EntityType>
         <EntityType Name="tblOrderDetail">
@@ -2636,8 +2637,8 @@
             <PropertyRef Name="OrderDetailID" />
           </Key>
           <Property Name="OrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderFID" Type="Int32" />
-          <Property Name="ProductFID" Type="Int32" />
+          <Property Name="OrderFID" Type="Int32" Nullable="false" />
+          <Property Name="ProductFID" Type="Int32" Nullable="false" />
           <Property Name="SalePrice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="PurchasePrice" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="Int32" />
@@ -2942,7 +2943,7 @@
           <NavigationProperty Name="tblSupplierReturnInvoices" Relationship="Self.FK_tblSupplierReturnInvoice_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnInvoice" />
           <NavigationProperty Name="tblSupplierReturnPayments" Relationship="Self.FK_tblSupplierReturnPayment_tblUser" FromRole="tblUser" ToRole="tblSupplierReturnPayment" />
           <NavigationProperty Name="tblTransactions" Relationship="Self.FK_tblTransaction_tblUser" FromRole="tblUser" ToRole="tblTransaction" />
-          <NavigationProperty Name="tblUserType" Relationship="BusinessERP_DBModel.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
+          <NavigationProperty Name="tblUserType" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUser" ToRole="tblUserType" />
         </EntityType>
         <EntityType Name="tblUserType">
           <Key>
@@ -2950,7 +2951,7 @@
           </Key>
           <Property Name="UserTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserType" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="tblUsers" Relationship="BusinessERP_DBModel.FK_tblUser_tblUserType" FromRole="tblUserType" ToRole="tblUser" />
+          <NavigationProperty Name="tblUsers" Relationship="Self.FK_tblUser_tblUserType" FromRole="tblUserType" ToRole="tblUser" />
         </EntityType>
         <Association Name="FK_tblAccountSetting_tblAccountActivity">
           <End Role="tblAccountActivity" Type="Self.tblAccountActivity" Multiplicity="1" />
@@ -3879,7 +3880,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblOrderDetail_tblOrder">
-          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="0..1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="1" />
           <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblOrder">
@@ -3891,7 +3892,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblOrderDetail_tblStock">
-          <End Role="tblStock" Type="Self.tblStock" Multiplicity="0..1" />
+          <End Role="tblStock" Type="Self.tblStock" Multiplicity="1" />
           <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblStock">
@@ -4207,6 +4208,18 @@
             </Principal>
             <Dependent Role="tblTransaction">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUser_tblUserType">
+          <End Role="tblUserType" Type="Self.tblUserType" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUserType">
+              <PropertyRef Name="UserTypeID" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="UserTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4658,23 +4671,11 @@
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblTransaction" EntitySet="tblTransactions" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblUser_tblUserType" Association="BusinessERP_DBModel.FK_tblUser_tblUserType">
+          <AssociationSet Name="FK_tblUser_tblUserType" Association="Self.FK_tblUser_tblUserType">
             <End Role="tblUserType" EntitySet="tblUserTypes" />
             <End Role="tblUser" EntitySet="tblUsers" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_tblUser_tblUserType">
-          <End Type="BusinessERP_DBModel.tblUserType" Role="tblUserType" Multiplicity="1" />
-          <End Type="BusinessERP_DBModel.tblUser" Role="tblUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUserType">
-              <PropertyRef Name="UserTypeID" />
-            </Principal>
-            <Dependent Role="tblUser">
-              <PropertyRef Name="UserTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

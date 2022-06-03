@@ -1,9 +1,9 @@
 ﻿@model  ERP_App.Models.ShopMV
 
+
 @{
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
-
 
 
 
@@ -20,6 +20,7 @@
                             <li><a href="@Url.Action("Shop","Home",new { id = c.CategoryID})">@c.categoryName<small> (@c.ProductCount)</small></a></li>
                         }
                     </ul>
+
                 </div>
                 <div class="filter-widget mb-0">
                     <h2 class="fw-title">refine by</h2>
@@ -39,86 +40,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="filter-widget mb-0">
-                    <h2 class="fw-title">color by</h2>
-                    <div class="fw-color-choose">
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="gray-color">
-                            <label class="cs-gray" for="gray-color">
-                                <span>(3)</span>
-                            </label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="orange-color">
-                            <label class="cs-orange" for="orange-color">
-                                <span>(25)</span>
-                            </label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="yollow-color">
-                            <label class="cs-yollow" for="yollow-color">
-                                <span>(112)</span>
-                            </label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="green-color">
-                            <label class="cs-green" for="green-color">
-                                <span>(75)</span>
-                            </label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="purple-color">
-                            <label class="cs-purple" for="purple-color">
-                                <span>(9)</span>
-                            </label>
-                        </div>
-                        <div class="cs-item">
-                            <input type="radio" name="cs" id="blue-color" checked="">
-                            <label class="cs-blue" for="blue-color">
-                                <span>(29)</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-widget mb-0">
-                    <h2 class="fw-title">Size</h2>
-                    <div class="fw-size-choose">
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="xs-size">
-                            <label for="xs-size">XS</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="s-size">
-                            <label for="s-size">S</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="m-size" checked="">
-                            <label for="m-size">M</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="l-size">
-                            <label for="l-size">L</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="xl-size">
-                            <label for="xl-size">XL</label>
-                        </div>
-                        <div class="sc-item">
-                            <input type="radio" name="sc" id="xxl-size">
-                            <label for="xxl-size">XXL</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-widget">
-                    <h2 class="fw-title">Brand</h2>
-                    <ul class="category-menu">
-                        <li><a href="#">Abercrombie & Fitch <span>(2)</span></a></li>
-                        <li><a href="#">Asos<span>(56)</span></a></li>
-                        <li><a href="#">Bershka<span>(36)</span></a></li>
-                        <li><a href="#">Missguided<span>(27)</span></a></li>
-                        <li><a href="#">Zara<span>(19)</span></a></li>
-                    </ul>
                 </div>
             </div>
 
@@ -156,3 +77,15 @@
     </div>
 </section>
 <!-- Category section end -->
+@*<script>
+    var priceSlider = $("slide-range").slider({
+        range: true,
+        min: $("slide-range").attr("data-min", 0),
+        max: $("slide-range").attr("data-max", 100),
+        values: [0, 100],
+        slide: function (event, ui) {
+            //$("").val(ui[0]);
+            //$("").val(ui[1]);
+        }
+    });
+</script>*@

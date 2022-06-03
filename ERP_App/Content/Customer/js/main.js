@@ -163,8 +163,8 @@ $(window).on('load', function() {
 	var rangeSlider = $(".price-range"),
 		minamount = $("#minamount"),
 		maxamount = $("#maxamount"),
-		minPrice = rangeSlider.data('min'),
-		maxPrice = rangeSlider.data('max');
+		minPrice = 0,
+		maxPrice = 100;
 	rangeSlider.slider({
 		range: true,
 		min: minPrice,

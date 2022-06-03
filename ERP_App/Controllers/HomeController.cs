@@ -64,7 +64,13 @@ namespace ERP_App.Controllers
         public ActionResult PlusToCart(int RowNo)
         {
             List<StockMV> list = (List<StockMV>)Session["myCart"];
-            list[RowNo].Quantity++;
+            int P_ID = list[RowNo].ProductID;
+            //int? available = DB.tblOrderDetails.Where(x => x.ProductFID == P_ID).Sum(x => x.Quantity);
+            int? available = DB.tblStocks.Where(x => x.ProductID == P_ID).Select(x=>x.Quantity).FirstOrDefault();
+            if (available > list[RowNo].Quantity)
+            {
+                list[RowNo].Quantity++;
+            }
             Session["myCart"] = list;
             return RedirectToAction("Cart");
         }
@@ -72,6 +78,11 @@ namespace ERP_App.Controllers
         {
             List<StockMV> list = (List<StockMV>)Session["myCart"];
             list[RowNo].Quantity--;
+            if (list[RowNo].Quantity <= 0)
+            {
+                //list.RemoveAt(RowNo);
+                list[RowNo].Quantity = 0;
+            }
             Session["myCart"] = list;
             return RedirectToAction("Cart");
         }

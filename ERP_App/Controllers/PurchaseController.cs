@@ -68,7 +68,14 @@ namespace ERP_App.Controllers
             purchaseitems.PurchaseItemList = list;
             purchaseitems.OrderSummary = new PurchaseCartSummaryMV() {  SubTotal = subTotal};
             ViewBag.ProductID = new SelectList(DB.tblStocks.Where(s=>s.BranchID == branchid && s.CompanyID == companyid).ToList(), "ProductID", "ProductName","0");
-            ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", "0");
+            if(Session["SupplierID"] == null)
+            {
+                ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", "0");
+            }
+            else
+            {
+                ViewBag.SupplierID = Session["SupplierID"];
+            }
             return View(purchaseitems);
         }
         [HttpPost]
@@ -163,7 +170,9 @@ namespace ERP_App.Controllers
             
             ViewBag.ProductID = new SelectList(DB.tblStocks.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "ProductID", "ProductName", purchaseCartMV.ProductID);
             ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", purchaseCartMV.SupplierID);
-            return View(purchaseCartMV);
+            Session["SupplierID"] = ViewBag.SupplierID;
+            //return View(purchaseCartMV);
+            return RedirectToAction("PurchaseStockProducts");
         }
         public ActionResult DeletePurchaseItem(int ? id)
         {
@@ -206,6 +215,20 @@ namespace ERP_App.Controllers
                         ModelState.AddModelError("SupplierID", "Please Select the Supplier!");
                         transaction.Rollback();
                     }
+                    //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                    //3. save in DB
+                    var order = new tblOrder();
+                    order.OrderDate = datetime;
+                    order.OrderStatus = "Paid";
+                    order.OrderType = "Purchase";
+                    order.OrderName = supplier.SupplierName;
+                    order.OrderEmail = supplier.SupplierEmail;
+                    order.OrderContact = supplier.SupplierConatctNo;
+                    order.OrderAddress = supplier.SupplierAddress;
+                    DB.tblOrders.Add(order);
+                    DB.SaveChanges();
+                    //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
                     float totalamount = (float)subtotal + (float)estimatedtax + (float)shippingfee;
                     string invoiceno = "PUR" + datetime.ToString("yyyymmddhhmmss") + userid;
                     var invoiceheader = new tblSupplierInvoice();
@@ -242,7 +265,19 @@ namespace ERP_App.Controllers
 
                         DB.tblSupplierInvoiceDetails.Add(purchaseitem);
                         DB.SaveChanges();
-
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                        var od = new tblOrderDetail();
+                        int orderID = DB.tblOrders.Max(x => x.OrderID);
+                        od.OrderFID = orderID;
+                        od.ProductFID = product.ProductID;
+                        od.Quantity = product.PurchaseQuantity;
+                        od.PurchasePrice = (decimal)product.purchaseUnitPrice;
+                        od.SalePrice = (decimal)product.SaleUnitPrice;
+                        od.CompanyFID = product.CompanyID;
+                        od.BranchFID = product.BranchID;
+                        DB.tblOrderDetails.Add(od);
+                        DB.SaveChanges();
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
                         var stockproduct = DB.tblStocks.Find(product.ProductID);
                         stockproduct.Manufacture = (DateTime)product.ManufactureDate;
                         stockproduct.ExpiryDate = (DateTime)product.ExpireDate;
@@ -408,6 +443,7 @@ namespace ERP_App.Controllers
 
                     transaction.Commit();
                     return RedirectToAction("PrintPurchaseInvoice",new { supplierinvoiceid = invoiceheader.SupplierInvoiceID });
+                    
                 }
                 catch (Exception)
                 {

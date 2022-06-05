@@ -131,6 +131,9 @@
           <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Logo" Type="nvarchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="tblCountry">
           <Key>
@@ -148,14 +151,16 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Customername" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="CustomerContact" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="CustomerArea" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CustomerAddress" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="BranchID" Type="int" Nullable="false" />
-          <Property Name="CompanyID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Customername" Type="varchar" MaxLength="150" />
+          <Property Name="CustomerContact" Type="nvarchar" MaxLength="150" />
+          <Property Name="CustomerEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerArea" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerAddress" Type="varchar" MaxLength="300" />
+          <Property Name="Description" Type="varchar" MaxLength="300" />
+          <Property Name="BranchID" Type="int" />
+          <Property Name="CompanyID" Type="int" />
+          <Property Name="UserID" Type="int" />
         </EntityType>
         <EntityType Name="tblCustomerInvoice">
           <Key>
@@ -283,6 +288,8 @@
           <Property Name="OrderEmail" Type="nvarchar" MaxLength="150" />
           <Property Name="OrderContact" Type="nvarchar" MaxLength="50" />
           <Property Name="OrderAddress" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CustomerFID" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblOrderDetail">
           <Key>
@@ -733,7 +740,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblBranch">
-          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1" />
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBranch">
@@ -745,7 +752,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblCompany">
-          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="1" />
+          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblCompany">
@@ -757,7 +764,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblUser">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblUser">
@@ -1109,6 +1116,18 @@
             </Principal>
             <Dependent Role="tblFinancialYear">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CustomerFID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2018,6 +2037,10 @@
             <End Role="tblUser" EntitySet="tblUser" />
             <End Role="tblFinancialYear" EntitySet="tblFinancialYear" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblCustomer" Association="Self.FK_tblOrder_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblOrderDetail_tblBranch" Association="Self.FK_tblOrderDetail_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranch" />
             <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
@@ -2415,6 +2438,9 @@
           <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Logo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblAccountControls" Relationship="Self.FK_tblAccountControl_tblCompany" FromRole="tblCompany" ToRole="tblAccountControl" />
           <NavigationProperty Name="tblAccountSettings" Relationship="Self.FK_tblAccountSetting_tblCompany" FromRole="tblCompany" ToRole="tblAccountSetting" />
           <NavigationProperty Name="tblCategories" Relationship="Self.FK_tblCategory_tblCompany" FromRole="tblCompany" ToRole="tblCategory" />
@@ -2450,20 +2476,23 @@
             <PropertyRef Name="CustomerID" />
           </Key>
           <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CustomerContact" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CustomerArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CustomerAddress" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="BranchID" Type="Int32" Nullable="false" />
-          <Property Name="CompanyID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Customername" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerContact" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerAddress" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="BranchID" Type="Int32" />
+          <Property Name="CompanyID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" />
           <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblCustomer_tblBranch" FromRole="tblCustomer" ToRole="tblBranch" />
           <NavigationProperty Name="tblCompany" Relationship="Self.FK_tblCustomer_tblCompany" FromRole="tblCustomer" ToRole="tblCompany" />
           <NavigationProperty Name="tblUser" Relationship="Self.FK_tblCustomer_tblUser" FromRole="tblCustomer" ToRole="tblUser" />
           <NavigationProperty Name="tblCustomerInvoices" Relationship="Self.FK_tblCustomerInvoice_tblCustomer" FromRole="tblCustomer" ToRole="tblCustomerInvoice" />
           <NavigationProperty Name="tblCustomerReturnInvoices" Relationship="Self.FK_tblCustomerReturnInvoice_tblCustomer" FromRole="tblCustomer" ToRole="tblCustomerReturnInvoice" />
           <NavigationProperty Name="tblCustomerReturnPayments" Relationship="Self.FK_tblCustomerReturnPayment_tblCustomer" FromRole="tblCustomer" ToRole="tblCustomerReturnPayment" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblCustomer" ToRole="tblOrder" />
         </EntityType>
         <EntityType Name="tblCustomerInvoice">
           <Key>
@@ -2630,6 +2659,9 @@
           <Property Name="OrderEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="OrderContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="OrderAddress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CustomerFID" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblOrder" ToRole="tblCustomer" />
           <NavigationProperty Name="tblOrderDetails" Relationship="Self.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
         </EntityType>
         <EntityType Name="tblOrderDetail">
@@ -3202,7 +3234,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblBranch">
-          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1" />
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBranch">
@@ -3424,7 +3456,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblCompany">
-          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="1" />
+          <End Role="tblCompany" Type="Self.tblCompany" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblCompany">
@@ -3604,7 +3636,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblCustomer_tblUser">
-          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblUser">
@@ -3650,6 +3682,18 @@
             </Principal>
             <Dependent Role="tblCustomerReturnPayment">
               <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="0..1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CustomerFID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4491,6 +4535,10 @@
             <End Role="tblCustomer" EntitySet="tblCustomers" />
             <End Role="tblCustomerReturnPayment" EntitySet="tblCustomerReturnPayments" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblCustomer" Association="Self.FK_tblOrder_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblCustomerInvoice_tblUser" Association="Self.FK_tblCustomerInvoice_tblUser">
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblCustomerInvoice" EntitySet="tblCustomerInvoices" />
@@ -4818,6 +4866,9 @@
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4839,6 +4890,8 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Customername" ColumnName="Customername" />
                 <ScalarProperty Name="CustomerContact" ColumnName="CustomerContact" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="CustomerPassword" ColumnName="CustomerPassword" />
                 <ScalarProperty Name="CustomerArea" ColumnName="CustomerArea" />
                 <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -4981,6 +5034,8 @@
                 <ScalarProperty Name="OrderEmail" ColumnName="OrderEmail" />
                 <ScalarProperty Name="OrderContact" ColumnName="OrderContact" />
                 <ScalarProperty Name="OrderAddress" ColumnName="OrderAddress" />
+                <ScalarProperty Name="CustomerFID" ColumnName="CustomerFID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

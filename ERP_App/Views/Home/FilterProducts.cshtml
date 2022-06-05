@@ -1,0 +1,22 @@
+﻿@model ERP_App.Models.FilterProductMV
+@foreach (var p in Model.Products)
+{
+    <div class="col-lg-4 col-sm-6">
+        <div class="product-item">
+            <div class="pi-pic">
+                <div class="tag-sale">ON SALE</div>
+                <div width="100px" height="100px"><img style=" object-fit: contain;" src="@Url.Content(p.ProductPicture)" alt=""></div>
+                <div class="pi-links">
+                    <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                    <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                </div>
+            </div>
+            <div class="pi-text">
+                <h6>@p.SaleUnitPrice</h6>
+                <h4>@p.ProductName</h4>
+                <p>@p.Description</p>
+            </div>
+        </div>
+    </div>
+    <hr />
+}

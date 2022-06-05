@@ -1,18 +1,21 @@
-﻿using ERP.DatabaseLayer;
-using ERP_App.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ERP.DatabaseLayer;
 
 namespace ERP_App.Controllers
 {
-    public class CustomerController : Controller
+    public class UsersController : Controller
     {
-        private BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
-        // GET: Customer
-        public ActionResult AllBranchCustomer()
+        private BusinessERP_DBEntities db = new BusinessERP_DBEntities();
+
+        // GET: Users
+        public ActionResult Index()
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             {
@@ -30,28 +33,12 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
-            var list = new List<CustomerMV>();
-            
-            var customers = DB.tblCustomers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
-            foreach (var customer in customers)
-            {
-                var gcustomer = new CustomerMV();
-
-                gcustomer.CustomerID = customer.CustomerID;
-                gcustomer.Customername = customer.Customername;
-                gcustomer.CustomerContact = customer.CustomerContact;
-                gcustomer.CustomerArea = customer.CustomerArea;
-                gcustomer.CustomerAddress = customer.CustomerAddress;
-                gcustomer.Description = customer.Description;
-                //gcustomer.BranchID = customer.BranchID;
-                //gcustomer.CompanyID = customer.CompanyID;
-                //gcustomer.UserID = customer.UserID;
-                gcustomer.CreatedBy = customer.tblUser.UserName;
-                list.Add(gcustomer);
-            }
-            return View(list);
+            var tblUsers = db.tblUsers.Where(x=>x.UserID == userid).Include(t => t.tblUserType);
+            return View(tblUsers.ToList());
         }
-        public ActionResult CreateBranchCustomer()
+
+        // GET: Users/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             {
@@ -69,12 +56,25 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
-            var customerMV = new CustomerMV();
-            return View(customerMV);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tblUser tblUser = db.tblUsers.Find(id);
+            if (tblUser == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.UserTypeID = new SelectList(db.tblUserTypes, "UserTypeID", "UserType", tblUser.UserTypeID);
+            return View(tblUser);
         }
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateBranchCustomer(CustomerMV customerMV)
+        public ActionResult Edit([Bind(Include = "UserID,UserTypeID,FullName,Email,ContactNo,UserName,Password,IsActive,Address")] tblUser tblUser)
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
             {
@@ -91,34 +91,16 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
-
 
             if (ModelState.IsValid)
             {
-                var checkcustomer = DB.tblCustomers.Where(u => u.BranchID == branchid && u.CompanyID == companyid && u.Customername == customerMV.Customername).FirstOrDefault();
-                if (checkcustomer == null)
-                {
-                    var newcustomer = new tblCustomer();
-                    newcustomer.Customername = customerMV.Customername;
-                    newcustomer.CustomerContact = customerMV.CustomerContact;
-                    newcustomer.CustomerArea = customerMV.CustomerArea;
-                    newcustomer.CustomerAddress = customerMV.CustomerAddress;
-                    newcustomer.Description = customerMV.Description;
-                    newcustomer.BranchID = branchid;
-                    newcustomer.CompanyID = companyid;
-                    newcustomer.UserID = userid;
-
-                    DB.tblCustomers.Add(newcustomer);
-                    DB.SaveChanges();
-                    return RedirectToAction("AllBranchCustomer");
-                }
-                else
-                {
-                    ModelState.AddModelError("Customername", "Already Exists");
-                }
+                db.Entry(tblUser).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-
-            return View(customerMV);
+            ViewBag.UserTypeID = new SelectList(db.tblUserTypes, "UserTypeID", "UserType", tblUser.UserTypeID);
+            return View(tblUser);
         }
+
     }
 }

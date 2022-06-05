@@ -15,5 +15,7 @@ namespace ERP_App.Models
         public string OrderEmail { get; set; }
         public string OrderContact { get; set; }
         public string OrderAddress { get; set; }
+        public string Status { get; set; }
+        public Nullable<int> CustomerFID { get; set; }
     }
 }

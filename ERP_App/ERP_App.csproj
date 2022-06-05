@@ -337,8 +337,10 @@
     <Compile Include="Controllers\AccountsSettiingController.cs" />
     <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
+    <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -346,6 +348,7 @@
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -371,6 +374,7 @@
     <Compile Include="Models\CustomerReturnPaymentMV.cs" />
     <Compile Include="Models\EmployeeMV.cs" />
     <Compile Include="Models\FilterModel.cs" />
+    <Compile Include="Models\FilterProductMV.cs" />
     <Compile Include="Models\FinancialYearMV.cs" />
     <Compile Include="Models\FocalPersonMV.cs" />
     <Compile Include="Models\OrderDetailMV.cs" />
@@ -506,6 +510,23 @@
     <Content Include="Views\Purchase\PrintSaleInvoice.cshtml" />
     <Content Include="Views\Purchase\ProfitAndLossReport.cshtml" />
     <Content Include="Views\Purchase\StockReport.cshtml" />
+    <Content Include="Views\Companies\Create.cshtml" />
+    <Content Include="Views\Companies\Delete.cshtml" />
+    <Content Include="Views\Companies\Details.cshtml" />
+    <Content Include="Views\Companies\Edit.cshtml" />
+    <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Customers\Create.cshtml" />
+    <Content Include="Views\Customers\Delete.cshtml" />
+    <Content Include="Views\Customers\Details.cshtml" />
+    <Content Include="Views\Customers\Edit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\Customers\Login.cshtml" />
+    <Content Include="Views\Customers\CustomerHistory.cshtml" />
+    <Content Include="Views\Customers\PrintSaleInvoice.cshtml" />
+    <Content Include="Views\Home\FilterProducts.cshtml" />
+    <Content Include="Views\Customers\CancelledOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -519,7 +540,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ERP.DatabaseLayer\ERP.DatabaseLayer.csproj">
-      <Project>{F312966E-659B-4CB1-AC50-FBB84848F74E}</Project>
+      <Project>{489D9FC4-FFB2-41A6-8C37-91F908B53AC5}</Project>
       <Name>ERP.DatabaseLayer</Name>
     </ProjectReference>
   </ItemGroup>

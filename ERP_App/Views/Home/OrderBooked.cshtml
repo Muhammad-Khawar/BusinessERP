@@ -87,36 +87,36 @@
             </div>
 
 
-            @if(Session["Order"] != null)
+            @if (Session["Order"] != null)
             {
                 OrderMV o = (OrderMV)Session["Order"];
-            <div class="col-lg-6" style="float:left;">
-                <h4 style="text-align:center;">Customer Details</h4><br />
-                <div class="d-flex">
-                    <h6>Customer Name</h6>
-                    <div class="ml-auto font-weight-bold">Rs: @o.OrderName</div>
+                <div class="col-lg-6" style="float:left;">
+                    <h4 style="text-align:center;">Customer Details</h4><br />
+                    <div class="d-flex">
+                        <h6>Customer Name</h6>
+                        <div class="ml-auto font-weight-bold">Rs: @o.OrderName</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Customer Email</h6>
+                        <div class="ml-auto font-weight-bold">@o.OrderEmail</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Customer Contact</h6>
+                        <div class="ml-auto font-weight-bold">@o.OrderContact</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Customer delivery Address</h6>
+                        <div class="ml-auto font-weight-bold">@o.OrderAddress</div>
+                    </div>
+                    <div class="d-flex">
+                        <h6>Order Status</h6>
+                        <div class="ml-auto font-weight-bold">@o.OrderStatus</div>
+                    </div>
+                    <div class="d-flex">
+                        <h5>Thank you</h5>
+                        <div class="ml-auto font-weight-bold">Order will be delivered as per terms & condition..</div>
+                    </div>
                 </div>
-                <div class="d-flex">
-                    <h6>Customer Email</h6>
-                    <div class="ml-auto font-weight-bold">@o.OrderEmail</div>
-                </div>
-                <div class="d-flex">
-                    <h6>Customer Contact</h6>
-                    <div class="ml-auto font-weight-bold">@o.OrderContact</div>
-                </div>
-                <div class="d-flex">
-                    <h6>Customer delivery Address</h6>
-                    <div class="ml-auto font-weight-bold">@o.OrderAddress</div>
-                </div>
-                <div class="d-flex">
-                    <h6>Order Status</h6>
-                    <div class="ml-auto font-weight-bold">Paid</div>
-                </div>
-                <div class="d-flex">
-                    <h5>Thank you</h5>
-                    <div class="ml-auto font-weight-bold">Order will be delivered as per terms & condition..</div>
-                </div>
-            </div>
             }
             <div class="col-lg-6" style="float:left;">
                 <h4 style="text-align:center;">Order Summary</h4><br />
@@ -152,75 +152,16 @@
     </div>
 </section>
 <!-- cart section end -->
-<!-- Related product section -->
-<section class="related-product-section">
-    <div class="container">
-        <div class="section-title text-uppercase">
-            <h2>Continue Shopping</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div class="tag-new">New</div>
-                        <img src="./img/product/2.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/5.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/9.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/1.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Related product section end -->
+
+<center>
+    <input type="submit" class="site-btn" value="Print Now" onclick="return PrintFunction();" />
+    <a type="submit" class="site-btn" href=" @Url.Action("CloseOrder", "Home") ">Close Order</a>
+</center>
+<br />
+
+<script type="text/javascript">
+    function PrintFunction() {
+        window.print();
+        return false;
+    }
+</script>

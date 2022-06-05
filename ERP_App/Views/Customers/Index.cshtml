@@ -1,0 +1,104 @@
+﻿@model IEnumerable<ERP.DatabaseLayer.tblCustomer>
+@using ERP.DatabaseLayer
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customername)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerContact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerArea)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerPassword)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblBranch.BranchName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblCompany.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tblUser.FullName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            if (Session["Customer"] != null)
+            {
+                tblCustomer c = (tblCustomer)Session["Customer"];
+                if (c.CustomerID == item.CustomerID)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Customername)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerContact)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerArea)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerEmail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerPassword)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblBranch.BranchName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblCompany.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tblUser.FullName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.CustomerID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.CustomerID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.CustomerID })
+                        </td>
+                    </tr>
+                }
+            }
+
+        }
+
+    </table>
+</body>
+</html>

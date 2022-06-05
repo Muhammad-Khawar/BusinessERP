@@ -4,46 +4,46 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8382495f81304eaea5fa799ce569bccc" Name="Diagram1">
+      <Diagram DiagramId="c28104a9151c42b6a11b15b6cdb38656" Name="Diagram1">
         <EntityTypeShape EntityType="BusinessERP_DBModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountActivity" Width="1.5" PointX="8.25" PointY="41.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountControl" Width="1.5" PointX="5.25" PointY="30.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountHead" Width="1.5" PointX="5.25" PointY="35.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountSetting" Width="1.5" PointX="10.5" PointY="37.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountSubControl" Width="1.5" PointX="10.5" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountActivity" Width="1.5" PointX="8.25" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountControl" Width="1.5" PointX="5.25" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountHead" Width="1.5" PointX="5.25" PointY="37.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountSetting" Width="1.5" PointX="10.5" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblAccountSubControl" Width="1.5" PointX="13.5" PointY="37.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BusinessERP_DBModel.tblAgent" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblBranch" Width="1.5" PointX="6" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblBranchType" Width="1.5" PointX="3.75" PointY="25.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCategory" Width="1.5" PointX="8.25" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblBranch" Width="1.5" PointX="6" PointY="25.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblBranchType" Width="1.5" PointX="3.75" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCategory" Width="1.5" PointX="8.25" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BusinessERP_DBModel.tblCity" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCompany" Width="1.5" PointX="6" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCompany" Width="1.5" PointX="6" PointY="41.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BusinessERP_DBModel.tblCountry" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomer" Width="1.5" PointX="8.25" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerInvoice" Width="1.5" PointX="13.5" PointY="30.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerInvoiceDetail" Width="1.5" PointX="18.75" PointY="37" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerPayment" Width="1.5" PointX="18.75" PointY="32" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnInvoice" Width="1.5" PointX="18.75" PointY="26.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnInvoiceDetail" Width="1.5" PointX="24" PointY="37.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnPayment" Width="1.5" PointX="24" PointY="26.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblEmployee" Width="1.5" PointX="6" PointY="51.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblFinancialYear" Width="1.5" PointX="5.25" PointY="47" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrder" Width="1.5" PointX="16.5" PointY="44" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrderDetail" Width="1.5" PointX="18.75" PointY="40.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblPayroll" Width="1.5" PointX="8.25" PointY="36.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblPurchaseCartDetail" Width="1.5" PointX="21.75" PointY="34.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSaleCartDetail" Width="1.5" PointX="21.75" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomer" Width="1.5" PointX="8.25" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerInvoice" Width="1.5" PointX="13.5" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerInvoiceDetail" Width="1.5" PointX="21.75" PointY="37.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerPayment" Width="1.5" PointX="18.75" PointY="29.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnInvoice" Width="1.5" PointX="21.75" PointY="32.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnInvoiceDetail" Width="1.5" PointX="30" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblCustomerReturnPayment" Width="1.5" PointX="27" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblEmployee" Width="1.5" PointX="6" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblFinancialYear" Width="1.5" PointX="5.25" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrder" Width="1.5" PointX="10.5" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblOrderDetail" Width="1.5" PointX="18.75" PointY="40" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblPayroll" Width="1.5" PointX="8.25" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblPurchaseCartDetail" Width="1.5" PointX="24.75" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSaleCartDetail" Width="1.5" PointX="21.75" PointY="41" IsExpanded="true" />
         <EntityTypeShape EntityType="BusinessERP_DBModel.tblState" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblStock" Width="1.5" PointX="13.5" PointY="36.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplier" Width="1.5" PointX="11.25" PointY="32.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierInvoice" Width="1.5" PointX="16.5" PointY="31.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierInvoiceDetail" Width="1.5" PointX="21.75" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierPayment" Width="1.5" PointX="16.5" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnInvoice" Width="1.5" PointX="24.75" PointY="32.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnInvoiceDetail" Width="1.5" PointX="27" PointY="34.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnPayment" Width="1.5" PointX="27" PointY="29.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblTransaction" Width="1.5" PointX="15.75" PointY="38.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblUser" Width="1.5" PointX="3" PointY="31" IsExpanded="true" />
-        <EntityTypeShape EntityType="BusinessERP_DBModel.tblUserType" Width="1.5" PointX="0.75" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblStock" Width="1.5" PointX="16.5" PointY="33.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplier" Width="1.5" PointX="11.25" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierInvoice" Width="1.5" PointX="19.5" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierInvoiceDetail" Width="1.5" PointX="24.75" PointY="30" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierPayment" Width="1.5" PointX="16.5" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnInvoice" Width="1.5" PointX="24.75" PointY="39.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnInvoiceDetail" Width="1.5" PointX="27" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblSupplierReturnPayment" Width="1.5" PointX="30" PointY="39.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblTransaction" Width="1.5" PointX="15.75" PointY="41.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblUser" Width="1.5" PointX="3" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BusinessERP_DBModel.tblUserType" Width="1.5" PointX="0.75" PointY="35.75" IsExpanded="true" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblAccountSetting_tblAccountActivity" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblAccountControl_tblBranch" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblAccountControl_tblCompany" ManuallyRouted="false" />
@@ -101,6 +101,7 @@
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerInvoice_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerReturnInvoice_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerReturnPayment_tblCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="BusinessERP_DBModel.FK_tblOrder_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerInvoice_tblUser" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerInvoiceDetail_tblCustomerInvoice" ManuallyRouted="false" />
         <AssociationConnector Association="BusinessERP_DBModel.FK_tblCustomerPayment_tblCustomerInvoice" ManuallyRouted="false" />

@@ -33,31 +33,47 @@ namespace ERP_App.Controllers
             {
                 list = (List<StockMV>)Session["myCart"];
             }
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            Boolean isProductExist = false;
+            foreach (var p in list)
+            {
+                if (id == p.ProductID)
+                {
+                    isProductExist = true;
+                    p.Quantity++;
+                }
+            }
 
+            if (isProductExist == false)
+            {
+                var stock = DB.tblStocks.Where(p => p.ProductID == id).FirstOrDefault();
 
-            var stock = DB.tblStocks.Where( p => p.ProductID == id).FirstOrDefault();
+                var item = new StockMV();
+                item.BranchID = stock.BranchID;
+                item.CategoryID = stock.CategoryID;
+                item.CompanyID = stock.CompanyID;
+                item.CreatedBy = stock.tblUser.UserName;
+                item.CurrentPurchaseUnitPrice = stock.CurrentPurchaseUnitPrice;
+                item.Description = stock.Description;
+                item.Manufacture = stock.Manufacture;
+                item.ExpiryDate = stock.ExpiryDate;
+                item.IsActive = stock.IsActive;
+                item.ProductID = stock.ProductID;
+                item.ProductName = stock.ProductName;
+                item.Quantity = stock.Quantity;
+                item.SaleUnitPrice = stock.SaleUnitPrice;
+                item.StockTreshHoldQuantity = stock.StockTreshHoldQuantity;
+                item.UserID = stock.UserID;
+                item.CategoryName = stock.tblCategory.categoryName;
+                item.ProductPicture = stock.ProductPicture;
+
+                list.Add(item);
+                list[list.Count - 1].Quantity = 1;
+            }
+            Session["myCart"] = list;
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
             
-            var item = new StockMV();
-            item.BranchID = stock.BranchID;
-            item.CategoryID = stock.CategoryID;
-            item.CompanyID = stock.CompanyID;
-            item.CreatedBy = stock.tblUser.UserName;
-            item.CurrentPurchaseUnitPrice = stock.CurrentPurchaseUnitPrice;
-            item.Description = stock.Description;
-            item.Manufacture = stock.Manufacture;
-            item.ExpiryDate = stock.ExpiryDate;
-            item.IsActive = stock.IsActive;
-            item.ProductID = stock.ProductID;
-            item.ProductName = stock.ProductName;
-            item.Quantity = stock.Quantity;
-            item.SaleUnitPrice = stock.SaleUnitPrice;
-            item.StockTreshHoldQuantity = stock.StockTreshHoldQuantity;
-            item.UserID = stock.UserID;
-            item.CategoryName = stock.tblCategory.categoryName;
-            item.ProductPicture = stock.ProductPicture;
-                
-            list.Add(item);
-            list[list.Count - 1].Quantity = 1;
             Session["myCart"] = list;
             return RedirectToAction("Cart");
         }
@@ -95,6 +111,7 @@ namespace ERP_App.Controllers
         }
         public ActionResult Shop(int ? id)
         {
+           
             ShopMV s = new ShopMV();
             
             var Categorieslist = new List<CategoryMV>();
@@ -110,7 +127,7 @@ namespace ERP_App.Controllers
                     categoryName = category.categoryName,
                     CompanyID = category.CompanyID,
                     UserID = category.UserID,
-                    ProductCount = category.tblStocks.Count,
+                    ProductCount = category.tblStocks.Count(),
                     CreatedBy = username
                 });
             }
@@ -174,18 +191,78 @@ namespace ERP_App.Controllers
 
                 s.Pro = list;
             }
+            var max = DB.tblStocks.Max(x=>x.SaleUnitPrice);
+            s.MaxPrice = max;
             return View(s);
+        }
+        public ActionResult FilterProducts(string searchTerm,int? CategoryId,int ? minimumPrice,int? maximunPrice)
+        {
+            FilterProductMV model = new FilterProductMV();
+            //kkkkkkkkkkkkkkkkkkkkkkkkk
+            var stock = DB.tblStocks.ToList();
+            if(!string.IsNullOrEmpty(searchTerm))
+            {
+                stock = stock.Where(x => x.ProductName.ToLower().Contains(searchTerm.ToLower())).ToList();
+            }
+            if(CategoryId.HasValue)
+            {
+                stock = stock.Where(x => x.CategoryID == CategoryId).ToList();
+            }
+            if(minimumPrice.HasValue)
+            {
+                stock = stock.Where(x => x.SaleUnitPrice >= minimumPrice.Value).ToList();
+            }
+            if(maximunPrice.HasValue)
+            {
+                stock = stock.Where(x => x.SaleUnitPrice <= maximunPrice.Value).ToList();
+            }
+            var list = new List<StockMV>();
+            foreach (var product in stock)
+            {
+                var item = new StockMV();
+                item.BranchID = product.BranchID;
+                item.CategoryID = product.CategoryID;
+                item.CompanyID = product.CompanyID;
+                item.CreatedBy = product.tblUser.UserName;
+                item.CurrentPurchaseUnitPrice = product.CurrentPurchaseUnitPrice;
+                item.Description = product.Description;
+                item.Manufacture = product.Manufacture;
+                item.ExpiryDate = product.ExpiryDate;
+                item.IsActive = product.IsActive;
+                item.ProductID = product.ProductID;
+                item.ProductName = product.ProductName;
+                item.Quantity = product.Quantity;
+                item.SaleUnitPrice = product.SaleUnitPrice;
+                item.StockTreshHoldQuantity = product.StockTreshHoldQuantity;
+                item.UserID = product.UserID;
+                item.CategoryName = product.tblCategory.categoryName;
+                item.ProductPicture = product.ProductPicture;
+                list.Add(item);
+            }
+            //kkkkkkkkkkkkkkkkkkkkkkkk
+            model.Products = list;
+            return PartialView(model);
         }
         public ActionResult PayNow(OrderMV o)
         {
             o.OrderDate = DateTime.Now;
-            o.OrderStatus = "Paid";
+            //o.OrderStatus = "Paid";
             o.OrderType = "Sale";
+            o.Status = "Active";
+            if (Session["Customer"] != null)
+            {
+                tblCustomer c = (tblCustomer)Session["Customer"];
+                o.CustomerFID = c.CustomerID;
+            }
             Session["Order"] = o;
-
-            //return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 190);
-            
-            return RedirectToAction("OrderBooked");
+            if(o.OrderStatus == "Cash on Delivery")
+            {
+                return RedirectToAction("OrderBooked");
+            }
+            else
+            {
+                return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 190);
+            }    
         }
         public ActionResult OrderBooked()
         {
@@ -219,7 +296,8 @@ namespace ERP_App.Controllers
             order.OrderEmail = o.OrderEmail;
             order.OrderContact = o.OrderContact;
             order.OrderAddress = o.OrderAddress;
-
+            order.Status = o.Status;
+            order.CustomerFID = o.CustomerFID;
             DB.tblOrders.Add(order);
             DB.SaveChanges();
 
@@ -238,7 +316,7 @@ namespace ERP_App.Controllers
                 int orderID = DB.tblOrders.Max(x => x.OrderID);
                 od.OrderFID = orderID;
                 od.ProductFID = p[i].ProductID;
-                od.Quantity = p[i].Quantity;
+                od.Quantity = p[i].Quantity*-1;
                 od.PurchasePrice = (decimal)p[i].CurrentPurchaseUnitPrice;
                 od.SalePrice = (decimal)p[i].SaleUnitPrice;
                 od.CompanyFID = p[i].CompanyID;
@@ -465,6 +543,12 @@ namespace ERP_App.Controllers
             Session["Name"] = string.Empty;
             Session["Logo"] = string.Empty;
             return RedirectToAction("Login");
+        }
+        public ActionResult CloseOrder()
+        {
+            Session["Order"] = null;
+            Session["myCart"] = null;
+            return RedirectToAction("IndexCustomer");
         }
     }
 }

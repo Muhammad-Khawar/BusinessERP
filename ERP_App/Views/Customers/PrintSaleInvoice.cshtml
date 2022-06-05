@@ -1,0 +1,199 @@
+﻿@model IEnumerable<ERP.DatabaseLayer.tblOrder>
+@{
+    ViewBag.Title = "PrintSaleInvoice";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Bootstrap Admin App + jQuery">
+    <meta name="keywords" content="app, responsive, jquery, bootstrap, dashboard, admin">
+    <title>Print Invoice</title>
+    <!-- =============== VENDOR STYLES ===============-->
+    <!-- FONT AWESOME-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/font-awesome/css/font-awesome.css">
+    <!-- SIMPLE LINE ICONS-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/simple-line-icons/css/simple-line-icons.css">
+    <!-- ANIMATE.CSS-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/animate.css/animate.css">
+    <!-- WHIRL (spinners)-->
+    <link rel="stylesheet" href="~/Content/Template/vendor/whirl/dist/whirl.css">
+    <!-- =============== PAGE VENDOR STYLES ===============-->
+    <!-- =============== BOOTSTRAP STYLES ===============-->
+    <link rel="stylesheet" href="~/Content/Template/css/bootstrap.css" id="bscss">
+    <!-- =============== APP STYLES ===============-->
+    <link rel="stylesheet" href="~/Content/Template/css/app.css" id="maincss">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Page content-->
+        <div class="content-wrapper">
+            <div class="content-heading">
+                Sale Invoice
+            </div>
+            <div class="card">
+                
+
+                <div class="card-body">
+                    @foreach (var o in Model)
+                    {
+                        <div class="d-flex align-items-center">
+                            <h3 class="m-0">Invoice @o.OrderID</h3>
+
+                        </div>
+                        <hr>
+                        <div class="row mb-3">
+                           
+                            <div class="col-xl-4 col-6 br py-2">
+                                <div class="row">
+                                    <div class="col-lg-2 text-center d-none d-lg-block">
+                                        <em class="fa fa-truck fa-4x text-muted"></em>
+                                    </div>
+                                    <div class="col-lg-10">
+                                        <h4>@o.OrderName</h4>
+                                        <address></address>@o.OrderContact
+                                        <br>@o.OrderEmail
+                                        <br>@o.OrderAddress
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-xl-4 col-12 py-2">
+                                <div class="clearfix">
+                                    <p class="float-left">INVOICE NO.</p>
+                                    <p class="float-right mr-2">@o.OrderID</p>
+                                </div>
+                                <div class="clearfix">
+                                    <p class="float-left">Date</p>
+                                    <p class="float-right mr-2">@o.OrderDate</p>
+                                </div>
+                            </div>
+                        </div>
+                        double totalAmount = 0;
+                        int totalQty = 0;
+                        <div class="table-responsive table-bordered mb-3">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Product Description</th>
+                                        <th>Product Price</th>
+                                        <th>Product Quantity</th>
+                                        <th>Product Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var od in o.tblOrderDetails)
+                                    {
+                                        <tr>
+                                            <td>@od.tblStock.ProductName</td>
+                                            <td>@od.tblStock.Description</td>
+                                            <td>
+                                                @if (o.OrderType == "Purchase")
+                                                {
+                                                    @od.PurchasePrice
+                                                }
+                                                else
+                                                {
+                                                    @od.SalePrice;
+                                                }
+                                            </td>
+                                            <td>@Math.Abs(Convert.ToInt32(od.Quantity))</td>
+                                            <td>
+                                                @if (o.OrderType == "Purchase")
+                                                {
+                                                    @(double.Parse(od.PurchasePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())))
+                                                }
+                                                else
+                                                {
+                                                    @(double.Parse(od.SalePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())))
+                                                }
+                                            </td>
+                                        </tr>
+                                        totalQty += Math.Abs(int.Parse(od.Quantity.ToString()));
+
+                                        if (o.OrderType == "Purchase")
+                                        {
+                                            totalAmount += (double.Parse(od.PurchasePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())));
+                                        }
+                                        else
+                                        {
+                                            totalAmount += (double.Parse(od.SalePrice.ToString()) * Math.Abs(int.Parse(od.Quantity.ToString())));
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6"></div>
+                            <div class="col-lg-6 py-2">
+                                <div class="row mb-3">
+                                    <div class="col-8">Total Quantity</div>
+                                    <div class="col-4">
+                                        <div class="text-right">@Math.Abs(Convert.ToInt32(totalQty))</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-8">Tax (3%)</div>
+                                    <div class="col-4">
+                                        <div class="text-right">0.00</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-8">Shipping Fee</div>
+                                    <div class="col-4">
+                                        <div class="text-right">0.00</div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-7">
+                                        <div class="h3">GRAND TOTAL</div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="text-right h3">@Math.Abs(Convert.ToInt32(totalAmount))</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="d-print-none">
+                        <div class="clearfix">
+                            @Html.ActionLink("Cancel", "PurchaseStockProducts", null, new { @class = "btn btn-info float-left mr-2" })
+                            <button class="btn btn-secondary float-left" type="button" onclick="window.print();">Print</button>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- =============== VENDOR SCRIPTS ===============-->
+    <!-- MODERNIZR-->
+    <script src="~/Content/Template/vendor/modernizr/modernizr.custom.js"></script>
+    <!-- JQUERY-->
+    <script src="~/Content/Template/vendor/jquery/dist/jquery.js"></script>
+    <!-- BOOTSTRAP-->
+    <script src="~/Content/Template/vendor/popper.js/dist/umd/popper.js"></script>
+    <script src="~/Content/Template/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- STORAGE API-->
+    <script src="~/Content/Template/vendor/js-storage/js.storage.js"></script>
+    <!-- JQUERY EASING-->
+    <script src="~/Content/Template/vendor/jquery.easing/jquery.easing.js"></script>
+    <!-- ANIMO-->
+    <script src="~/Content/Template/vendor/animo/animo.js"></script>
+    <!-- SCREENFULL-->
+    <script src="~/Content/Template/vendor/screenfull/dist/screenfull.js"></script>
+    <!-- LOCALIZE-->
+    <script src="~/Content/Template/vendor/jquery-localize/dist/jquery.localize.js"></script>
+    <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+    <!-- =============== APP SCRIPTS ===============-->
+    <script src="~/Content/Template/js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+﻿@model ERP.DatabaseLayer.tblCustomer
+
+@{
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>tblCustomer</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Customername)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Customername)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerContact)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerContact)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerArea)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerArea)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerAddress)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerAddress)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerEmail)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerEmail)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerPassword)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerPassword)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tblBranch.BranchName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tblBranch.BranchName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tblCompany.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tblCompany.Name)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tblUser.FullName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tblUser.FullName)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CustomerID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

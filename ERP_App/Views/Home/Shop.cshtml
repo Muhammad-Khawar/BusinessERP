@@ -1,11 +1,9 @@
 ﻿@model  ERP_App.Models.ShopMV
-
-
+@using ERP_App.Models
 @{
+   
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
-
-
 
 <!-- Category section -->
 <section class="category-section spad">
@@ -17,7 +15,8 @@
                     <ul class="category-menu">
                         @foreach (var c in Model.Cat)
                         {
-                            <li><a href="@Url.Action("Shop","Home",new { id = c.CategoryID})">@c.categoryName<small> (@c.ProductCount)</small></a></li>
+                          
+                            <li><a href="@Url.Action("Shop", "Home", new { id = c.CategoryID })">@c.categoryName<small> (@c.ProductCount)</small></a></li>
                         }
                     </ul>
 
@@ -44,27 +43,11 @@
             </div>
 
             <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
-                <div class="row">
-                    @foreach (var p in Model.Pro)
-                    {
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <div class="tag-sale">ON SALE</div>
-                                    <div width="100px" height="100px"><img  style=" object-fit: contain;" src="@Url.Content(p.ProductPicture)" alt=""></div>
-                                    <div class="pi-links">
-                                        <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                                        <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                                    </div>
-                                </div>
-                                <div class="pi-text">
-                                    <h6>@p.SaleUnitPrice</h6>
-                                    <h4>@p.ProductName</h4>
-                                    <p>@p.Description</p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr />
+                <div class="row" id="filterPiriceProducts">
+                   @{
+                       FilterProductMV model = new FilterProductMV();
+                       model.Products = Model.Pro;
+                       Html.RenderPartial("FilterProducts",model);
                     }
 
 
@@ -78,14 +61,69 @@
 </section>
 <!-- Category section end -->
 @*<script>
-    var priceSlider = $("slide-range").slider({
+        var priceSlider = $("slide-range").slider({
+            range: true,
+            min: $("slide-range").attr("data-min", 0),
+            max: $("slide-range").attr("data-max", 100),
+            values: [0, 100],
+            slide: function (event, ui) {
+                //$("").val(ui[0]);
+                //$("").val(ui[1]);
+            }
+        });
+    </script>*@
+<script src="~/Scripts/jquery-3.2.1.min.js"></script>
+
+<script src="~/Content/Customer/js/jquery-ui.min.js"></script>
+<script>
+
+    /*-------------------
+        Range Slider
+    --------------------- */
+    var calltimeout;
+    var rangeSlider = $(".price-range"),
+        minamount = $("#minamount"),
+        maxamount = $("#maxamount"),
+        minPrice = 0,
+        maxPrice = @Model.MaxPrice;
+    rangeSlider.slider({
         range: true,
-        min: $("slide-range").attr("data-min", 0),
-        max: $("slide-range").attr("data-max", 100),
-        values: [0, 100],
+        min: minPrice,
+        max: maxPrice,
+        values: [minPrice, maxPrice],
         slide: function (event, ui) {
-            //$("").val(ui[0]);
-            //$("").val(ui[1]);
+
+            var minPrice = ui.values[0];
+            var maxPrice = ui.values[1];
+
+            minamount.val('$' + minPrice);
+            maxamount.val('$' + maxPrice);
+
+            clearTimeout(calltimeout);
+            calltimeout = setTimeout(GetData,2000);
         }
     });
-</script>*@
+    minamount.val('$' + rangeSlider.slider("values", 0));
+    maxamount.val('$' + rangeSlider.slider("values", 1));
+
+
+        //kkkkkkkkkkkkkkkkkk
+    function GetData() {
+       
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("FilterProducts", "Home")',
+            data: {
+                minimumPrice: rangeSlider.slider("values", 0),
+                maximunPrice: rangeSlider.slider("values", 1)
+            },
+            success: function (data) {
+               // alert(data);
+                $("#filterPiriceProducts").html(data);
+            }
+            
+        });
+        }
+        //kkkkkkkkkkkkkkkkkkkk
+
+</script>

@@ -1,0 +1,50 @@
+﻿@using ERP.DatabaseLayer
+
+@{
+    int number = 0;
+    //Model3 db = new Model3();
+    BusinessERP_DBEntities db = new BusinessERP_DBEntities();
+    tblCustomer c = (tblCustomer)Session["Customer"];
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    ViewBag.Title = "Customer Order History";
+}
+
+<center>
+    <h2>Customer Order History</h2>
+</center>
+
+
+<table align="center" class="tabel table-bordered table-responsive" width="100%">
+    <tr style="background-color:red; color:floralwhite">
+        <th style="text-align: center">Sr #</th>
+        <th style="text-align: center">Order Number</th>
+        <th style="text-align: center">Customer Name</th>
+        <th style="text-align: center">Customer Email</th>
+        <th style="text-align: center">Customer Address</th>
+        <th style="text-align: center">Customer Contact</th>
+        <th style="text-align: center">Order Status</th>
+        <th style="text-align: center">Order Date</th>
+        <th colspan="2" style="text-align: center">Action</th>
+    </tr>
+
+    @foreach (var o in db.tblOrders.Where(x => x.OrderType == "Sale" && x.Status=="Active"))
+    {
+
+        if (o.CustomerFID == c.CustomerID)
+        {
+            number++;
+            <tr>
+                <td align="center">@number</td>
+                <td align="center">Order-@o.OrderID</td>
+                <td align="center">@o.OrderName</td>
+                <td align="center">@o.OrderEmail</td>
+                <td align="center">@o.OrderAddress</td>
+                <td align="center">@o.OrderContact</td>
+                <td align="center">@o.OrderStatus</td>
+                <td align="center">@DateTime.Parse(o.OrderDate.ToString()).ToLongDateString()</td>
+                <td align="center"><a href="@Url.Action("OrderCancellation","Customers", new { id = o.OrderID })" class="btn btn-danger">Cancel Order</a></td>
+                <td align="center"><a href="@Url.Action("PrintSaleInvoice","Customers", new { id = o.OrderID })" class="btn btn-success">View Invoice</a></td>
+            </tr>
+        }
+    }
+</table>

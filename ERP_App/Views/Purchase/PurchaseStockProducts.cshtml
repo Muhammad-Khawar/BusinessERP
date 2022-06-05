@@ -4,266 +4,268 @@
     ViewBag.Title = "Purchase";
 }
 <!-- DATATABLE DEMO 2-->
-@using (Html.BeginForm("PurchaseStockProducts", "Purchase", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div id="showdata">
+    @using (Html.BeginForm("PurchaseStockProducts", "Purchase", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.HiddenFor(u => u.CompanyID)
-    @Html.HiddenFor(u => u.BranchID)
-    @Html.HiddenFor(u => u.UserID)
+        @Html.HiddenFor(u => u.CompanyID)
+        @Html.HiddenFor(u => u.BranchID)
+        @Html.HiddenFor(u => u.UserID)
 
-<div class="row">
-    <div class="col-lg-9">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">New Purchase</div>
-                @ViewBag.Message
-            </div>
-            <div class="card-body">
-                <div class="form-horizontal">
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ProductID, "Product :", htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.DropDownList("ProductID", null, "Select Product", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })
-                                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.PurchaseQuantity, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.PurchaseQuantity, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.PrevoiusPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.PrevoiusPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.PrevoiusPurchaseUnitPrice, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.CurrentPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.CurrentPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.CurrentPurchaseUnitPrice, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.SaleUnitPrice, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.SaleUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.SaleUnitPrice, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ManufactureDate, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.ManufactureDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ManufactureDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.ExpireDate, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.ExpireDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                            <div>
-                                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">New Purchase</div>
+                        @ViewBag.Message
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Add Cart" class="btn btn-primary" />
+                    <div class="card-body">
+                        <div class="form-horizontal">
+
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.ProductID, "Product :", htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.DropDownList("ProductID", null, "Select Product", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })
+                                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.PurchaseQuantity, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PurchaseQuantity, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.PrevoiusPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.PrevoiusPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PrevoiusPurchaseUnitPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.CurrentPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.CurrentPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.CurrentPurchaseUnitPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.SaleUnitPrice, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.SaleUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.SaleUnitPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.ManufactureDate, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.ManufactureDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ManufactureDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.ExpireDate, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ExpireDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                                    <div>
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Add Cart" class="btn btn-primary" />
+                                </div>
+                            </div>
                         </div>
+
+                        <hr />
+                        <h4>Purchase Cart</h4>
+                        <hr />
+
+                        <table class="table table-striped my-4 w-100" id="datatable2">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Product Name
+                                    </th>
+
+                                    <th>
+                                        Product Quantity
+                                    </th>
+
+                                    <th>
+                                        Expiry Date
+                                    </th>
+                                    <th>
+                                        Manufacture Date
+                                    </th>
+                                    <th>Previous Purchase Unit Price</th>
+                                    <th>Current Purchase Unit Price</th>
+                                    <th>
+                                        Item Cost
+                                    </th>
+                                    <th>
+                                        Sale Unit Price
+                                    </th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.PurchaseItemList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ProductName)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Quantity)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ExpiryDate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Manufacture)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PreviousPurchaseUnitPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CurrentPurchaseUnitPrice)
+                                        </td>
+                                        <td>
+                                            @(item.Quantity * item.CurrentPurchaseUnitPrice)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SaleUnitPrice)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Delete", "DeletePurchaseItem", new { id = item.PurchaseCartDetailID }, new { @class = "btn btn-warning" })
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <hr />
-                <h4>Purchase Cart</h4>
-                <hr />
-
-                <table class="table table-striped my-4 w-100" id="datatable2">
-                    <thead>
-                        <tr>
-                            <th>
-                                Product Name
-                            </th>
-
-                            <th>
-                                Product Quantity
-                            </th>
-
-                            <th>
-                                Expiry Date
-                            </th>
-                            <th>
-                                Manufacture Date
-                            </th>
-                            <th>Previous Purchase Unit Price</th>
-                            <th>Current Purchase Unit Price</th>
-                            <th>
-                                Item Cost
-                            </th>
-                            <th>
-                                Sale Unit Price
-                            </th>
-
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.PurchaseItemList)
-                        {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProductName)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Quantity)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ExpiryDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Manufacture)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PreviousPurchaseUnitPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CurrentPurchaseUnitPrice)
-                            </td>
-                            <td>
-                                @(item.Quantity * item.CurrentPurchaseUnitPrice)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SaleUnitPrice)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Delete", "DeletePurchaseItem", new { id = item.PurchaseCartDetailID }, new { @class = "btn btn-warning" })
-
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card b mb-2">
-            <div class="card-header bb">
-                <h4 class="card-title">Order Supplier</h4>
-            </div>
-            <div class="card-body bt">
-                <h4 class="b0">Select Supplier</h4>
-                @Html.DropDownList("SupplierID", null, "--Select Supplier--", htmlAttributes: new { @class = "form-control", @onchange = "SelectedSupplier()" })
-                @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
-            </div>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>ContactNo</td>
-                        <td>
-                            <div class="text-right text-bold"><label id="suppliercontactno"></label></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>
-                            <div class="text-right text-bold"><label id="supplieraddress"></label></div>
-                        </td>
-                    </tr>
-                  
-                </tbody>
-            </table>
-           
-        </div>
-        <div class="card b mb-2">
-            <div class="card-header bb">
-                <h4 class="card-title">Order Summnary</h4>
-            </div>
-            <div class="card-body bt">
-                <h4 class="b0">Order #65487</h4>
-            </div>
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <td>Subtotal</td>
-                        <td>
-                            @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control", @id = "subtotal", @readonly = "readonly" } })
-                            @Html.ValidationMessageFor(model => model.OrderSummary.SubTotal, "", new { @class = "text-danger" })
+            <div class="col-lg-3">
+                <div class="card b mb-2">
+                    <div class="card-header bb">
+                        <h4 class="card-title">Order Supplier</h4>
+                    </div>
+                    <div class="card-body bt">
+                        <h4 class="b0">Select Supplier</h4>
+                        @Html.DropDownList("SupplierID", null, "--Select Supplier--", htmlAttributes: new { @class = "form-control", @onchange = "SelectedSupplier()" })
+                        @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                    </div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>ContactNo</td>
+                                <td>
+                                    <div class="text-right text-bold"><label id="suppliercontactno"></label></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Address</td>
+                                <td>
+                                    <div class="text-right text-bold"><label id="supplieraddress"></label></div>
+                                </td>
+                            </tr>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Estimated Tax</td>
-                        <td>
-                            @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control", @id = "estimatedfee", @onchange = "CalculateOrderTotal()" } })
-                            @Html.ValidationMessageFor(model => model.OrderSummary.EstimatedTax, "", new { @class = "text-danger" })
+                        </tbody>
+                    </table>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Shiping</td>
-                        <td>
-                            @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control", @id = "shippingfee", @onchange = "CalculateOrderTotal()" } })
-                            @Html.ValidationMessageFor(model => model.OrderSummary.ShippingFee, "", new { @class = "text-danger" })
+                </div>
+                <div class="card b mb-2">
+                    <div class="card-header bb">
+                        <h4 class="card-title">Order Summnary</h4>
+                    </div>
+                    <div class="card-body bt">
+                        <h4 class="b0">Order #65487</h4>
+                    </div>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>
+                                    @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control", @id = "subtotal", @readonly = "readonly" } })
+                                    @Html.ValidationMessageFor(model => model.OrderSummary.SubTotal, "", new { @class = "text-danger" })
 
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="card-body">
-                <div class="clearfix">
-                    <div class="float-right text-right">
-                        <div id="ordertotal">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Estimated Tax</td>
+                                <td>
+                                    @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control", @id = "estimatedfee", @onchange = "CalculateOrderTotal()" } })
+                                    @Html.ValidationMessageFor(model => model.OrderSummary.EstimatedTax, "", new { @class = "text-danger" })
 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Shiping</td>
+                                <td>
+                                    @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control", @id = "shippingfee", @onchange = "CalculateOrderTotal()" } })
+                                    @Html.ValidationMessageFor(model => model.OrderSummary.ShippingFee, "", new { @class = "text-danger" })
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-right text-right">
+                                <div id="ordertotal">
+
+                                </div>
+                                <div class="text-sm">PKR</div>
+                            </div>
+                            <div class="float-left text-bold text-dark">ORDER TOTAL</div>
                         </div>
-                        <div class="text-sm">PKR</div>
                     </div>
-                    <div class="float-left text-bold text-dark">ORDER TOTAL</div>
-                </div>
-            </div>
 
-            <div class="card-body">
-                <div class="clearfix">
-                    <div class="float-left text-left">
-                       <label>Is Order Payment is Paid?</label>
-                        <input type="checkbox" id="ispaymentispaid"/>
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <div class="float-left text-left">
+                                <label>Is Order Payment is Paid?</label>
+                                <input type="checkbox" id="ispaymentispaid" />
+                            </div>
+                            <div class="float-left text-bold text-dark">ORDER TOTAL</div>
+                        </div>
                     </div>
-                    <div class="float-left text-bold text-dark">ORDER TOTAL</div>
-                </div>
-            </div>
 
-            <div class="card-body">
-                <p>
-                    <button class="btn btn-primary btn-block" type="button" onclick="CheckoutPurchase()">CHECKOUT</button>
-                </p>
-                <small class="text-muted">* To use this method you must be registered first</small>
+                    <div class="card-body">
+                        <p>
+                            <button class="btn btn-primary btn-block" type="button" onclick="CheckoutPurchase()">CHECKOUT</button>
+                        </p>
+                        <small class="text-muted">* To use this method you must be registered first</small>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </div>
-}
 <script src="~/Scripts/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -328,6 +330,8 @@
             url: "/Purchase/CheckoutPurchase?supplierid=" + supplierID + "&ispaymentispaid=" + ispaymentispaid + "&estimatedtax=" + purchase_estimatedfee + "&shippingfee=" + purchase_shippingfee + "&subtotal=" + purchase_subtotal,
             data: [],
             success: function (data) {
+                console.log(data);
+                $("#showdata").html(data);
             }
         });
     }

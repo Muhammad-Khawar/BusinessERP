@@ -9,5 +9,6 @@ namespace ERP_App.Models
     {
         public List<CategoryMV> Cat { get; set; }
         public List<StockMV> Pro { get; set; }
+        public double MaxPrice { get; set; }
     }
 }

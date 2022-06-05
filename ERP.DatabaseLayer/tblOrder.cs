@@ -28,7 +28,10 @@ namespace ERP.DatabaseLayer
         public string OrderEmail { get; set; }
         public string OrderContact { get; set; }
         public string OrderAddress { get; set; }
+        public Nullable<int> CustomerFID { get; set; }
+        public string Status { get; set; }
     
+        public virtual tblCustomer tblCustomer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblOrderDetail> tblOrderDetails { get; set; }
     }

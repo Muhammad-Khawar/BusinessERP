@@ -1,4 +1,4 @@
-﻿
+﻿@using ERP_App.Models
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -60,9 +60,14 @@
                             <div class="up-item">
                                 <div class="shopping-card">
                                     <i class="flaticon-bag"></i>
-                                    <span>0</span>
+                                    @if (Session["myCart"] != null)
+                                    {
+                                        List<StockMV> list = (List<StockMV>)Session["myCart"];
+                                        <span>@list.Count()</span>
+                                    }
+
                                 </div>
-                                <a href="~/Content/Customer/#">Shopping Cart</a>
+                                <a href="@Url.Content("~/Home/Cart")">Shopping Cart</a>
                             </div>
                         </div>
                     </div>
@@ -78,6 +83,26 @@
                     <li><a href="@Url.Action("Shop","Home")">Shop</a></li>
                     <li><a href="@Url.Action("ContactUs","Home")">Contact</a></li>
                     <li><a href="@Url.Action("FeedBack","Home")">FeedBack</a></li>
+                    <li>
+                        <a href="#">Customer</a>
+                        <ul class="sub-menu">
+                            @if (Session["Customer"] != null)
+                            {
+                                <li><a href="@Url.Action("Index","Customers")">Manage Account</a></li>
+                                <li><a href="@Url.Action("CustomerHistory","Customers")">Order History</a></li>
+                                <li><a href="@Url.Action("CancelledOrder","Customers")">Cancelled Order</a></li>
+                                <li><a href="@Url.Action("Logout","Customers")">Customer Logout</a></li>
+
+                            }
+                            else
+                            {
+                                <li><a href="@Url.Action("Create","Customers")">Create Account</a></li>
+                                <li><a href="@Url.Action("Login","Customers")">Customer Login</a></li>
+                            }
+
+
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>

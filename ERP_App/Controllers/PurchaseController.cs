@@ -67,15 +67,22 @@ namespace ERP_App.Controllers
             }
             purchaseitems.PurchaseItemList = list;
             purchaseitems.OrderSummary = new PurchaseCartSummaryMV() {  SubTotal = subTotal};
+          
             ViewBag.ProductID = new SelectList(DB.tblStocks.Where(s=>s.BranchID == branchid && s.CompanyID == companyid).ToList(), "ProductID", "ProductName","0");
-            if(Session["SupplierID"] == null)
-            {
-                ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", "0");
-            }
-            else
-            {
-                ViewBag.SupplierID = Session["SupplierID"];
-            }
+            
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            //if(Session["SupplierID"] == null)
+            //{
+            //    ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", "0");
+            //}
+            //else
+            //{
+            //    ViewBag.SupplierID = Session["SupplierID"];
+            //}
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            
+            
+            ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", "0");
             return View(purchaseitems);
         }
         [HttpPost]
@@ -139,6 +146,7 @@ namespace ERP_App.Controllers
 
             var purchaseitems = new PurchaseCartMV();
             var list = new List<PurchaseItemsMV>();
+            double subTotal = 0;
             foreach (var product in stock)
             {
                 var item = new PurchaseItemsMV();
@@ -165,14 +173,20 @@ namespace ERP_App.Controllers
                 item.CategoryName = product.tblStock.tblCategory.categoryName;
                 
                 list.Add(item);
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                subTotal = subTotal + ((double)product.purchaseUnitPrice * product.PurchaseQuantity);
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
             }
             purchaseCartMV.PurchaseItemList = list;
-            
+            //kkkkkkkkkkkkkkkkk
+            purchaseCartMV.OrderSummary = new PurchaseCartSummaryMV() { SubTotal = subTotal };
+            //kkkkkkkkkkkkkkkkk
             ViewBag.ProductID = new SelectList(DB.tblStocks.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "ProductID", "ProductName", purchaseCartMV.ProductID);
             ViewBag.SupplierID = new SelectList(DB.tblSuppliers.Where(s => s.BranchID == branchid && s.CompanyID == companyid).ToList(), "SupplierID", "SupplierName", purchaseCartMV.SupplierID);
-            Session["SupplierID"] = ViewBag.SupplierID;
-            //return View(purchaseCartMV);
-            return RedirectToAction("PurchaseStockProducts");
+            //Session["SupplierID"] = ViewBag.SupplierID;
+            return View(purchaseCartMV);
+            //return RedirectToAction("PurchaseStockProducts");
         }
         public ActionResult DeletePurchaseItem(int ? id)
         {
@@ -442,7 +456,7 @@ namespace ERP_App.Controllers
                     DB.Database.ExecuteSqlCommand("TRUNCATE TABLE tblPurchaseCartDetail");
 
                     transaction.Commit();
-                    return RedirectToAction("PrintPurchaseInvoice",new { supplierinvoiceid = invoiceheader.SupplierInvoiceID });
+                    return RedirectToAction("PrintPurchaseInvoice",new { supplierinvoiceid = invoiceheader.SupplierInvoiceID});
                     
                 }
                 catch (Exception)

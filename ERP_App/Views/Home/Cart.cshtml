@@ -1,4 +1,5 @@
 ﻿@using ERP_App.Models
+@using ERP.DatabaseLayer
 @{
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
@@ -77,7 +78,10 @@
                     </div>
                     <div class="total-cost">
                         <div class="row">
-                            <div class="col-9">
+                            <div class="col-5">
+                                <h6><span><a style="color:white" href="@Url.Action("Shop","Home")">Continue Shopping>>>></a></span></h6>
+                            </div>
+                            <div class="col-4">
                                 <h6><span>@totalQty</span></h6>
                             </div>
                             <div class="col-3">
@@ -91,13 +95,28 @@
 
             @using (Html.BeginForm("PayNow", "Home", FormMethod.Post, new { @class = "promo-code-form" }))
             {
-                <div class="col-lg-6" style="float:right;">
-                    <h4 style="text-align:center;">Customer Information</h4><br />
-                    <input type="text" placeholder="Enter Customer Name" name="OrderName" required>
-                    <input type="text" placeholder="Enter your Email" name="OrderEmail" required>
-                    <input type="text" placeholder="Enter your Phone No" name="OrderContact" required>
-                    <input type="text" placeholder="Enter your Address" name="OrderAddress" required>
-                </div>
+                
+        <div class="col-lg-6" style="float:right;">
+            <h4 style="text-align:center;">Customer Information</h4>
+            <h5><a class="fa fa-user" href="@Url.Action("Login","Customers")" style="text-decoration:none;color:mediumvioletred;">Customer Login</a></h5>
+            <br />
+            @if (Session["Customer"] != null)
+            {
+                tblCustomer c = (tblCustomer)Session["Customer"];
+                <input type="text" placeholder="Enter Customer Name" name="OrderName" value="@c.Customername" required>
+                <input type="text" placeholder="Enter your Email" name="OrderEmail" value="@c.CustomerEmail" required>
+                <input type="text" placeholder="Enter your Phone No" name="OrderContact" value="@c.CustomerContact" required>
+                <input type="text" placeholder="Enter your Address" name="OrderAddress" value="@c.CustomerAddress" required>
+            }
+            else
+            {
+                <input type="text" placeholder="Enter Customer Name" name="OrderName" required>
+                <input type="text" placeholder="Enter your Email" name="OrderEmail" required>
+                <input type="text" placeholder="Enter your Phone No" name="OrderContact" required>
+                <input type="text" placeholder="Enter your Address" name="OrderAddress" required>
+            }
+
+        </div>
                 <div class="col-lg-6" style="float:left;">
                     <h4 style="text-align:center;">Order Summary</h4><br />
                     <div class="d-flex">
@@ -108,10 +127,7 @@
                         <h6>Discount</h6>
                         <div class="ml-auto font-weight-bold">Rs: 0</div>
                     </div>
-                    <div class="d-flex">
-                        <h6>Coupon Discount</h6>
-                        <div class="ml-auto font-weight-bold">Rs: 0</div>
-                    </div>
+
                     <div class="d-flex">
                         <h6>Tax</h6>
                         <div class="ml-auto font-weight-bold">Rs: 0</div>
@@ -120,12 +136,22 @@
                         <h6>Shipping Cost</h6>
                         <div class="ml-auto font-weight-bold">Free</div>
                     </div>
+                    <div>
+                        <h6>Payment Mode</h6>
+                        <div>
+                            <input type="radio" style="height:15px; width:15px;" name="OrderStatus" value="Cash on Delivery" checked />Cash on Delivery
+                            <input type="radio" style="height:15px; width: 15px;" name="OrderStatus" value="Paid" /> Pay with Paypal
+                        </div>
+                    </div>
                     <div class="d-flex">
                         <h5>Grand Total</h5>
                         <div class="ml-auto font-weight-bold">Rs: @totalBill</div>
                     </div>
                 </div>
-                <input class="site-btn" type="submit" value="CHeckout & Pay Now">
+                if (Session["myCart"] != null)
+                {
+                    <input class="site-btn" type="submit" value="CHeckout">
+                }
             }
 
 

@@ -20,17 +20,20 @@ namespace ERP.DatabaseLayer
             this.tblCustomerInvoices = new HashSet<tblCustomerInvoice>();
             this.tblCustomerReturnInvoices = new HashSet<tblCustomerReturnInvoice>();
             this.tblCustomerReturnPayments = new HashSet<tblCustomerReturnPayment>();
+            this.tblOrders = new HashSet<tblOrder>();
         }
     
         public int CustomerID { get; set; }
         public string Customername { get; set; }
         public string CustomerContact { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerPassword { get; set; }
         public string CustomerArea { get; set; }
         public string CustomerAddress { get; set; }
         public string Description { get; set; }
-        public int BranchID { get; set; }
-        public int CompanyID { get; set; }
-        public int UserID { get; set; }
+        public Nullable<int> BranchID { get; set; }
+        public Nullable<int> CompanyID { get; set; }
+        public Nullable<int> UserID { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCompany tblCompany { get; set; }
@@ -41,5 +44,7 @@ namespace ERP.DatabaseLayer
         public virtual ICollection<tblCustomerReturnInvoice> tblCustomerReturnInvoices { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblCustomerReturnPayment> tblCustomerReturnPayments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblOrder> tblOrders { get; set; }
     }
 }

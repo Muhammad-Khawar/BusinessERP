@@ -204,13 +204,22 @@
                             <li class="nav-heading ">
                                 <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
                             </li>
-                          
+
                             <li class=" ">
                                 <a href="@Url.Content("~/Dashboard/HeadOffice")" title="Dashboard">
                                     <em class="icon-layers"></em>
                                     <span>Dashboard</span>
                                 </a>
-                               
+                            </li>
+                            <li class=" ">
+                                <a href="@Url.Content("~/Users/Index")" title="Account">
+                                    <span data-localize="sidebar.nav.form.STANDARD">Account</span>
+                                </a>
+                            </li>
+                            <li class=" ">
+                                <a href="@Url.Content("~/Companies/Index")" title="Company">
+                                    <span data-localize="sidebar.nav.form.STANDARD">Manag Company Detail</span>
+                                </a>
                             </li>
                             <li class="nav-heading ">
                                 <span data-localize="sidebar.heading.COMPONENTS">Components</span>
@@ -231,7 +240,7 @@
                                                 <span data-localize="sidebar.nav.element.BUTTON">User Types</span>
                                             </a>
                                         </li>
-                                       
+
                                     </ul>
                                 </li>
                             }
@@ -244,7 +253,6 @@
                                     </a>
 
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="forms">
-
                                         <li class="sidebar-subnav-header">Companies</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/company/companies")" title="Standard">
@@ -256,82 +264,82 @@
                                                 <span data-localize="sidebar.nav.form.EXTENDED">Branch Types</span>
                                             </a>
                                         </li>
-                                      
+
                                     </ul>
 
                                 </li>
                             }
-                           
+
+                            <li class=" ">
+                                <a href="#charts" title="Accounts" data-toggle="collapse">
+                                    <em class="icon-graph"></em>
+                                    <span data-localize="sidebar.nav.chart.CHART">Accounts</span>
+                                </a>
+                                <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
+                                    <li class="sidebar-subnav-header">Setting</li>
+                                    @if (usertypeid == 1 || usertypeid == 2)
+                                    {
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Account Activity">
+                                                <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Account Heads">
+                                                <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Financial Years">
+                                                <span>Financial Years</span>
+                                            </a>
+                                        </li>
+                                    }
+                                    @if (usertypeid > 2)
+                                    {
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Accounts/AllAccountControls")" title="All Account Control">
+                                                <span>Account Control</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Accounts/AllAccountSubControls")" title="All Account Control">
+                                                <span>Account Sub Control</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/AccountsSettiing/BranchAccountSetting")" title="Account Flow Setting">
+                                                <span>Account Flow Setting</span>
+                                            </a>
+                                        </li>
+
+                                    }
+                                </ul>
+                            </li>
+
+                            @if (usertypeid >= 3)
+                            {
                                 <li class=" ">
-                                    <a href="#charts" title="Accounts" data-toggle="collapse">
-                                        <em class="icon-graph"></em>
-                                        <span data-localize="sidebar.nav.chart.CHART">Accounts</span>
+                                    <a href="#tables" title="Tables" data-toggle="collapse">
+                                        <em class="icon-grid"></em>
+                                        <span data-localize="sidebar.nav.table.TABLE">Branches</span>
                                     </a>
-                                    <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
+                                    <ul class="sidebar-nav sidebar-subnav collapse" id="tables">
                                         <li class="sidebar-subnav-header">Setting</li>
-                                        @if (usertypeid == 1 || usertypeid == 2)
-                                        {
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Account Activity">
-                                                    <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Account Heads">
-                                                    <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Financial Years">
-                                                    <span>Financial Years</span>
-                                                </a>
-                                            </li>
-                                        }
-                                        @if (usertypeid > 2)
-                                        {
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/Accounts/AllAccountControls")" title="All Account Control">
-                                                    <span>Account Control</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/Accounts/AllAccountSubControls")" title="All Account Control">
-                                                    <span>Account Sub Control</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/AccountsSettiing/BranchAccountSetting")" title="Account Flow Setting">
-                                                    <span>Account Flow Setting</span>
-                                                </a>
-                                            </li>
-                                          
-                                        }
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Branch/AllCompanyBranches")" title="Company Branches">
+                                                <span data-localize="sidebar.nav.table.STANDARD">Branches</span>
+                                            </a>
+                                        </li>
+                                        <li class=" ">
+                                            <a href="@Url.Content("~/Employee/BranchEmployees")" title="Employees">
+                                                <span data-localize="sidebar.nav.table.EXTENDED">Employees</span>
+                                            </a>
+                                        </li>
+
                                     </ul>
                                 </li>
-                            
-                            @if (usertypeid >= 3)
-                                {
-                                    <li class=" ">
-                                        <a href="#tables" title="Tables" data-toggle="collapse">
-                                            <em class="icon-grid"></em>
-                                            <span data-localize="sidebar.nav.table.TABLE">Branches</span>
-                                        </a>
-                                        <ul class="sidebar-nav sidebar-subnav collapse" id="tables">
-                                            <li class="sidebar-subnav-header">Setting</li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/Branch/AllCompanyBranches")" title="Company Branches">
-                                                    <span data-localize="sidebar.nav.table.STANDARD">Branches</span>
-                                                </a>
-                                            </li>
-                                            <li class=" ">
-                                                <a href="@Url.Content("~/Employee/BranchEmployees")" title="Employees">
-                                                    <span data-localize="sidebar.nav.table.EXTENDED">Employees</span>
-                                                </a>
-                                            </li>
-              
-                                        </ul>
-                                    </li>
-                                }
+                            }
                             @if (usertypeid >= 3)
                             {
                                 <li class=" ">
@@ -377,9 +385,9 @@
                                                 <span data-localize="sidebar.nav.pages.REGISTER">Supplier</span>
                                             </a>
                                         </li>
-                                      
+
                                     }
-                                    </ul>
+                                </ul>
                             </li>
 
 
@@ -390,7 +398,7 @@
                                 </a>
                                 <ul class="sidebar-nav sidebar-subnav collapse" id="extras">
                                     <li class="sidebar-subnav-header">Purchase</li>
-                                   
+
                                     <li class=" ">
                                         <a href="@Url.Content("~/Purchase/PurchaseStockProducts")" title="New Purchase">
                                             <span>New Purchase</span>
@@ -416,10 +424,10 @@
                                             <span>Stock Report</span>
                                         </a>
                                     </li>
-                                   
+
                                 </ul>
                             </li>
-                          
+
                         </ul>
                         <!-- END sidebar nav-->
                     </nav>

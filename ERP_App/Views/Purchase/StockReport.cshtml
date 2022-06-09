@@ -51,8 +51,8 @@
                 <td>@p.Description</td>
                 <td>@p.CurrentPurchaseUnitPrice</td>
                 <td>@p.SaleUnitPrice</td>
-                @*<td>@p.tblOrderDetails.Where(x => x.tblOrder.OrderDate <= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity)</td>*@
-                <td>@p.Quantity</td>
+                <td>@p.tblOrderDetails.Where(x => x.tblOrder.OrderDate <= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity)</td>
+                @*<td>@p.Quantity</td>*@
             </tr>
         }
     </tbody>

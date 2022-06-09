@@ -108,14 +108,10 @@
     </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
+
+        <a class="btn btn-primary" href="@Url.Action("AllCompanyBranches","Branch")">Back</a>
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </div>
 }
-<div>
-    @Html.ActionLink("Back", "AllCompanyBranches","Branch",null,new {  @class = "btn btn-outline-default"})
-</div>
-
 

@@ -1,9 +1,11 @@
-﻿@using ERP_App.Models
+﻿@model ERP_App.Models.FilterProductMV
+@using ERP_App.Models
 @using ERP.DatabaseLayer
 @{
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
 @{
+    BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
     int row = 0;
     int totalQty = 0;
     decimal totalBill = 0;
@@ -41,6 +43,11 @@
                                                 <div class="pc-title">
                                                     <h3>@item.ProductName</h3>
                                                     <p>@item.Description</p>
+                                                    @{ 
+                                                        var available = DB.tblStocks.Where(x => x.ProductID == item.ProductID).Select(x=>x.Quantity).FirstOrDefault();
+                                                    }
+                                                    <p>Available Stock: @available</p>
+
                                                 </div>
                                             </td>
                                             <td>
@@ -95,7 +102,7 @@
 
             @using (Html.BeginForm("PayNow", "Home", FormMethod.Post, new { @class = "promo-code-form" }))
             {
-                
+
         <div class="col-lg-6" style="float:right;">
             <h4 style="text-align:center;">Customer Information</h4>
             <h5><a class="fa fa-user" href="@Url.Action("Login","Customers")" style="text-decoration:none;color:mediumvioletred;">Customer Login</a></h5>
@@ -103,16 +110,16 @@
             @if (Session["Customer"] != null)
             {
                 tblCustomer c = (tblCustomer)Session["Customer"];
-                <input type="text" placeholder="Enter Customer Name" name="OrderName" value="@c.Customername" required>
-                <input type="text" placeholder="Enter your Email" name="OrderEmail" value="@c.CustomerEmail" required>
-                <input type="text" placeholder="Enter your Phone No" name="OrderContact" value="@c.CustomerContact" required>
+                <input maxlength="20" min="3" id="onlycharacter" type="text" placeholder="Enter Customer Name" name="OrderName" value="@c.Customername" required><span id="errmsg"></span>
+                <input type="email" placeholder="Enter your Email" name="OrderEmail" value="@c.CustomerEmail" required>
+                <input id="onlynumber" type="text" placeholder="Enter your Phone No" name="OrderContact" value="@c.CustomerContact" required><span id="errmsg"></span>
                 <input type="text" placeholder="Enter your Address" name="OrderAddress" value="@c.CustomerAddress" required>
             }
             else
             {
-                <input type="text" placeholder="Enter Customer Name" name="OrderName" required>
-                <input type="text" placeholder="Enter your Email" name="OrderEmail" required>
-                <input type="text" placeholder="Enter your Phone No" name="OrderContact" required>
+                <input maxlength="20" min="3" id="onlycharacter" type="text" placeholder="Enter Customer Name" name="OrderName" required><span id="errmsg"></span>
+                <input type="email" placeholder="Enter your Email" name="OrderEmail" required>
+                <input id="onlynumber" type="text" placeholder="Enter your Phone No" name="OrderContact" required><span id="errmsg"></span>
                 <input type="text" placeholder="Enter your Address" name="OrderAddress" required>
             }
 
@@ -166,73 +173,52 @@
         <div class="section-title text-uppercase">
             <h2>Continue Shopping</h2>
         </div>
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
+        <div class="product-slider owl-carousel">
+            @foreach (var p in Model.Products)
+            {
                 <div class="product-item">
                     <div class="pi-pic">
-                        <div class="tag-new">New</div>
-                        <img src="./img/product/2.jpg" alt="">
+                        <img width="263px" height="300px" src="@Url.Content(p.ProductPicture)" alt="">
                         <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                         </div>
                     </div>
                     <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
+                        <h6>@p.SaleUnitPrice</h6>
+                        <p>@p.ProductName</p>
+                        <p>@p.Description</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/5.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/9.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="./img/product/1.jpg" alt="">
-                        <div class="pi-links">
-                            <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
+<script src="~/Content/Customer/js/jquery-3.2.1.min.js"></script>
 <!-- Related product section end -->
 <script type="text/javascript">
-    window.onload = function ()
-    { window.scrollBy(0, 180); }
+    window.onload = function () { window.scrollBy(0, 180); }
+    $(document).ready(function () {
+        //called when key is pressed in textbox
+        $("#onlynumber").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#onlycharacter").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+
 </script>

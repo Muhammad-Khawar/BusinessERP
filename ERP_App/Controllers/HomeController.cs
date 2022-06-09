@@ -14,13 +14,75 @@ namespace ERP_App.Controllers
     {
         private BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
         // GET: Home
-        public ActionResult IndexCustomer()
+        public ActionResult IndexCustomer(int? id)
         {
-            return View();
+            //var qty = DB.tblStocks.Where(x => x.IsActive == true && x.Quantity > 0).Max(x => x.Quantity);
+            var stock = DB.tblStocks.Where(x => x.IsActive == true && x.Quantity > 0).OrderByDescending(x=>x.Quantity).ToList();
+            //var stock = DB.tblStocks.Where(x=>x.IsActive==true && x.Quantity > 0).OrderByDescending(x=>x.ProductID).ToList();
+            if (id!=null)
+            {
+                stock = DB.tblStocks.Where(x=>x.ProductID ==id && x.IsActive == true && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
+            }
+            var list = new List<StockMV>();
+            foreach (var product in stock)
+            {
+                var item = new StockMV();
+                item.BranchID = product.BranchID;
+                item.CategoryID = product.CategoryID;
+                item.CompanyID = product.CompanyID;
+                item.CreatedBy = product.tblUser.UserName;
+                item.CurrentPurchaseUnitPrice = product.CurrentPurchaseUnitPrice;
+                item.Description = product.Description;
+                item.Manufacture = product.Manufacture;
+                item.ExpiryDate = product.ExpiryDate;
+                item.IsActive = product.IsActive;
+                item.ProductID = product.ProductID;
+                item.ProductName = product.ProductName;
+                item.Quantity = product.Quantity;
+                item.SaleUnitPrice = product.SaleUnitPrice;
+                item.StockTreshHoldQuantity = product.StockTreshHoldQuantity;
+                item.UserID = product.UserID;
+                item.CategoryName = product.tblCategory.categoryName;
+                item.ProductPicture = product.ProductPicture;
+                list.Add(item);
+            }
+            FilterProductMV p = new FilterProductMV();
+            p.Products = list;
+            return View(p);
         }
-        public ActionResult Cart()
+        public ActionResult Cart(int ? id)
         {
-            return View();
+            var stock = DB.tblStocks.Where(x => x.IsActive == true && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
+            if (id != null)
+            {
+                stock = DB.tblStocks.Where(x => x.ProductID == id && x.IsActive == true && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
+            }
+            var list = new List<StockMV>();
+            foreach (var product in stock)
+            {
+                var item = new StockMV();
+                item.BranchID = product.BranchID;
+                item.CategoryID = product.CategoryID;
+                item.CompanyID = product.CompanyID;
+                item.CreatedBy = product.tblUser.UserName;
+                item.CurrentPurchaseUnitPrice = product.CurrentPurchaseUnitPrice;
+                item.Description = product.Description;
+                item.Manufacture = product.Manufacture;
+                item.ExpiryDate = product.ExpiryDate;
+                item.IsActive = product.IsActive;
+                item.ProductID = product.ProductID;
+                item.ProductName = product.ProductName;
+                item.Quantity = product.Quantity;
+                item.SaleUnitPrice = product.SaleUnitPrice;
+                item.StockTreshHoldQuantity = product.StockTreshHoldQuantity;
+                item.UserID = product.UserID;
+                item.CategoryName = product.tblCategory.categoryName;
+                item.ProductPicture = product.ProductPicture;
+                list.Add(item);
+            }
+            FilterProductMV p = new FilterProductMV();
+            p.Products = list;
+            return View(p);
         }
         public ActionResult AddToCart(int id)
         {
@@ -135,7 +197,7 @@ namespace ERP_App.Controllers
      
             if (id == null)
             {
-                var stock = DB.tblStocks.ToList();
+                var stock = DB.tblStocks.Where(x=>x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
                 var list = new List<StockMV>();
                 foreach (var product in stock)
                 {
@@ -164,7 +226,7 @@ namespace ERP_App.Controllers
             }
             else
             {
-                var stock = DB.tblStocks.Where(p => p.CategoryID == id).ToList();
+                var stock = DB.tblStocks.Where(p => p.CategoryID == id && p.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
                 var list = new List<StockMV>();
                 foreach (var product in stock)
                 {
@@ -199,22 +261,22 @@ namespace ERP_App.Controllers
         {
             FilterProductMV model = new FilterProductMV();
             //kkkkkkkkkkkkkkkkkkkkkkkkk
-            var stock = DB.tblStocks.ToList();
+            var stock = DB.tblStocks.Where(x=>x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
             if(!string.IsNullOrEmpty(searchTerm))
             {
-                stock = stock.Where(x => x.ProductName.ToLower().Contains(searchTerm.ToLower())).ToList();
+                stock = stock.Where(x => x.ProductName.ToLower().Contains(searchTerm.ToLower()) && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
             }
             if(CategoryId.HasValue)
             {
-                stock = stock.Where(x => x.CategoryID == CategoryId).ToList();
+                stock = stock.Where(x => x.CategoryID == CategoryId).OrderByDescending(x => x.Quantity).ToList();
             }
             if(minimumPrice.HasValue)
             {
-                stock = stock.Where(x => x.SaleUnitPrice >= minimumPrice.Value).ToList();
+                stock = stock.Where(x => x.SaleUnitPrice >= minimumPrice.Value && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
             }
             if(maximunPrice.HasValue)
             {
-                stock = stock.Where(x => x.SaleUnitPrice <= maximunPrice.Value).ToList();
+                stock = stock.Where(x => x.SaleUnitPrice <= maximunPrice.Value && x.Quantity > 0).OrderByDescending(x => x.Quantity).ToList();
             }
             var list = new List<StockMV>();
             foreach (var product in stock)
@@ -310,7 +372,9 @@ namespace ERP_App.Controllers
                 DB.Entry(stockproduct).State = System.Data.Entity.EntityState.Modified;
                 DB.SaveChanges();
                 //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                
+                //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
                 var od = new tblOrderDetail();
                 int orderID = DB.tblOrders.Max(x => x.OrderID);

@@ -29,8 +29,15 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
-
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkk
             var branches = DB.tblBranches.Where(b => b.BrchID == branchid && b.CompanyID == companyid).ToList();
+            if (usertypeid == 1)
+            {
+                branches = DB.tblBranches.ToList();
+            }
+            //kkkkkkkkkkkkkkkkkkkkkkk
+            //var branches = DB.tblBranches.Where(b => b.BrchID == branchid && b.CompanyID == companyid).ToList();
+            
             var list = new List<BranchMV>();
             foreach (var branch in branches)
             {

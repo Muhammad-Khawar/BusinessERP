@@ -1,14 +1,9 @@
 ﻿@model IEnumerable<ERP_App.Models.CompanyMV>
-
-@{
+@{ 
     var usertypeid = 0;
     int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
     ViewBag.Title = "Index";
 }
-
-<h2>Company</h2>
-
-
 <table class="table">
     <tr>
         <th>
@@ -53,7 +48,6 @@
 
         </td>
     }
-
 </tr>
 }
 

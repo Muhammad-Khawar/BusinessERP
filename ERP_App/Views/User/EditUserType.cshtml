@@ -4,14 +4,14 @@
     ViewBag.Title = "EditUserType";
 }
 
-<h2>EditUserType</h2>
+<h2>Update User Type</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>tblUserType</h4>
+    
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserTypeID)
@@ -25,13 +25,9 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+
+            <a class="btn btn-primary" href="@Url.Action("AllUserTypes","User")">Back</a>
+            <input type="submit" value="Update" class="btn btn-primary" />
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

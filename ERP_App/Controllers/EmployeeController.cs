@@ -29,8 +29,15 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
-
-            var employees = DB.tblEmployees.Where(e => e.CompanyID == companyid && e.BranchID == branchid).ToList(); //specific branch k employees
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            var employees = DB.tblEmployees.Where(e => e.CompanyID == companyid && e.BranchID == branchid).ToList();
+            if (usertypeid == 1)
+            {
+                employees = DB.tblEmployees.ToList();
+            }
+            //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+            
+            //var employees = DB.tblEmployees.Where(e => e.CompanyID == companyid && e.BranchID == branchid).ToList(); //specific branch k employees
             var list = new List<EmployeeMV>();
             foreach (var employee in employees)
             {
@@ -115,7 +122,12 @@ namespace ERP_App.Controllers
                         newemployee.EmployeeID = employeemv.EmployeeID;
                         newemployee.MonthlySalary = employeemv.MonthlySalary;
                         newemployee.Name = employeemv.Name;
-                        newemployee.Photo = "~/Content/Template/img/user/employee.png";
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                        employeemv.Pro_Pic.SaveAs(Server.MapPath("~/ProductPicture/" + employeemv.Pro_Pic.FileName));
+                        newemployee.Photo = "~/ProductPicture/" + employeemv.Pro_Pic.FileName;
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
+                        //newemployee.Photo = "~/Content/Template/img/user/employee.png";
                         newemployee.Address = employeemv.Address;
                         newemployee.UserID = employeemv.UserID;
 
@@ -208,7 +220,15 @@ namespace ERP_App.Controllers
                         editemployee.EmployeeID = employeemv.EmployeeID;
                         editemployee.MonthlySalary = employeemv.MonthlySalary;
                         editemployee.Name = employeemv.Name;
-                      //  newemployee.Photo = "~/Content/Template/img/user/employee.png";
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+                        if (employeemv.Pro_Pic != null)
+                        {
+                            employeemv.Pro_Pic.SaveAs(Server.MapPath("~/ProductPicture/" + employeemv.Pro_Pic.FileName));
+                            editemployee.Photo = "~/ProductPicture/" + employeemv.Pro_Pic.FileName;
+                        }
+                        //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
+                        //  newemployee.Photo = "~/Content/Template/img/user/employee.png";
                         editemployee.Address = employeemv.Address;
 
                         DB.Entry(editemployee).State = System.Data.Entity.EntityState.Modified;
@@ -369,5 +389,6 @@ namespace ERP_App.Controllers
             }
             }
         }
+        
     }
 }

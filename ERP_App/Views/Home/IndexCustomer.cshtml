@@ -1,4 +1,7 @@
-﻿@{
+﻿@model ERP_App.Models.FilterProductMV
+@using ERP.DatabaseLayer
+@using ERP_App.Models
+@{
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
 
@@ -11,15 +14,16 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
                         <span style="text-decoration-color:black">New Arrivals</span>
-                        <h2 style="text-decoration-color:black">Welcome to INFINITY Shop</h2>
-                        <p style="text-decoration-color:black">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                        <a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
-                        <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>
+                        <h2 style="text-decoration-color:black">Welcome to SoleBox Shop</h2>
+                        <p style="text-decoration-color:black">Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience.</p>
+                        @*<a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
+
+                            <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
                     </div>
                 </div>
                 <div class="offer-card text-white">
                     <span>from</span>
-                    <h2>$29</h2>
+                    <h2>1999 Rs</h2>
                     <p>SHOP NOW</p>
                 </div>
             </div>
@@ -29,15 +33,15 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
                         <span>New Arrivals</span>
-                        <h2>Welcome to INFINITY Shop</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum sus-pendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. </p>
-                        <a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
-                        <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>
+                        <h2>Welcome to SoleBox Shop</h2>
+                        <p>Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience. </p>
+                        @*<a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
+                            <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
                     </div>
                 </div>
                 <div class="offer-card text-white">
                     <span>from</span>
-                    <h2>$29</h2>
+                    <h2>1999 Rs</h2>
                     <p>SHOP NOW</p>
                 </div>
             </div>
@@ -52,31 +56,31 @@
 <section class="features-section">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-4 p-0 feature">
-                <div class="feature-inner">
-                    <div class="feature-icon">
-                        <img src="~/Content/Customer/img/icons/1.png" alt="#">
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="~/Content/Customer/img/icons/1.png" alt="#">
+                        </div>
+                        <h2>Fast Secure Payments</h2>
                     </div>
-                    <h2>Fast Secure Payments</h2>
+                </div>
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="~/Content/Customer/img/icons/2.png" alt="#">
+                        </div>
+                        <h2>Premium Products</h2>
+                    </div>
+                </div>
+                <div class="col-md-4 p-0 feature">
+                    <div class="feature-inner">
+                        <div class="feature-icon">
+                            <img src="~/Content/Customer/img/icons/3.png" alt="#">
+                        </div>
+                        <h2>fast Delivery</h2>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 p-0 feature">
-                <div class="feature-inner">
-                    <div class="feature-icon">
-                        <img src="~/Content/Customer/img/icons/2.png" alt="#">
-                    </div>
-                    <h2>Premium Products</h2>
-                </div>
-            </div>
-            <div class="col-md-4 p-0 feature">
-                <div class="feature-inner">
-                    <div class="feature-icon">
-                        <img src="~/Content/Customer/img/icons/3.png" alt="#">
-                    </div>
-                    <h2>Free & fast Delivery</h2>
-                </div>
-            </div>
-        </div>
     </div>
 </section>
 <!-- Features section end -->
@@ -87,72 +91,23 @@
             <h2>LATEST PRODUCTS</h2>
         </div>
         <div class="product-slider owl-carousel">
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="#" alt="">
-                    <div class="pi-links">
-                        <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+            @foreach (var p in Model.Products)
+            {
+                <div class="product-item">
+                    <div class="pi-pic">
+                        <img width="263px" height="300px" src="@Url.Content(p.ProductPicture)" alt="">
+                        <div class="pi-links">
+                            <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                        </div>
+                    </div>
+                    <div class="pi-text">
+                        <h6>@p.SaleUnitPrice</h6>
+                        <p>@p.ProductName</p>
+                        <p>@p.Description</p>
                     </div>
                 </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <div class="tag-new">New</div>
-                    <img src="#" alt="">
-                    <div class="pi-links">
-                        <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Black and White Stripes Dress</p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="#" alt="">
-                    <div class="pi-links">
-                        <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="#" alt="">
-                    <div class="pi-links">
-                        <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
-            <div class="product-item">
-                <div class="pi-pic">
-                    <img src="#" alt="">
-                    <div class="pi-links">
-                        <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                        <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                    </div>
-                </div>
-                <div class="pi-text">
-                    <h6>$35,00</h6>
-                    <p>Flamboyant Pink Top </p>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
@@ -305,11 +260,12 @@
 <!-- Banner section -->
 <section class="banner-section">
     <div class="container">
-        <div class="banner" style="background-image: url('../../Content/Customer/img/banner-bg.jpg');">
+        
+        <div class="banner" style="background-image: url('../../Content/Customer/img/pic1.jpeg');">
             <div class="tag-new">NEW</div>
-            <span>New Arrivals</span>
-            <h2>STRIPED SHIRTS</h2>
-            <a href="~/Content/Customer/#" class="site-btn">SHOP NOW</a>
+            <span style="color:white;">New Arrivals</span>
+            <h2 style="color:white;">STRIPED Shoes</h2>
+            <a style="color:white;" href="~/Content/Customer/#" class="site-btn">SHOP NOW</a>
         </div>
     </div>
 </section>

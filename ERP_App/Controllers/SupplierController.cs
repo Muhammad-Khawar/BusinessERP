@@ -31,8 +31,12 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
             var list = new List<SupplierMV>();
-
-            var suppliers = DB.tblSuppliers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
+            var suppliers = DB.tblSuppliers.ToList();
+            if (usertypeid != 1)
+            {
+                suppliers = DB.tblSuppliers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
+            }
+            
             foreach (var supplier in suppliers)
             {
                 var gsupplier = new SupplierMV();

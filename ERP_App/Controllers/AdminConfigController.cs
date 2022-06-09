@@ -26,10 +26,10 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["UserID"]), out userid);
             int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
 
-            if (usertypeid != 1)
-            {
-                return RedirectToAction("Admin", "Dashboard");
-            }
+            //if (usertypeid != 1)
+            //{
+            //    return RedirectToAction("Admin", "Dashboard");
+            //}
             var list = new List<BranchTypeMV>();
             var branchtypes = DB.tblBranchTypes.ToList();
             foreach (var branchtype in branchtypes)

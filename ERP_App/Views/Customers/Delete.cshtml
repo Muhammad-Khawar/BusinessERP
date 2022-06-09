@@ -20,92 +20,95 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Customername)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Customername)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CustomerContact)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CustomerContact)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CustomerArea)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CustomerArea)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CustomerAddress)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CustomerAddress)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Description)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Description)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CustomerEmail)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CustomerEmail)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.CustomerPassword)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.CustomerPassword)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.tblBranch.BranchName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.tblBranch.BranchName)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.tblCompany.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.tblCompany.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.tblUser.FullName)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.tblUser.FullName)
             </dd>
-    
+
         </dl>
-    
-        @using (Html.BeginForm()) {
+
+        @using (Html.BeginForm())
+        {
             @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
+
+            <a class="btn btn-primary" href="@Url.Action("Index","Customers")">Back</a>
+            <input type="submit" value="Delete" class="btn btn-primary" />
+            @*<div class="form-actions no-color">
                 <input type="submit" value="Delete" class="btn btn-default" /> |
                 @Html.ActionLink("Back to List", "Index")
-            </div>
+            </div>*@
         }
     </div>
 </body>

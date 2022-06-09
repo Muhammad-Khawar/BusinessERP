@@ -33,7 +33,40 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
+            //var tblUsers = db.tblUsers.Include(t => t.tblUserType);
+            //if (usertypeid != 1 || usertypeid != 2)
+            //{
+            //    tblUsers = db.tblUsers.Where(x => x.UserID == userid).Include(t => t.tblUserType);
+            //}
+
             var tblUsers = db.tblUsers.Where(x=>x.UserID == userid).Include(t => t.tblUserType);
+            return View(tblUsers.ToList());
+        }
+        public ActionResult AllUser()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var tblUsers = db.tblUsers.Include(t => t.tblUserType);
+            //if (usertypeid != 1 || usertypeid != 2)
+            //{
+            //    tblUsers = db.tblUsers.Where(x => x.UserID == userid).Include(t => t.tblUserType);
+            //}
+
+            //var tblUsers = db.tblUsers.Where(x=>x.UserID == userid).Include(t => t.tblUserType);
             return View(tblUsers.ToList());
         }
 

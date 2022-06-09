@@ -17,8 +17,10 @@ namespace ERP_App.Controllers
         // GET: Customers
         public ActionResult Index()
         {
-            var tblCustomers = db.tblCustomers.Include(t => t.tblBranch).Include(t => t.tblCompany).Include(t => t.tblUser);
-            return View(tblCustomers.ToList());
+            var c = (tblCustomer)Session["Customer"];
+            
+            var customer = db.tblCustomers.Where(x=>x.CustomerID == c.CustomerID).ToList();
+            return View(customer);
         }
 
         // GET: Customers/Details/5
@@ -77,9 +79,6 @@ namespace ERP_App.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName", tblCustomer.BranchID);
-            ViewBag.CompanyID = new SelectList(db.tblCompanies, "CompanyID", "Name", tblCustomer.CompanyID);
-            ViewBag.UserID = new SelectList(db.tblUsers, "UserID", "FullName", tblCustomer.UserID);
             return View(tblCustomer);
         }
 
@@ -88,7 +87,7 @@ namespace ERP_App.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CustomerID,Customername,CustomerContact,CustomerArea,CustomerAddress,Description,BranchID,CompanyID,UserID,CustomerEmail,CustomerPassword")] tblCustomer tblCustomer)
+        public ActionResult Edit(tblCustomer tblCustomer)
         {
             if (ModelState.IsValid)
             {
@@ -96,9 +95,6 @@ namespace ERP_App.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName", tblCustomer.BranchID);
-            ViewBag.CompanyID = new SelectList(db.tblCompanies, "CompanyID", "Name", tblCustomer.CompanyID);
-            ViewBag.UserID = new SelectList(db.tblUsers, "UserID", "FullName", tblCustomer.UserID);
             return View(tblCustomer);
         }
 
@@ -175,11 +171,19 @@ namespace ERP_App.Controllers
         }
         public ActionResult OrderCancellation(int id)
         {
-            var o = db.tblOrders.Where(x => x.OrderID == id).FirstOrDefault();
-            o.Status = "Cancelled";
-            db.Entry(o).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("CustomerHistory");
+            var status = db.tblOrders.Where(x => x.OrderID == id).Select(x => x.OrderStatus).FirstOrDefault();
+            if(status =="Paid")
+            {
+                return RedirectToAction("CustomerHistory");
+            }
+            else
+            {
+                var o = db.tblOrders.Where(x => x.OrderID == id && x.OrderStatus == "Cash on Delivery").FirstOrDefault();
+                o.Status = "Cancelled";
+                db.Entry(o).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("CustomerHistory");
+            }
         }
         public ActionResult CancelledOrder()
         {

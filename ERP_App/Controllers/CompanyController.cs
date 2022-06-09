@@ -12,6 +12,127 @@ namespace ERP_App.Controllers
     {
         BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
         // GET: Company
+        public ActionResult Index()
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            var c = DB.tblCompanies.ToList();
+            
+            if (usertypeid >= 3)
+            {
+                c = DB.tblCompanies.Where(x => x.CompanyID == companyid).ToList();
+            }
+
+            var list = new List<CompanyMV>();
+            foreach (var company in c)
+            {
+                list.Add(new CompanyMV()
+                {
+                    CompanyID = company.CompanyID,
+                    Name = company.Name,
+                    Logo = company.Logo,
+                    Email = company.Email,
+                    Address = company.Address,
+                    Contact = company.Contact
+
+                });
+            }
+
+            return View(list);
+        }
+        public ActionResult Edit(int? id)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+           
+            tblCompany tblCompany = DB.tblCompanies.Find(id);
+            if (tblCompany == null)
+            {
+                return HttpNotFound();
+            }
+            var company = DB.tblCompanies.Find(id);
+            var editcompany = new CompanyMV();
+            editcompany.CompanyID = company.CompanyID;
+            editcompany.Name = company.Name;
+            editcompany.Logo = company.Logo;
+            editcompany.Email = company.Email;
+            editcompany.Address = company.Address;
+            editcompany.Contact = company.Contact;
+
+            return View(editcompany);
+        }
+
+        // POST: Companies/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CompanyMV companyMV)
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            var userid = 0;
+            var usertypeid = 0;
+            //Yeh ab Admin nahi keray ga, bel-k comapny khod keray gi. es liye zeyada validation add hon gi.
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeId"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            if (ModelState.IsValid)
+            {
+                var editcompany = DB.tblCompanies.Find(companyMV.CompanyID);
+                editcompany.Name = companyMV.Name;
+                //editcompany.Logo = companyMV.Logo;
+                editcompany.Email = companyMV.Email;
+                editcompany.Address = companyMV.Address;
+                editcompany.Contact = companyMV.Contact;
+                if (companyMV.Pro_Pic != null)
+                {
+                    companyMV.Pro_Pic.SaveAs(Server.MapPath("~/ProductPicture/" + companyMV.Pro_Pic.FileName));
+                    editcompany.Logo = "~/ProductPicture/" + companyMV.Pro_Pic.FileName;
+                }
+
+                DB.Entry(editcompany).State = System.Data.Entity.EntityState.Modified;
+                DB.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(companyMV);
+        }
         public ActionResult Companies()
         {
             if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
@@ -126,7 +247,11 @@ namespace ERP_App.Controllers
                         var company = new tblCompany()
                         {
                             Name = CName,
-                            Logo = string.Empty
+                            Logo = string.Empty,
+                            Email = string.Empty,
+                            Address = string.Empty,
+                            Contact = string.Empty
+                            
                         };
 
                         DB.tblCompanies.Add(company);

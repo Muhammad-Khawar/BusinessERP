@@ -163,7 +163,8 @@
                         </div>
                         <hr class="d-print-none">
                         <div class="clearfix">
-                            @Html.ActionLink("Cancel", "PurchaseStockProducts", null, new { @class = "btn btn-info float-left mr-2" })
+                            @*@Html.ActionLink("Cancel", "PurchaseStockProducts", null, new { @class = "btn btn-info float-left mr-2" })*@
+                            <a class="btn btn-primary" href="@Url.Action("CustomerHistory","Customers")">Back</a>
                             <button class="btn btn-secondary float-left" type="button" onclick="window.print();">Print</button>
 
                         </div>

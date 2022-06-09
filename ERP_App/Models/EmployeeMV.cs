@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -27,6 +28,8 @@ namespace ERP_App.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "Required *")]
         public double MonthlySalary { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase Pro_Pic { get; set; }
         public int BranchID { get; set; }
         public int CompanyID { get; set; }
         public Nullable<int> UserID { get; set; }

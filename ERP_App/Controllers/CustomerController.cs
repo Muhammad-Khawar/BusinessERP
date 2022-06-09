@@ -31,8 +31,12 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
             var list = new List<CustomerMV>();
-            
-            var customers = DB.tblCustomers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
+            var customers = DB.tblCustomers.ToList();
+            if (usertypeid != 1)
+            {
+                customers = DB.tblCustomers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
+            }
+            //var customers = DB.tblCustomers.Where(c => c.BranchID == branchid && c.CompanyID == companyid).ToList();
             foreach (var customer in customers)
             {
                 var gcustomer = new CustomerMV();
@@ -107,7 +111,8 @@ namespace ERP_App.Controllers
                     newcustomer.BranchID = branchid;
                     newcustomer.CompanyID = companyid;
                     newcustomer.UserID = userid;
-
+                    newcustomer.CustomerEmail = customerMV.CustomerEmail;
+                    newcustomer.CustomerPassword = customerMV.CustomerPassword;
                     DB.tblCustomers.Add(newcustomer);
                     DB.SaveChanges();
                     return RedirectToAction("AllBranchCustomer");

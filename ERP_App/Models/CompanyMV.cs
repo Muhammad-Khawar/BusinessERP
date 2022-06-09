@@ -11,7 +11,11 @@ namespace ERP_App.Models
         public int CompanyID { get; set; }
         public string Name { get; set; }
         public string Logo { get; set; }
+        public string Email { get; set; }
+        public string Address { get; set; }
+        public string Contact { get; set; }
+
         [NotMapped]
-        public HttpPostedFileBase PhotoFile { get; set; }
+        public HttpPostedFileBase Pro_Pic { get; set; }
     }
 }

@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<ERP_App.Models.EmployeeMV>
-
+@using ERP.DatabaseLayer
 @{
+    BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
+    
     ViewBag.Title = "BranchEmployees";
+
 }
 <!-- DATATABLE DEMO 2-->
 <div class="card">
@@ -41,49 +44,64 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Description)
                     </th>
-
-
+                    <th>
+                        Company Name
+                    </th>
+                    <th>
+                        Branch Name
+                    </th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ContactNo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Photo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CNIC)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MonthlySalary)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Designation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNo)
+                    </td>
+                    <td>
+                        <img height="100px" width="100px" src="@Url.Content(item.Photo)" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MonthlySalary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Designation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @{
+                            var cname = DB.tblCompanies.Where(x => x.CompanyID == item.CompanyID).Select(x => x.Name).FirstOrDefault();
+                        }
+                        @cname
+                    </td>
+                    <td>
+                        @{
+                            var bname = DB.tblBranches.Where(x => x.BranchID == item.BranchID).Select(x => x.BranchName).FirstOrDefault();
+                        }
+                        @bname
+                    </td>
 
+                    <td>
+                        @Html.ActionLink("Edit", "EditBranchEmployee", new { employeeid = item.EmployeeID }, new { @class = "btn btn-warning" })
 
-                        <td>
-                            @Html.ActionLink("Edit", "EditBranchEmployee", new { employeeid = item.EmployeeID }, new { @class = "btn btn-warning" })
-
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

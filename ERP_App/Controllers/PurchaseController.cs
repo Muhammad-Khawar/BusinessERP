@@ -79,6 +79,10 @@ namespace ERP_App.Controllers
             //{
             //    ViewBag.SupplierID = Session["SupplierID"];
             //}
+            //if(Session["ErrorProductID"]!=null)
+            //{
+            //    ViewBag.ProductID = (string)Session["ErrorProductID"];
+            //}
             //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
             
             
@@ -239,6 +243,7 @@ namespace ERP_App.Controllers
                     order.OrderEmail = supplier.SupplierEmail;
                     order.OrderContact = supplier.SupplierConatctNo;
                     order.OrderAddress = supplier.SupplierAddress;
+                    order.Status = "Active";
                     DB.tblOrders.Add(order);
                     DB.SaveChanges();
                     //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
@@ -315,11 +320,14 @@ namespace ERP_App.Controllers
                     int AccountControlID = 0;
                     int AccountSubControlID = 0;
 
-                    var debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 1 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                    //var debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 1 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                    var debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 1).FirstOrDefault();
                     if (debitentry == null)
                     {
                         ModelState.AddModelError("ProductID", "First Set Account Flow!");
                         transaction.Rollback();
+                        //Session["ErrorProductID"] = "First Set Account Flow!";
+                        return View();
                     }
 
                     AccountHeadID = debitentry.AccountHeadID;
@@ -344,7 +352,9 @@ namespace ERP_App.Controllers
                     DB.SaveChanges();
 
                     //Credit Entry: Payment Pending activity
-                    var creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                    //var creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                    var creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5).FirstOrDefault();
+
                     if (creditentry == null)
                     {
                         ModelState.AddModelError("ProductID", "First Set Account Flow!");
@@ -392,7 +402,8 @@ namespace ERP_App.Controllers
                         DB.SaveChanges();
 
                         //Payment Debit Transaction : Purchase Payment Pending activity : 5
-                        debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                        //debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                        debitentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 5).FirstOrDefault();
                         if (debitentry == null)
                         {
                             ModelState.AddModelError("ProductID", "First Set Account Flow!");
@@ -423,7 +434,8 @@ namespace ERP_App.Controllers
 
                         //Payment Credit Entry: Purchase Payment Paid :6
 
-                        creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 6 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                        //creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 6 && s.CompanyID == companyid && s.BranchID == branchid).FirstOrDefault();
+                        creditentry = DB.tblAccountSettings.Where(s => s.AccountActivityID == 6).FirstOrDefault();
                         if (creditentry == null)
                         {
                             ModelState.AddModelError("ProductID", "First Set Account Flow!");

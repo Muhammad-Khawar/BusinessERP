@@ -43,16 +43,12 @@
 
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Update" class="btn btn-primary" />
-        </div>
+
+        <a class="btn btn-primary" href="@Url.Action("AllAccountSubControls","Accounts")">Back</a>
+        <input type="submit" value="Update" class="btn btn-primary" />
     </div>
 </div>
 }
-<div>
-    @Html.ActionLink("Back", "AllAccountSubControls", "Accounts", null, new { @class = "btn btn-outline-default" })
-</div>
-
 
 <script type="text/javascript">
     function myFunction() {

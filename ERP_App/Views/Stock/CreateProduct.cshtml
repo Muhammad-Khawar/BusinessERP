@@ -83,8 +83,8 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ProductPicture, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            
-            <input type="file" name="Pro_Pic" required/>
+
+            <input type="file" name="Pro_Pic" required />
 
             @Html.ValidationMessageFor(model => model.ProductPicture, "", new { @class = "text-danger" })
         </div>
@@ -99,7 +99,8 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
+        @*@Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })*@
+        IsFeatured?
         <div class="col-md-10">
             <div class="checkbox">
                 @Html.EditorFor(model => model.IsActive)
@@ -108,14 +109,12 @@
         </div>
     </div>
 
+   
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" />
-        </div>
+
+        <a class="btn btn-primary" href="@Url.Action("StockProducts","Stock")">Back</a>
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "StockProducts")
-</div>

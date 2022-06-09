@@ -123,6 +123,7 @@
     <Content Include="Content\Customer\img\logo.png" />
     <Content Include="Content\Customer\img\mastercart.png" />
     <Content Include="Content\Customer\img\paypal.png" />
+    <Content Include="Content\Customer\img\pic1.jpeg" />
     <Content Include="Content\Customer\img\product\1.jpg" />
     <Content Include="Content\Customer\img\product\10.jpg" />
     <Content Include="Content\Customer\img\product\11.jpg" />
@@ -337,7 +338,6 @@
     <Compile Include="Controllers\AccountsSettiingController.cs" />
     <Compile Include="Controllers\AdminConfigController.cs" />
     <Compile Include="Controllers\BranchController.cs" />
-    <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
@@ -527,6 +527,9 @@
     <Content Include="Views\Customers\PrintSaleInvoice.cshtml" />
     <Content Include="Views\Home\FilterProducts.cshtml" />
     <Content Include="Views\Customers\CancelledOrder.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\Edit.cshtml" />
+    <Content Include="Views\Users\AllUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

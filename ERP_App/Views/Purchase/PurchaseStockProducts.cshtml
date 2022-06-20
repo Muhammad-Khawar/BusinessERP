@@ -36,7 +36,7 @@
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.PurchaseQuantity, htmlAttributes: new { @class = "control-label" })
                                     <div>
-                                        @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.PurchaseQuantity, new { htmlAttributes = new { @class = "form-control", @required = "required",@type="number" } })
                                         @Html.ValidationMessageFor(model => model.PurchaseQuantity, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.PrevoiusPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
                                     <div>
-                                        @Html.EditorFor(model => model.PrevoiusPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.PrevoiusPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
                                         @Html.ValidationMessageFor(model => model.PrevoiusPurchaseUnitPrice, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -53,14 +53,14 @@
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.CurrentPurchaseUnitPrice, htmlAttributes: new { @class = "control-label" })
                                     <div>
-                                        @Html.EditorFor(model => model.CurrentPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.CurrentPurchaseUnitPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
                                         @Html.ValidationMessageFor(model => model.CurrentPurchaseUnitPrice, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.SaleUnitPrice, htmlAttributes: new { @class = "control-label" })
                                     <div>
-                                        @Html.EditorFor(model => model.SaleUnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.SaleUnitPrice, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
                                         @Html.ValidationMessageFor(model => model.SaleUnitPrice, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
                                     <div>
-                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@
                     </div>
                     <div class="card-body bt">
                         <h4 class="b0">Select Supplier</h4>
-                        @Html.DropDownList("SupplierID", null, "--Select Supplier--", htmlAttributes: new { @class = "form-control", @onchange = "SelectedSupplier()" })
+                        @Html.DropDownList("SupplierID", null, "--Select Supplier--", htmlAttributes: new { @class = "form-control", @onchange = "SelectedSupplier()", @required = "required" })
                         @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
                     </div>
                     <table class="table">
@@ -210,7 +210,7 @@
                             <tr>
                                 <td>Subtotal</td>
                                 <td>
-                                    @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control", @id = "subtotal", @readonly = "readonly" } })
+                                    @Html.EditorFor(model => model.OrderSummary.SubTotal, new { htmlAttributes = new { @class = "form-control", @id = "subtotal", @readonly = "readonly", @required = "required", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.OrderSummary.SubTotal, "", new { @class = "text-danger" })
 
                                 </td>
@@ -218,7 +218,7 @@
                             <tr>
                                 <td>Estimated Tax</td>
                                 <td>
-                                    @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control", @id = "estimatedfee", @onchange = "CalculateOrderTotal()" } })
+                                    @Html.EditorFor(model => model.OrderSummary.EstimatedTax, new { htmlAttributes = new { @class = "form-control", @id = "estimatedfee", @onchange = "CalculateOrderTotal()", @required = "required", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.OrderSummary.EstimatedTax, "", new { @class = "text-danger" })
 
                                 </td>
@@ -226,7 +226,7 @@
                             <tr>
                                 <td>Shiping</td>
                                 <td>
-                                    @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control", @id = "shippingfee", @onchange = "CalculateOrderTotal()" } })
+                                    @Html.EditorFor(model => model.OrderSummary.ShippingFee, new { htmlAttributes = new { @class = "form-control", @id = "shippingfee", @onchange = "CalculateOrderTotal()", @required = "required", @type = "number" } })
                                     @Html.ValidationMessageFor(model => model.OrderSummary.ShippingFee, "", new { @class = "text-danger" })
 
                                 </td>
@@ -336,8 +336,7 @@
         });
     }
 
-    function CalculateOrderTotal()
-    {
+    function CalculateOrderTotal() {
         var purchase_subtotal = document.getElementById("subtotal").value;
         var purchase_shippingfee = document.getElementById("shippingfee").value;
         var purchase_estimatedfee = document.getElementById("estimatedfee").value;
@@ -345,3 +344,69 @@
         $("#ordertotal").text(purchase_order_total);
     }
 </script>
+
+<script src="~/Content/Customer/js/jquery-3.2.1.min.js"></script>
+<!-- Related product section end -->
+<script type="text/javascript">
+    window.onload = function () { window.scrollBy(0, 180); }
+    $(document).ready(function () {
+        //called when key is pressed in textbox
+        $("#onlynumber").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlynumberr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#onlycharacter").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlycharacterr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlycharacters").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    //$('input').keypress(function (e) {
+    //    if (e.which === 32)
+    //        return false;
+    //});
+    //$.validator.addMethod("NoWhiteSpaceAtBeginn", function (value, element) {
+    //    return this.optional(element) || /^[^\t].*/.test(value);
+    //}, "Must not begin with a whitespace");
+    //$(document).ready(function () {
+    //    $("#form1").validate();
+    //});
+</script>
+
+

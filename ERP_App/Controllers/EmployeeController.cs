@@ -208,10 +208,10 @@ namespace ERP_App.Controllers
             {
                 if (ModelState.IsValid)        
                 {
-                    var checkemployee = DB.tblEmployees.Where(e => e.CNIC == employeemv.CNIC.Trim() && e.EmployeeID == employeemv.EmployeeID).FirstOrDefault();//kisi b company mein employee aeek h baar register ho ga.
-                    if (checkemployee == null)
-                    {
-                        var editemployee = DB.tblEmployees.Find(employeemv.EmployeeID);
+                    //var checkemployee = DB.tblEmployees.Where(e => e.CNIC == employeemv.CNIC.Trim() && e.EmployeeID == employeemv.EmployeeID).FirstOrDefault();//kisi b company mein employee aeek h baar register ho ga.
+                    //if (checkemployee == null)
+                    //{
+                        var editemployee = DB.tblEmployees.Where(x=>x.CompanyID==companyid && x.BranchID == branchid && x.EmployeeID == employeemv.EmployeeID).FirstOrDefault();
                         editemployee.CNIC = employeemv.CNIC;
                         editemployee.ContactNo = employeemv.ContactNo;
                         editemployee.Description = employeemv.Description;
@@ -234,11 +234,11 @@ namespace ERP_App.Controllers
                         DB.Entry(editemployee).State = System.Data.Entity.EntityState.Modified;
                         DB.SaveChanges();
                         return RedirectToAction("BranchEmployees");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("CNIC", "Already Exists");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    ModelState.AddModelError("CNIC", "Already Exists");
+                    //}
                 }
                 return View(employeemv);
             }
@@ -316,7 +316,7 @@ namespace ERP_App.Controllers
             focalpersonmv.userMV = new UserMV();
             focalpersonmv.BranchID = branch.BranchID;
             focalpersonmv.CompanyID = branch.CompanyID;
-
+            //ViewBag.UserTypeID = new SelectList(DB.tblUserTypes.ToList(), "UserTypeID", "UserType", focalpersonmv.userMV.UserTypeID);
             return View(focalpersonmv);
         }
         [HttpPost]
@@ -345,7 +345,7 @@ namespace ERP_App.Controllers
                 if (ModelState.IsValid)
                 {       
                         var newuser = new tblUser();
-                        newuser.UserTypeID =  3;
+                        newuser.UserTypeID = 3;
                         newuser.FullName = focalpersonmv.employeeMV.Name;
                         newuser.Email = focalpersonmv.employeeMV.Email;
                         newuser.ContactNo = focalpersonmv.employeeMV.ContactNo;

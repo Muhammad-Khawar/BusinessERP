@@ -2,6 +2,7 @@
 @using ERP.DatabaseLayer
 @using ERP_App.Models
 @{
+    BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
 
@@ -9,7 +10,8 @@
 <!-- Hero section -->
 <section class="hero-section">
     <div class="hero-slider owl-carousel">
-        <div class="hs-item" style="background-image: url('../../Content/Customer/img/bg-2.jpg'); background-size:cover">
+        @*<img src="~/Content/Customer/img/picshoe1.jpg" />*@
+        <div class="hs-item" style="background-image: url('../../Content/Customer/img/picshoe3.jpg'); background-size: cover">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
@@ -18,7 +20,7 @@
                         <p style="text-decoration-color:black">Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience.</p>
                         @*<a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
 
-                            <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
+                        <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
                     </div>
                 </div>
                 <div class="offer-card text-white">
@@ -28,7 +30,8 @@
                 </div>
             </div>
         </div>
-        <div class="hs-item" style="background-image: url('../../Content/Customer/img/bg.jpg');background-size:cover">
+        @*<img src="~/Content/Customer/img/picshoe2.jpg" />*@
+        <div class="hs-item" style="background-image: url('../../Content/Customer/img/picshoe4.jpg'); background-size: cover">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 text-white">
@@ -36,7 +39,7 @@
                         <h2>Welcome to SoleBox Shop</h2>
                         <p>Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience. </p>
                         @*<a href="~/Content/Customer/#" class="site-btn sb-line">DISCOVER</a>
-                            <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
+                        <a href="~/Content/Customer/#" class="site-btn sb-white">ADD TO CART</a>*@
                     </div>
                 </div>
                 <div class="offer-card text-white">
@@ -98,7 +101,7 @@
                         <img width="263px" height="300px" src="@Url.Content(p.ProductPicture)" alt="">
                         <div class="pi-links">
                             <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            @*<a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>*@
                         </div>
                     </div>
                     <div class="pi-text">
@@ -113,7 +116,7 @@
 </section>
 <!-- letest product section end -->
 <!-- Product filter section -->
-<section class="product-filter-section">
+@*<section class="product-filter-section">
     <div class="container">
         <div class="section-title">
             <h2>BROWSE TOP SELLING PRODUCTS</h2>
@@ -128,134 +131,58 @@
             <li><a href="~/Content/Customer/#">JUMPERS</a></li>
             <li><a href="~/Content/Customer/#">LEGGINGS</a></li>
         </ul>
-        <div class="row">
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+        @{
+            List<Nullable<int>> a = new List<Nullable<int>>();
+
+            var Orderid = DB.tblOrders.Where(x => x.OrderType == "Sale").Select(x => x.OrderID).ToList();
+            var product = DB.tblOrderDetails.Where(x => Orderid.Contains(x.OrderFID)).GroupBy(x => x.ProductFID).OrderBy(x => x.Key);
+            var productfid = DB.tblOrderDetails.Where(x => Orderid.Contains(x.OrderFID)).Select(x => x.ProductFID).ToList();
+
+            foreach (var item in product)
+            {
+                var id = item.Sum(x => x.Quantity);
+                item.Where(x=>x.Quantity < id).OrderBy(x => x.ProductFID);
+                a.Add(id);
+                var b = a.OrderBy();
+            }
+
+            foreach (var items in product)
+            {
+
+                //var id = items.Sum(x => x.Quantity);
+                //List<Nullable<int>> a = new List<Nullable<int>>();
+                //a.Add(id);
+                //var productlist = DB.tblStocks.Where(x => productfid.Contains(x.ProductID)).OrderByDescending(x=>a);
+                var productlist = DB.tblStocks.Where(x => x.ProductID == items.Key).OrderByDescending(x=>a).ToList();
+                foreach (var item in productlist)
+                {
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img width="263px" height="300px" src="@Url.Content(item.ProductPicture)" alt="">
+                                            <div class="pi-links">
+                                                <a href="@Url.Action("AddToCart","Home",new { id = item.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                                                <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                                            </div>
+                                        </div>
+                                <div class="pi-text">
+                                    <h6>@item.SaleUnitPrice</h6>
+                                    <p>@item.ProductName</p>
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <div class="tag-sale">ON SALE</div>
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Black and White Stripes Dress</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="product-item">
-                    <div class="pi-pic">
-                        <img src="#" alt="">
-                        <div class="pi-links">
-                            <a href="~/Content/Customer/#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
-                        </div>
-                    </div>
-                    <div class="pi-text">
-                        <h6>$35,00</h6>
-                        <p>Flamboyant Pink Top </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center pt-5">
-            <button class="site-btn sb-line sb-dark">LOAD MORE</button>
-        </div>
+                }
+            }
+
+        }
+
+
     </div>
-</section>
+</section>*@
 <!-- Product filter section end -->
 <!-- Banner section -->
 <section class="banner-section">
@@ -265,7 +192,7 @@
             <div class="tag-new">NEW</div>
             <span style="color:white;">New Arrivals</span>
             <h2 style="color:white;">STRIPED Shoes</h2>
-            <a style="color:white;" href="~/Content/Customer/#" class="site-btn">SHOP NOW</a>
+            <a style="color:white;" href="@Url.Action("Shop","Home")" class="site-btn">SHOP NOW</a>
         </div>
     </div>
 </section>

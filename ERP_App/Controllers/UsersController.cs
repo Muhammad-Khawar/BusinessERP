@@ -60,11 +60,30 @@ namespace ERP_App.Controllers
             int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
             int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
 
-            var tblUsers = db.tblUsers.Include(t => t.tblUserType);
+
+            //var tblUsers = db.tblUsers.Include(t => t.tblUserType);
+            
+            var tblUsers = db.tblUsers.Where(x=>x.UserID != userid).Include(t => t.tblUserType);
+            //if (usertypeid == 1 || usertypeid == 2)
+            //{
+            //    tblUsers = db.tblUsers.Include(t => t.tblUserType);
+            //}
+            if (usertypeid == 3)
+            {
+                var employeesUserId = db.tblEmployees.Where(e => e.CompanyID == companyid).Select(x => x.UserID).ToList();
+                tblUsers = db.tblUsers.Where(x => employeesUserId.Contains(x.UserID) && x.UserID != userid).Include(t => t.tblUserType);
+
+            }
+            if(usertypeid > 3)
+            {
+                var employeesUserId = db.tblEmployees.Where(e => e.CompanyID == companyid && e.BranchID == branchid).Select(x => x.UserID).ToList();
+                tblUsers = db.tblUsers.Where(x => employeesUserId.Contains(x.UserID) && x.UserID != userid).Include(t => t.tblUserType);
+            }
             //if (usertypeid != 1 || usertypeid != 2)
             //{
             //    tblUsers = db.tblUsers.Where(x => x.UserID == userid).Include(t => t.tblUserType);
             //}
+
 
             //var tblUsers = db.tblUsers.Where(x=>x.UserID == userid).Include(t => t.tblUserType);
             return View(tblUsers.ToList());

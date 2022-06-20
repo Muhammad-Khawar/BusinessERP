@@ -29,9 +29,19 @@
     <td>
         @Html.DisplayFor(modelItem => item.Name)
     </td>
-    <td>
-        <img height="100px" width="100px" src="@Url.Content(item.Logo)" />
-    </td>
+    @if (item.Logo==null) {
+<td>
+    <img height="100px" width="100px" src="#" />
+    
+</td>
+    }
+                else
+                {
+<td>
+    <img height="100px" width="100px" src="@Url.Content(item.Logo)" />
+</td>
+                }
+
     <td>
         @Html.DisplayFor(modelItem => item.Email)
     </td>
@@ -41,7 +51,7 @@
     <td>
         @Html.DisplayFor(modelItem => item.Contact)
     </td>
-    @if (usertypeid != 1)
+    @if (usertypeid == 3 || usertypeid == 4)
     {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.CompanyID }, new { @class = "btn btn-warning" })

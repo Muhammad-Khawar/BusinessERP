@@ -24,10 +24,10 @@
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col-3">
-                        <em class="fa fa-comments fa-5x"></em>
+                        <em class="fa fa-product-hunt fa-5x"></em>
                     </div>
                     <div class="col-9 text-right">
-                        <div class="text-lg">@DB.tblStocks.Where(x=>x.CompanyID == companyid && x.BranchID == branchid).Count()</div>
+                        <div class="text-lg">@DB.tblStocks.Where(x=>x.CompanyID == companyid && x.BranchID == branchid &&x.Quantity > 0).Count()</div>
                         <p class="m-0">Available Products</p>
                     </div>
                 </div>
@@ -48,8 +48,12 @@
                 <div class="row align-items-center">
                     
                     <div class="col-9 text-right">
-                        <div class="text-lg">@DB.tblOrderDetails.Where(x => x.tblOrder.OrderType == "Sale" && x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => (x.SalePrice * x.Quantity) * -1)</div>
-                        <p class="m-0">Online Earning</p>
+                        @{
+                            var or = DB.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Select(x => x.OrderFID).ToList();
+                            var purchase = DB.tblOrders.Where(x => x.OrderType == "Purchase" && or.Contains(x.OrderID)).Count();
+                        }
+                        <div class="text-lg">@purchase</div>
+                        <p class="m-0">All Purchases Count</p>
                     </div>
                 </div>
             </div>
@@ -70,9 +74,13 @@
                     <div class="col-3">
                         <em class="fa fa-shopping-cart fa-5x"></em>
                     </div>
+                    @{
+                        var orderid = DB.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Select(x => x.OrderFID).ToList();
+                        var orders = DB.tblOrders.Where(x => x.OrderType == "Sale" && orderid.Contains(x.OrderID)).Count();
+                    }
                     <div class="col-9 text-right">
-                        <div class="text-lg">124</div>
-                        <p class="m-0">New Orders!</p>
+                        <div class="text-lg">@orders</div>
+                        <p class="m-0">All Sales Count!</p>
                     </div>
                 </div>
             </div>
@@ -85,9 +93,9 @@
         </div>
         <!-- END card-->
     </div>
-    <div class="col-xl-3 col-lg-6">
+    <!--<div class="col-xl-3 col-lg-6">-->
         <!-- START card-->
-        <div class="card bg-danger border-0">
+        <!--<div class="card bg-danger border-0">
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col-3">
@@ -105,8 +113,8 @@
                     <em class="fa fa-chevron-circle-right"></em>
                 </span>
             </a>
-        </div>
+        </div>-->
         <!-- END card-->
-    </div>
+    <!--</div>-->
 </div>
 

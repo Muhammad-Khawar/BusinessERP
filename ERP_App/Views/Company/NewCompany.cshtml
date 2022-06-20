@@ -50,7 +50,7 @@
                         </h4>
                         <fieldset>
                             <label for="userName">User name *</label>
-                            <input class="form-control required" id="UserName" name="UserName" type="text">
+                            <input class="form-control required onlycharacter" id="UserName" name="UserName" type="text">
                             <label for="password">Password *</label>
                             <input class="form-control required" id="Password" name="Password" type="password">
                             <label for="confirm">Confirm Password *</label>
@@ -66,11 +66,11 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <label for="name">Employee Name *</label>
-                                    <input class="form-control required" id="EName" name="EName" type="text">
+                                    <input class="form-control required onlycharacter" id="EName" name="EName" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="phone">Contact No *</label>
-                                    <input class="form-control required" id="EContactNo" name="EContactNo" type="text">
+                                    <input class="form-control required onlynumber" id="EContactNo" name="EContactNo" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <label for="email">Email *</label>
@@ -78,15 +78,15 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>CNIC</label>
-                                    <input class="form-control required" id="ECNIC" name="ECNIC" type="text">
+                                    <input class="form-control required onlynumber" id="ECNIC" name="ECNIC" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Designation</label>
-                                    <input required class="form-control required" id="EDesignation" name="EDesignation" type="text">
+                                    <input required class="form-control required onlycharacter" id="EDesignation" name="EDesignation" type="text">
                                 </div>
                                 <div class="col-md-3">
                                     <label>Basic Salary</label>
-                                    <input required class="form-control required" id="EMonthlySalary" name="EMonthlySalary" type="number">
+                                    <input required class="form-control required onlynumber" id="EMonthlySalary" name="EMonthlySalary" type="number">
                                 </div>
                                 <div class="col-md-6">
                                     <label for="address">Address</label>
@@ -102,11 +102,11 @@
                         </h4>
                         <fieldset>
                             <label for="name">Company *</label>
-                            <input for="name" class="form-control required" id="CName" name="CName" type="text">
+                            <input for="name" class="form-control required onlycharacter" id="CName" name="CName" type="text">
                             <label>Branch Title *</label>
-                            <input class="form-control required" id="BranchName" name="BranchName" type="text">
+                            <input class="form-control required onlycharacter" id="BranchName" name="BranchName" type="text">
                             <label>Branch Contact *</label>
-                            <input class="form-control required" id="BranchContact" name="BranchContact" type="text">
+                            <input class="form-control required onlynumber" id="BranchContact" name="BranchContact" type="text">
                             <label>Branch Address</label>
                             <input class="form-control required" id="BranchAddress" name="BranchAddress" type="text">
                             <p>(*) Mandatory</p>
@@ -156,3 +156,61 @@
 </html>
 </body>
 </html>
+
+<script src="~/Content/Customer/js/jquery-3.2.1.min.js"></script>
+<!-- Related product section end -->
+<script type="text/javascript">
+    window.onload = function () { window.scrollBy(0, 180); }
+    $(document).ready(function () {
+        //called when key is pressed in textbox
+        $(".onlynumber").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $(".onlynumberr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $(".onlycharacter").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $(".onlycharacterr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $(".onlycharacters").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    $('input').keypress(function (e) {
+        if (e.which === 32)
+            return false;
+    });
+</script>

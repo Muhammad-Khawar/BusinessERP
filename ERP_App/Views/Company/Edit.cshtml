@@ -3,62 +3,102 @@
 @using (Html.BeginForm("Edit", "Company", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>tblCompany</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-    @Html.HiddenFor(u => u.CompanyID)
-  
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>tblCompany</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(u => u.CompanyID)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "onlycharacter" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" accept="image/*" name="Pro_Pic" />
+                <img height="100px" width="100px" src="@Url.Content(Model.Logo)" />
+                @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @required = "required" ,@type="email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "onlynumber" } })
+                @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <a class="btn btn-primary" href="@Url.Action("Index","Company")">Back</a>
+            <input type="submit" value="Update" class="btn btn-primary" />
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="Pro_Pic" />
-            <img height="100px" width="100px" src="@Url.Content(Model.Logo)" />
-            @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-
-        <a class="btn btn-primary" href="@Url.Action("Index","Company")">Back</a>
-        <input type="submit" value="Update" class="btn btn-primary" />
-    </div>
-</div>
 }
 
+<script src="~/Content/Customer/js/jquery-3.2.1.min.js"></script>
+<!-- Related product section end -->
+<script type="text/javascript">
+    window.onload = function () { window.scrollBy(0, 180); }
+    $(document).ready(function () {
+        //called when key is pressed in textbox
+        $("#onlynumber").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#onlycharacter").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlycharacters").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    $('input').keypress(function (e) {
+        if (e.which === 32)
+            return false;
+    });
+</script>

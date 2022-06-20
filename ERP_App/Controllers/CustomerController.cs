@@ -125,5 +125,98 @@ namespace ERP_App.Controllers
 
             return View(customerMV);
         }
+        public ActionResult EditBranchCustomer(int? id)
+
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+
+
+
+                return RedirectToAction("Login", "Home");
+
+            }
+
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+            var customer = DB.tblCustomers.Find(id);
+            var newcustomer = new CustomerMV();
+            newcustomer.CustomerID = customer.CustomerID;
+            newcustomer.Customername = customer.Customername;
+            newcustomer.BranchID = customer.BranchID;
+            newcustomer.CompanyID = customer.CompanyID;
+            newcustomer.CustomerAddress = customer.CustomerAddress;
+            newcustomer.CustomerArea = customer.CustomerArea;
+            newcustomer.CustomerContact = customer.CustomerContact;
+            newcustomer.Description = customer.Description;
+            newcustomer.UserID = customer.UserID;
+
+            return View(newcustomer);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult EditBranchCustomer(CustomerMV customersettingmv)
+
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+
+
+
+                return RedirectToAction("Login", "Home");
+
+            }
+
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            if (ModelState.IsValid)
+            {
+                var customeraccountsetting = DB.tblCustomers.Where(e => e.CompanyID == companyid && e.BranchID == branchid && e.Customername == customersettingmv.Customername && e.CustomerID != customersettingmv.CustomerID).FirstOrDefault();
+                if (customeraccountsetting == null)
+                {
+                    var editcustomer = DB.tblCustomers.Find(customersettingmv.CustomerID);
+
+
+                    editcustomer.Customername = customersettingmv.Customername;
+                    editcustomer.Description = customersettingmv.Description;
+                    editcustomer.CustomerContact = customersettingmv.CustomerContact;
+                    editcustomer.CustomerArea = customersettingmv.CustomerArea;
+                    editcustomer.CustomerAddress = customersettingmv.CustomerAddress;
+                    editcustomer.UserID = userid;
+
+
+                    DB.Entry(editcustomer).State = System.Data.Entity.EntityState.Modified;
+                    DB.SaveChanges();
+                    return RedirectToAction("AllBranchCustomer");
+                }
+                else
+                {
+                    ModelState.AddModelError("CustomerName", "already");
+                }
+            }
+
+            return View(customersettingmv);
+
+
+        }
     }
 }

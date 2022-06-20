@@ -1,11 +1,16 @@
 ﻿@using ERP_App.Models
+@using ERP.DatabaseLayer
+@{ 
+    BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
+    var companyinfo = DB.tblCompanies.Where(x => x.CompanyID == 1).FirstOrDefault();
+}
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-    <title>SoleBox Company</title>
+    <title>SoleBox E Store</title>
     <meta charset="UTF-8">
-    <meta name="description" content="SoleBox Company">
-    <meta name="keywords" content="SoleBox Company, eCommerce, creative, html">
+    <meta name="description" content="SoleBox E Store">
+    <meta name="keywords" content="SoleBox E Store, eCommerce, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link href="~/Content/Customer/img/favicon.ico" rel="shortcut icon" />
@@ -42,12 +47,12 @@
                     <div class="col-lg-2 text-center text-lg-left">
                         <!-- logo -->
                         <a href="@Url.Action("IndexCustomer","Home")" class="site-logo">
-                            <h3>SoleBox</h3>
+                            <h3>@companyinfo.Name</h3>
                         </a>
                     </div>
                     <div class="col-xl-6 col-lg-5">
                         <form class="header-search-form">
-                            <input type="text" placeholder="Search on SoleBox ....">
+                            <input type="text" placeholder="Search on @companyinfo.Name ....">
                             <button><i class="flaticon-search"></i></button>
                         </form>
                     </div>
@@ -82,7 +87,7 @@
                     <li><a href="@Url.Action("About","Home")">About Us</a></li>
                     <li><a href="@Url.Action("Shop","Home")">Shop</a></li>
                     <li><a href="@Url.Action("ContactUs","Home")">Contact</a></li>
-                    <li><a href="@Url.Action("FeedBack","Home")">FeedBack</a></li>
+                    @*<li><a href="@Url.Action("FeedBack","Home")">FeedBack</a></li>*@
                     <li>
                         <a href="#">Customer</a>
                         <ul class="sub-menu">
@@ -124,7 +129,7 @@
                     <div class="footer-widget about-widget">
                         <h2>About</h2>
                         <p>Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience.</p>
-                        <img src="~/Content/Customer/img/cards.png" alt="">
+                        @*<img src="~/Content/Customer/img/cards.png" alt="">*@
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -136,14 +141,14 @@
                             <li><a href="@Url.Action("Shop","Home")">Shop</a></li>
                             <li><a href="@Url.Action("ContactUs","Home")">Contact</a></li>
                             <li><a href="@Url.Action("FeedBack","Home")">FeedBack</a></li>
-                            
+
                         </ul>
                         <ul>
-                            <li><a href="~/Content/Customer/">Partners</a></li>
-                            <li><a href="~/Content/Customer/">Bloggers</a></li>
-                            <li><a href="~/Content/Customer/">Support</a></li>
-                            <li><a href="~/Content/Customer/">Terms of Use</a></li>
-                            <li><a href="~/Content/Customer/">Press</a></li>
+                            <li><a href="#">Vision</a></li>
+                            <li><a href="#">Satisfaction</a></li>
+                            <li><a href="#">Qaulity </a></li>
+                            <li><a href="#">Innovative</a></li>
+                            <li><a href="#">Reliable</a></li>
                         </ul>
                     </div>
                 </div>
@@ -154,17 +159,17 @@
                             <div class="lp-item">
                                 <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/1.jpg"></div>
                                 <div class="lp-content">
-                                    <h6>what shoes to wear</h6>
+                                    <h6>trends this year</h6>
                                     <span>Jan 01, 2022</span>
-                                    <a href="~/Content/Customer/#" class="readmore">Read More</a>
+                                    @*<a href="#" class="readmore">Read More</a>*@
                                 </div>
                             </div>
                             <div class="lp-item">
                                 <div class="lp-thumb set-bg" data-setbg="img/blog-thumbs/2.jpg"></div>
                                 <div class="lp-content">
                                     <h6>trends this year</h6>
-                                    <span>Mar 21, 2022</span>
-                                    <a href="~/Content/Customer/#" class="readmore">Read More</a>
+                                    <span>@DateTime.Now</span>
+                                    @*<a href="#" class="readmore">Read More</a>*@
                                 </div>
                             </div>
                         </div>
@@ -179,15 +184,15 @@
                         </div>
                         <div class="con-info">
                             <span>B.</span>
-                            <p>1481 Creekside Lane  Avila Beach, CA 93424, P.O. BOX 68 </p>
+                            <p>@companyinfo.Address </p>
                         </div>
                         <div class="con-info">
                             <span>T.</span>
-                            <p>+53 345 7953 32453</p>
+                            <p>@companyinfo.Contact</p>
                         </div>
                         <div class="con-info">
                             <span>E.</span>
-                            <p>office@youremail.com</p>
+                            <p>@companyinfo.Email</p>
                         </div>
                     </div>
                 </div>
@@ -195,14 +200,14 @@
         </div>
         <div class="social-links-warp">
             <div class="container">
-                <div class="social-links">
-                    <a href="~/Content/Customer/" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
-                    <a href="~/Content/Customer/" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
-                    <a href="~/Content/Customer/" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
-                    <a href="~/Content/Customer/" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
-                    <a href="~/Content/Customer/" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
-                    <a href="~/Content/Customer/" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
-                    <a href="~/Content/Customer/" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>
+                <div class="social-links" style="text-align:center;">
+                    <a href="#" class="instagram"><i class="fa fa-instagram"></i><span>instagram</span></a>
+                    <a href="#" class="google-plus"><i class="fa fa-google-plus"></i><span>g+plus</span></a>
+                    <a href="#" class="pinterest"><i class="fa fa-pinterest"></i><span>pinterest</span></a>
+                    <a href="#" class="facebook"><i class="fa fa-facebook"></i><span>facebook</span></a>
+                    @*<a href="#" class="twitter"><i class="fa fa-twitter"></i><span>twitter</span></a>
+                    <a href="#" class="youtube"><i class="fa fa-youtube"></i><span>youtube</span></a>
+                    <a href="#" class="tumblr"><i class="fa fa-tumblr-square"></i><span>tumblr</span></a>*@
                 </div>
 
                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

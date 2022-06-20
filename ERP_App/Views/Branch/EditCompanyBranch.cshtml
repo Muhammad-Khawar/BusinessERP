@@ -28,7 +28,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BranchName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.BranchName, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "onlycharacter" } })
             @Html.ValidationMessageFor(model => model.BranchName, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -36,7 +36,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BranchContact, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.BranchContact, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.BranchContact, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "onlynumber" } })
             @Html.ValidationMessageFor(model => model.BranchContact, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -44,7 +44,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.BranchAddress, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.BranchAddress, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.BranchAddress, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
             @Html.ValidationMessageFor(model => model.BranchAddress, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -57,3 +57,61 @@
 
 }
 
+
+<script src="~/Content/Customer/js/jquery-3.2.1.min.js"></script>
+<!-- Related product section end -->
+<script type="text/javascript">
+    window.onload = function () { window.scrollBy(0, 180); }
+    $(document).ready(function () {
+        //called when key is pressed in textbox
+        $("#onlynumber").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlynumberr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                //display error message
+                $("#errmsg").html("Digits Only").show().fadeOut("slow");
+                return false;
+            }
+        });
+
+        $("#onlycharacter").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlycharacterr").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+        $("#onlycharacters").keypress(function (e) {
+            //if the letter is not digit then display error and don't type anything
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                //display error message
+                $("#errmsg").html("Only character").show().fadeOut("slow");
+                return false;
+            }
+        });
+    });
+
+    $('input').keypress(function (e) {
+        if (e.which === 32)
+            return false;
+    });
+</script>

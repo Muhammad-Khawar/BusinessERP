@@ -247,7 +247,7 @@ namespace ERP_App.Controllers
                         var company = new tblCompany()
                         {
                             Name = CName,
-                            Logo = string.Empty,
+                            Logo = "~/Content/Template/img/user/employee.png",
                             Email = string.Empty,
                             Address = string.Empty,
                             Contact = string.Empty

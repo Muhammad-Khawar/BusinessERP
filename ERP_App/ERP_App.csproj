@@ -115,6 +115,7 @@
     <Content Include="Content\Customer\img\cart\1.jpg" />
     <Content Include="Content\Customer\img\cart\2.jpg" />
     <Content Include="Content\Customer\img\cart\3.jpg" />
+    <Content Include="Content\Customer\img\employee.png" />
     <Content Include="Content\Customer\img\favicon.ico" />
     <Content Include="Content\Customer\img\icons\1.png" />
     <Content Include="Content\Customer\img\icons\2.png" />
@@ -124,6 +125,10 @@
     <Content Include="Content\Customer\img\mastercart.png" />
     <Content Include="Content\Customer\img\paypal.png" />
     <Content Include="Content\Customer\img\pic1.jpeg" />
+    <Content Include="Content\Customer\img\picshoe1.jpg" />
+    <Content Include="Content\Customer\img\picshoe2.jpg" />
+    <Content Include="Content\Customer\img\picshoe3.jpg" />
+    <Content Include="Content\Customer\img\picshoe4.jpg" />
     <Content Include="Content\Customer\img\product\1.jpg" />
     <Content Include="Content\Customer\img\product\10.jpg" />
     <Content Include="Content\Customer\img\product\11.jpg" />
@@ -530,6 +535,8 @@
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\Company\Edit.cshtml" />
     <Content Include="Views\Users\AllUser.cshtml" />
+    <Content Include="Views\Customer\EditBranchCustomer.cshtml" />
+    <Content Include="Views\Supplier\EditBranchSupplier.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

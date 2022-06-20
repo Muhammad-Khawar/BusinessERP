@@ -58,6 +58,9 @@ namespace ERP_App.Controllers
             {
                 db.tblCustomers.Add(tblCustomer);
                 db.SaveChanges();
+                //kkkkkkkkkkkkkkkkkkk
+                Session["Customer"] = db.tblCustomers.Where(x => x.CustomerID == tblCustomer.CustomerID).FirstOrDefault();
+                //kkkkkkkkkkkkkkkkkkkkkk
                 return RedirectToAction("Index");
             }
 
@@ -121,6 +124,7 @@ namespace ERP_App.Controllers
             tblCustomer tblCustomer = db.tblCustomers.Find(id);
             db.tblCustomers.Remove(tblCustomer);
             db.SaveChanges();
+            //Session["Customer"] = null;
             return RedirectToAction("Index");
         }
 

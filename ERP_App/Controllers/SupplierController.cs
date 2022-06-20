@@ -125,6 +125,100 @@ namespace ERP_App.Controllers
 
             return View(supplierMV);
         }
+        public ActionResult EditBranchSupplier(int? id)
+
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+
+
+
+                return RedirectToAction("Login", "Home");
+
+            }
+
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+            var supplier = DB.tblSuppliers.Find(id);
+            var newsupp = new SupplierMV();
+            newsupp.SupplierID = supplier.SupplierID;
+            newsupp.SupplierName = supplier.SupplierName;
+            newsupp.SupplierAddress = supplier.SupplierAddress;
+            newsupp.SupplierConatctNo = supplier.SupplierConatctNo;
+            newsupp.SupplierEmail = supplier.SupplierEmail;
+            newsupp.Discription = supplier.Discription;
+            newsupp.CompanyID = supplier.CompanyID;
+            newsupp.BranchID = supplier.BranchID;
+            newsupp.UserID = supplier.UserID;
+
+            return View(newsupp);
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult EditBranchSupplier(SupplierMV suppliermv)
+
+        {
+            if (string.IsNullOrEmpty(Convert.ToString(Session["UserName"])))
+            {
+
+
+
+                return RedirectToAction("Login", "Home");
+
+            }
+
+            var userid = 0;
+            var usertypeid = 0;
+            var companyid = 0;
+            var branchid = 0;
+            var branchtypeid = 0;
+            int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+            int.TryParse(Convert.ToString(Session["UserTypeID"]), out usertypeid);
+            int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+            int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
+            int.TryParse(Convert.ToString(Session["BranchTypeID"]), out branchtypeid);
+
+            if (ModelState.IsValid)
+            {
+                var supplier = DB.tblSuppliers.Where(e => e.CompanyID == companyid && e.BranchID == branchid && e.SupplierName == suppliermv.SupplierName && e.SupplierID != suppliermv.SupplierID).FirstOrDefault();
+                if (supplier == null)
+                {
+                    var newsupp = DB.tblSuppliers.Find(suppliermv.SupplierID);
+
+
+                    newsupp.SupplierName = suppliermv.SupplierName;
+                    newsupp.SupplierAddress = suppliermv.SupplierAddress;
+                    newsupp.SupplierConatctNo = suppliermv.SupplierConatctNo;
+                    newsupp.SupplierEmail = suppliermv.SupplierEmail;
+                    newsupp.Discription = suppliermv.Discription;
+
+                    newsupp.UserID = suppliermv.UserID;
+
+
+                    DB.Entry(newsupp).State = System.Data.Entity.EntityState.Modified;
+                    DB.SaveChanges();
+                    return RedirectToAction("AllBranchSupplier");
+                }
+                else
+                {
+                    ModelState.AddModelError("SupplierName", "already");
+                }
+            }
+
+            return View(suppliermv);
+
+
+        }
         public JsonResult GetSelectedSupplierDetails(int? id)
         {
             var data = new Supplier();
@@ -143,6 +237,7 @@ namespace ERP_App.Controllers
 
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
     }
     class Supplier
     {

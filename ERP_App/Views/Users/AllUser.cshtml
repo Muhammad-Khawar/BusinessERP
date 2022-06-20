@@ -38,38 +38,41 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FullName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ContactNo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Password)
+    </td>
 
+    <td>
+        @Html.DisplayFor(modelItem => item.Address)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.tblUserType.UserType)
+    </td>
+    @*@if (usertypeid == 1)
+        {
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tblUserType.UserType)
-            </td>
-            @if (usertypeid == 1)
-            {
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-warning" })
 
-                </td>
-            }
+            </td>
+        }*@
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-warning" })
 
-        </tr>
+    </td>
+</tr>
     }
 
 </table>

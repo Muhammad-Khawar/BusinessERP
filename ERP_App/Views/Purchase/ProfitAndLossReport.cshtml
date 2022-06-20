@@ -9,75 +9,76 @@
     int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
     int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
 }
-
-@using (Html.BeginForm("ProfitAndLossReport", "Purchase", FormMethod.Post))
-{
-    <table class="table table-striped table-hover w-100">
-        <tr>
-            <th style="padding:3px;">Date From:</th>
-            <td style="padding:5px;"><input type="datetime-local" name="DateFrom" class="form-control" value="@ViewBag.DateFrom" /></td>
-            <th style="padding:3px;">Data To:</th>
-            <td style="padding:5px;"><input type="datetime-local" name="DateTo" class="form-control" value="@ViewBag.DateTo" /></td>
-            <td style="padding:5px;"><input id="btn1" type="submit" value="Generate Report" class="btn btn-danger btn-block" /></td>
-        </tr>
-        <tr>
-            <th style="padding:3px;">Category:</th>
-            <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })</td>
-            <th style="padding:3px;">Product:</th>
-            <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
-            <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-danger btn-block" /></td>
-        </tr>
-    </table>
-}
-<br />
-
-<div class="content-heading" style="text-align:center;">Profit & Loss Report</div>
-<table class="table table-striped table-hover w-100" id="datatable1">
-    <thead>
-        <tr>
-            <th>Sr #</th>
-            <th>Order Number</th>
-            <th>Order Date</th>
-            <th>Customer Name</th>
-            <th>Order Sale Cost</th>
-            <th>Order Purchase Cost</th>
-            <th>Gross Profit & Loss</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var o in Model)
-        {
-            number++;
+<div id="printArea">
+    @using (Html.BeginForm("ProfitAndLossReport", "Purchase", FormMethod.Post))
+    {
+        <table class="table table-striped table-hover w-100">
             <tr>
-                <td>@number</td>
-                <td>Order-@o.OrderID</td>
-                <td>@DateTime.Parse(o.OrderDate.ToString()).ToLongDateString()</td>
-                <td>@o.OrderName</td>
-                <td>@o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
-                <td>@o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
-                <td>@(o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))))</td>
-
-                <td class="text-center">
-                    <a href="@Url.Action("PrintSaleInvoice","Purchase", new { id = o.OrderID })" class="btn btn-sm btn-secondary" type="button">
-                        <em class="fa fa-search"></em>
-                    </a>
-                </td>
+                <th style="padding:3px;">Date From:</th>
+                <td style="padding:5px;"><input type="datetime-local" name="DateFrom" class="form-control" value="@ViewBag.DateFrom" /></td>
+                <th style="padding:3px;">Data To:</th>
+                <td style="padding:5px;"><input type="datetime-local" name="DateTo" class="form-control" value="@ViewBag.DateTo" /></td>
+                <td style="padding:5px;"><input id="btn1" type="submit" value="Generate Report" class="btn btn-danger btn-block" /></td>
             </tr>
-            NetProfit += (o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))));
-        }
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>Net Profit & Loss</td>
-        <td>@NetProfit</td>
+            <tr>
+                <th style="padding:3px;">Category:</th>
+                <td style="padding:5px;"> @Html.DropDownList("Category", ViewBag.Category as SelectList, "Select Category", htmlAttributes: new { @class = "form-control", @onchange = "myFunction()" })</td>
+                <th style="padding:3px;">Product:</th>
+                <td style="padding:5px;"> @Html.DropDownList("Product", ViewBag.Product as SelectList, "Select Product", htmlAttributes: new { @class = "form-control" })</td>
+                <td style="padding:5px;"><input id="btn2" onclick="return PrintFunction();" type="button" value="Print Report" class="btn btn-danger btn-block" /></td>
+            </tr>
+        </table>
+    }
+    <br />
 
-    </tr>
-    </tbody>
-</table>
+    <div class="content-heading" style="text-align:center;">Profit & Loss Report</div>
+    <table class="table table-striped table-hover w-100" id="datatable1">
+        <thead>
+            <tr>
+                <th>Sr #</th>
+                <th>Order Number</th>
+                <th>Order Date</th>
+                <th>Customer Name</th>
+                <th>Order Sale Cost</th>
+                <th>Order Purchase Cost</th>
+                <th>Gross Profit & Loss</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var o in Model)
+            {
+                number++;
+                <tr>
+                    <td>@number</td>
+                    <td>Order-@o.OrderID</td>
+                    <td>@DateTime.Parse(o.OrderDate.ToString()).ToLongDateString()</td>
+                    <td>@o.OrderName</td>
+                    <td>@o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
+                    <td>@o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity)))</td>
+                    <td>@(o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))))</td>
+
+                    <td class="text-center">
+                        <a href="@Url.Action("PrintSaleInvoice","Purchase", new { id = o.OrderID })" class="btn btn-sm btn-secondary" type="button">
+                            <em class="fa fa-search"></em>
+                        </a>
+                    </td>
+                </tr>
+                NetProfit += (o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.SalePrice * Math.Abs(Convert.ToInt32(x.Quantity))) - o.tblOrderDetails.Where(x => x.CompanyFID == companyid && x.BranchFID == branchid).Sum(x => x.PurchasePrice * Math.Abs(Convert.ToInt32(x.Quantity))));
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>Net Profit & Loss</td>
+                <td>@NetProfit</td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
 <script type="text/javascript">
     function myFunction() {
         var CategoryID = $("#Category").val();
@@ -94,4 +95,24 @@
             }
         });
     }
+</script>
+<script type="text/javascript">
+    function PrintFunction() {
+        var print = document.getElementById('printArea');
+        var b1 = document.getElementById('btn1');
+        var b2 = document.getElementById('btn2');
+        b1.style.display = "none";
+        b2.style.display = "none";
+        var printWindow = window.open('', '', 'height=400,width=800');
+        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('</html><body>');
+        printWindow.document.write(print.innerHTML);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        setTimeout(function () { printWindow.print(); }, 500);
+        b1.style.display = "block";
+        b2.style.display = "block";
+        return false;
+    }
+
 </script>

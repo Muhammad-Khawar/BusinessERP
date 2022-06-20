@@ -91,15 +91,15 @@
             var minPrice = ui.values[0];
             var maxPrice = ui.values[1];
 
-            minamount.val('$' + minPrice);
-            maxamount.val('$' + maxPrice);
+            minamount.val('Rs:' + minPrice);
+            maxamount.val('Rs:' + maxPrice);
 
             clearTimeout(calltimeout);
             calltimeout = setTimeout(GetData,2000);
         }
     });
-    minamount.val('$' + rangeSlider.slider("values", 0));
-    maxamount.val('$' + rangeSlider.slider("values", 1));
+    minamount.val('Rs:' + rangeSlider.slider("values", 0));
+    maxamount.val('Rs:' + rangeSlider.slider("values", 1));
 
 
         //kkkkkkkkkkkkkkkkkk

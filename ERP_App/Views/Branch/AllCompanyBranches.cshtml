@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<ERP_App.Models.BranchMV>
-
+@using ERP.DatabaseLayer
 @{
+    //BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
+
     ViewBag.Title = "All Branches";
 }
 <!-- DATATABLE DEMO 2-->
@@ -61,7 +63,7 @@
                         }
                         else
                         {
-
+                           
                             @Html.ActionLink("Add Focal Person", "CreateBranchFocalPerson", "Employee", new { BranchID = item.BranchID }, new { @class = "btn btn-primary" })
                         }
 

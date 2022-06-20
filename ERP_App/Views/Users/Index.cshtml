@@ -59,14 +59,17 @@
     <td>
         @Html.DisplayFor(modelItem => item.tblUserType.UserType)
     </td>
-    @if (usertypeid == 1)
+    @*@if (usertypeid == 1)
     {
 <td>
     @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-warning" })
 
 </td>
-    }
-    
+    }*@
+<td>
+    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }, new { @class = "btn btn-warning" })
+
+</td>
 </tr>
 }
 

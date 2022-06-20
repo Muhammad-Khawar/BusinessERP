@@ -148,6 +148,7 @@
                         <div>
                             <input type="radio" style="height:15px; width:15px;" name="OrderStatus" value="Cash on Delivery" checked />Cash on Delivery
                             <input type="radio" style="height:15px; width: 15px;" name="OrderStatus" value="Paid" /> Pay with Paypal
+                            <a href="https://buy.stripe.com/test_7sI9CI2orau89DafYY">Pay with Stripe</a>
                         </div>
                     </div>
                     <div class="d-flex">
@@ -181,7 +182,7 @@
                         <img width="263px" height="300px" src="@Url.Content(p.ProductPicture)" alt="">
                         <div class="pi-links">
                             <a href="@Url.Action("AddToCart","Home",new { id = p.ProductID})" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
-                            <a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
+                            @*<a href="~/Content/Customer/#" class="wishlist-btn"><i class="flaticon-heart"></i></a>*@
                         </div>
                     </div>
                     <div class="pi-text">

@@ -61,10 +61,12 @@ namespace ERP_App.Controllers
                     if(user.IsActive == true)
                     {
                         addbranch.IsHaveFocalPerson = true;
+                        //addbranch.IsActive = true;
                     }
                     else
                     {
                         addbranch.IsHaveFocalPerson = false;
+                        //addbranch.IsActive = false;
                     }
                 }
                 else

@@ -5,6 +5,119 @@
 @{
     ViewBag.Title = "About";
 }
+<style>
+    body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
 
-<h2>About</h2>
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+
+</style>
+<div class="about-section">
+    <h1 style="color:white;">About Us Page</h1>
+    <p style="color:white;">Some text about who we are and what we do.</p>
+    <p style="color:white;">Here at ‘SoleBox’.com, we realize that style and prosperity begin with the correct shoes. We likewise understand that effectively finding the size and style to meet your requirements is vital to your web-based shopping knowledge. Since beginning our web-based business website in 2022, we’ve been endeavoring to present to you that perfect shopping experience.</p>
+</div>
+
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+    <div class="column">
+        <div class="card">
+            @*<img src="~/Content/Customer/img/employee.png" />*@
+            <img src="~/Content/Customer/img/employee.png" alt="Jane" style="width:100%">
+            <div class="container">
+                <h2 style="text-align:center;">Khawar</h2>
+                <p class="title">CEO & Founder</p>
+                <p>I'm the CEO of the company'</p>
+                <p>khawargsabir@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="card">
+            @*<img src="~/Content/Customer/img/employee.png" />*@
+            <img src="~/Content/Customer/img/employee.png" alt="Jane" style="width:100%">
+            <div class="container">
+                <h2 style="text-align:center;">Khawar</h2>
+                <p class="title">CEO & Founder</p>
+                <p>I'm the CEO of the company'</p>
+                <p>khawargsabir@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="card">
+            @*<img src="~/Content/Customer/img/employee.png" />*@
+            <img src="~/Content/Customer/img/employee.png" alt="Jane" style="width:100%">
+            <div class="container">
+                <h2 style="text-align:center;">Khawar</h2>
+                <p class="title">CEO & Founder</p>
+                <p>I'm the CEO of the company'</p>
+                <p>khawargsabir@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+</div>
 

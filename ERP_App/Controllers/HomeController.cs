@@ -177,7 +177,12 @@ namespace ERP_App.Controllers
             ShopMV s = new ShopMV();
             
             var Categorieslist = new List<CategoryMV>();
-            var categories = DB.tblCategories.ToList();
+            ////kkkkkkkkkkkkkkkkkkk
+            var categoryid = DB.tblStocks.Where(x => x.Quantity > 0).Select(x=>x.CategoryID).ToList();
+
+            ////kkkkkkkkkkkkkkkkkkk
+            //var categories = DB.tblCategories.ToList();
+            var categories = DB.tblCategories.Where(x=>categoryid.Contains(x.CategoryID)).ToList();
             foreach (var category in categories)
             {
                 var username = category.tblUser.UserName;
@@ -189,7 +194,10 @@ namespace ERP_App.Controllers
                     categoryName = category.categoryName,
                     CompanyID = category.CompanyID,
                     UserID = category.UserID,
-                    ProductCount = category.tblStocks.Count(),
+                    //ProductCount = category.tblStocks.Count(),
+                    //kkkkkkkkkkkk
+                    ProductCount = category.tblStocks.Where(x=>x.Quantity > 0).Count(),
+                    //kkkkkkkkkkkkkkkkkkk
                     CreatedBy = username
                 });
             }
@@ -323,25 +331,28 @@ namespace ERP_App.Controllers
             }
             else
             {
-                return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 190);
+                return Redirect("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_xclick&business=khawarbt17108@gmail.com&item_name=SoleBoxShopProducts&return=http://localhost:59656/Home/OrderBooked&amount=" + double.Parse(Session["totalamount"].ToString()) / 205);
             }    
         }
         public ActionResult OrderBooked()
         {
             OrderMV o = (OrderMV)Session["Order"];
             //1.send email
-            //MailMessage mail = new MailMessage();
+            MailMessage mail = new MailMessage();
             //mail.From = new MailAddress("khawargsabir@gmail.com");
-            //mail.To.Add(o.OrderEmail);
-            //mail.Subject = "Order Confirmation";
-            //mail.Body = "<b>Thanks For Your Order!</b> Your Order will be delivered as per schedule - TheSoleBoxShop";
-            //mail.IsBodyHtml = true;
+            mail.From = new MailAddress("BIT18-029@pugc.edu.pk");
+            mail.To.Add(o.OrderEmail);
+            mail.Subject = "Order Confirmation";
+            mail.Body = "<b>Thanks For Your Order!</b> Your Order will be delivered as per schedule - TheSoleBoxShop";
+            mail.IsBodyHtml = true;
 
-            //SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-            //SmtpServer.Port = 587;
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+            SmtpServer.Port = 587;
+            SmtpServer.UseDefaultCredentials = false;
             //SmtpServer.Credentials = new System.Net.NetworkCredential("khawargsabir@gmail.com", "09GNIK87");
-            //SmtpServer.EnableSsl = true;
-            //SmtpServer.Send(mail);
+            SmtpServer.Credentials = new System.Net.NetworkCredential("BIT18-029@pugc.edu.pk", "rawahk7641");
+            SmtpServer.EnableSsl = true;
+            SmtpServer.Send(mail);
 
             //2. send SMS
             //String api = "https://lifetimesms.com/json?api_token=1e68a08b0558ffb61b47192772f84ca6661d2d7151&api_secret=TheSoleBoxShop&to=" + o.OrderContact + "&from=TheSoleBoxShop&message=Order Confirmation";
@@ -373,7 +384,24 @@ namespace ERP_App.Controllers
                 DB.SaveChanges();
                 //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
                 //kkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-                
+                if (stockproduct.Quantity <= p[i].StockTreshHoldQuantity)
+                {
+                    //1.send email
+                    //MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress("BIT18-029@pugc.edu.pk");
+                    mail.To.Add("khawargsabir@gmail.com");
+                    mail.Subject = "Stock deadline TreshHold Quantity";
+                    mail.Body = "<b>Category :" + p[i].CategoryName + "</b><br>" + "<b>Name :" + p[i].ProductName + "</b><br>" + "<b>Quantity Sold:" + p[i].Quantity + "</b><br>" + "<b>Remaing Quantity:" + stockproduct.Quantity + "</b><br>";
+                    mail.IsBodyHtml = true;
+
+                    //SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                    SmtpServer.Port = 587;
+                    SmtpServer.UseDefaultCredentials = false;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("BIT18-029@pugc.edu.pk", "rawahk7641");
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(mail);
+
+                }
                 //kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
                 var od = new tblOrderDetail();

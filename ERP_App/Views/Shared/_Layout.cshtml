@@ -1,7 +1,11 @@
 ﻿@using ERP.DatabaseLayer
 @{ 
     var userid = 0;
+    var branchid = 0;
+    var companyid = 0;
     int.TryParse(Convert.ToString(Session["UserID"]), out userid);
+    int.TryParse(Convert.ToString(Session["CompanyID"]), out companyid);
+    int.TryParse(Convert.ToString(Session["BranchID"]), out branchid);
     BusinessERP_DBEntities DB = new BusinessERP_DBEntities();
     //var imgUrl = DB.tblEmployees.Where(x => x.UserID == userid).Select(x => x.Photo).FirstOrDefault();
 }
@@ -44,7 +48,8 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#/">
                         <div class="brand-logo">
-                            <img class="img-fluid" src="~/Content/Template/img/logo.png" alt="App Logo">
+                            @*<img class="img-fluid" src="~/Content/Template/img/logo.png" alt="App Logo">*@
+                            <h3 style="text-align:center; color:white;">SoleBox E Store</h3>
                         </div>
                         <div class="brand-logo-collapsed">
                             <img class="img-fluid" src="~/Content/Template/img/logo-single.png" alt="App Logo">
@@ -84,78 +89,57 @@
                 <!-- START Right Navbar-->
                 <ul class="navbar-nav flex-row">
                     <!-- Search icon-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-search-open="">
-                            <em class="icon-magnifier"></em>
-                        </a>
-                    </li>
+                    @*<li class="nav-item">
+            <a class="nav-link" href="#" data-search-open="">
+                <em class="icon-magnifier"></em>
+            </a>
+        </li>*@
                     <!-- Fullscreen (only desktops)-->
                     <li class="nav-item d-none d-md-block">
                         <a class="nav-link" href="#" data-toggle-fullscreen="">
                             <em class="fa fa-expand"></em>
                         </a>
                     </li>
-                    <!-- START Alert menu-->
-                    <li class="nav-item dropdown dropdown-list">
-                        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-toggle="dropdown">
-                            <em class="icon-bell"></em>
-                            <span class="badge badge-danger">11</span>
-                        </a>
-                        <!-- START Dropdown menu-->
-                        <div class="dropdown-menu dropdown-menu-right animated flipInX">
-                            <div class="dropdown-item">
-                                <!-- START list group-->
-                                <div class="list-group">
-                                    <!-- list item-->
-                                    <div class="list-group-item list-group-item-action">
-                                        <div class="media">
-                                            <div class="align-self-start mr-2">
-                                                <em class="fa fa-twitter fa-2x text-info"></em>
+                    @{
+                        var stock = DB.tblStocks.Where(x => x.CompanyID == companyid && x.BranchID == branchid && x.Quantity <= x.StockTreshHoldQuantity).ToList();
+                        <!-- START Alert menu-->
+                        <li class="nav-item dropdown dropdown-list">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-toggle="dropdown">
+                                <em class="icon-bell"></em>
+                                <span class="badge badge-danger">@stock.Count()</span>
+                            </a>
+
+                            <!-- START Dropdown menu-->
+                            <div class="dropdown-menu dropdown-menu-right animated flipInX">
+                                <div class="dropdown-item">
+                                    <!-- START list group-->
+                                    <div class="list-group">
+                                        <!-- list item-->
+                                        @foreach (var item in stock)
+                                        {
+                                            <div class="list-group-item list-group-item-action">
+                                                <div class="media">
+                                                    <div class="align-self-start mr-2">
+                                                        <em class="fa fa-industry fa-2x text-info"></em>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <p class="m-0">@item.ProductName</p>
+                                                        <p class="m-0 text-muted text-sm">Available Stock :@item.Quantity</p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="media-body">
-                                                <p class="m-0">New followers</p>
-                                                <p class="m-0 text-muted text-sm">1 new follower</p>
-                                            </div>
-                                        </div>
+                                        }
+
+
                                     </div>
-                                    <!-- list item-->
-                                    <div class="list-group-item list-group-item-action">
-                                        <div class="media">
-                                            <div class="align-self-start mr-2">
-                                                <em class="fa fa-envelope fa-2x text-warning"></em>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="m-0">New e-mails</p>
-                                                <p class="m-0 text-muted text-sm">You have 10 new emails</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- list item-->
-                                    <div class="list-group-item list-group-item-action">
-                                        <div class="media">
-                                            <div class="align-self-start mr-2">
-                                                <em class="fa fa-tasks fa-2x text-success"></em>
-                                            </div>
-                                            <div class="media-body">
-                                                <p class="m-0">Pending Tasks</p>
-                                                <p class="m-0 text-muted text-sm">11 pending task</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- last list item-->
-                                    <div class="list-group-item list-group-item-action">
-                                        <span class="d-flex align-items-center">
-                                            <span class="text-sm">More notifications</span>
-                                            <span class="badge badge-danger ml-auto">14</span>
-                                        </span>
-                                    </div>
+                                    <!-- END list group-->
                                 </div>
-                                <!-- END list group-->
                             </div>
-                        </div>
-                        <!-- END Dropdown menu-->
-                    </li>
-                    <!-- END Alert menu-->
+                            <!-- END Dropdown menu-->
+                        </li>
+                        <!-- END Alert menu-->
+                    }
+
                     <!-- START Offsidebar button-->
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle-state="offsidebar-open" data-no-persist="true">
@@ -210,9 +194,8 @@
                             <!-- END user info-->
                             <!-- Iterates over all sidebar items-->
                             <li class="nav-heading ">
-                                <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
+                                <span>Main Navigation</span>
                             </li>
-
                             <li class=" ">
                                 <a href="@Url.Content("~/Dashboard/HeadOffice")" title="Dashboard">
                                     <em class="icon-layers"></em>
@@ -221,27 +204,27 @@
                             </li>
                             <li class=" ">
                                 <a href="@Url.Content("~/Users/Index")" title="Account">
-                                    <span data-localize="sidebar.nav.form.STANDARD">Account</span>
+                                    <span>Account</span>
                                 </a>
                             </li>
                             @if (usertypeid > 2)
                             {
                                 <li class=" ">
-                                    <a href="@Url.Content("~/Company/Index")" title="Company">
-                                        <span data-localize="sidebar.nav.form.STANDARD">Manage Company</span>
+                                    <a href="@Url.Content("~/Company/Index")">
+                                        <span >Manage Company</span>
                                     </a>
                                 </li>
                             }
 
                             <li class="nav-heading ">
-                                <span data-localize="sidebar.heading.COMPONENTS">Components</span>
+                                <span>Components</span>
                             </li>
                             @if (usertypeid == 1 || usertypeid == 2)
                             {
                                 <li class=" ">
                                     <a href="#elements" title="Elements" data-toggle="collapse">
                                         <em class="icon-chemistry"></em>
-                                        <span data-localize="sidebar.nav.element.ELEMENTS">Users</span>
+                                        <span>Users</span>
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="elements">
 
@@ -249,28 +232,28 @@
                                         <li class="sidebar-subnav-header">User Settings</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/User/AllUserTypes")" title="User Types">
-                                                <span data-localize="sidebar.nav.element.BUTTON">User Types</span>
+                                                <span>User Types</span>
                                             </a>
                                         </li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Users/AllUser")" title="All User">
-                                                <span data-localize="sidebar.nav.element.BUTTON">All Users</span>
+                                                <span>All Users</span>
                                             </a>
                                         </li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Employee/BranchEmployees")" title="Employees">
-                                                <span data-localize="sidebar.nav.table.EXTENDED">Employees</span>
+                                                <span>Employees</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                             }
-                            @if (usertypeid >= 2)
+                            @if (usertypeid == 3 || usertypeid == 4)
                             {
                                 <li class=" ">
                                     <a href="#elements1" title="Elements" data-toggle="collapse">
                                         <em class="icon-chemistry"></em>
-                                        <span data-localize="sidebar.nav.element.ELEMENTS">Users</span>
+                                        <span>Users</span>
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="elements1">
 
@@ -279,23 +262,23 @@
 
                                         <li class=" ">
                                             <a href="@Url.Content("~/Users/AllUser")" title="All User">
-                                                <span data-localize="sidebar.nav.element.BUTTON">Users</span>
+                                                <span >Users</span>
                                             </a>
                                         </li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Employee/BranchEmployees")" title="Employees">
-                                                <span data-localize="sidebar.nav.table.EXTENDED">Employees</span>
+                                                <span >Employees</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                             }
-                            @if (usertypeid == 1 || usertypeid == 2 || usertypeid >= 2)
+                            @if (usertypeid <= 4)
                             {
                                 <li class=" ">
                                     <a href="#forms" title="Forms" data-toggle="collapse">
                                         <em class="icon-note"></em>
-                                        <span data-localize="sidebar.nav.form.FORM">Branch</span>
+                                        <span>Branch</span>
                                     </a>
 
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="forms">
@@ -303,13 +286,13 @@
 
                                         <li class=" ">
                                             <a href="@Url.Content("~/AdminConfig/AllBranchTypes")" title="Branch Types">
-                                                <span data-localize="sidebar.nav.form.EXTENDED">Branch Types</span>
+                                                <span>Branch Types</span>
                                             </a>
                                         </li>
 
                                         <li class=" ">
                                             <a href="@Url.Content("~/Branch/AllCompanyBranches")" title="All Company Branches">
-                                                <span data-localize="sidebar.nav.table.STANDARD">Company Branches</span>
+                                                <span>Company Branches</span>
                                             </a>
                                         </li>
 
@@ -322,7 +305,7 @@
                                 <li class=" ">
                                     <a href="#forms1" title="Forms" data-toggle="collapse">
                                         <em class="icon-note"></em>
-                                        <span data-localize="sidebar.nav.form.FORM">Companies</span>
+                                        <span >Companies</span>
                                     </a>
 
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="forms1">
@@ -330,13 +313,13 @@
 
                                         <li class=" ">
                                             <a href="@Url.Content("~/Company/Index")" title="Company">
-                                                <span data-localize="sidebar.nav.form.EXTENDED">Registered Companies</span>
+                                                <span >Registered Companies</span>
                                             </a>
                                         </li>
 
                                         <li class=" ">
                                             <a href="@Url.Content("~/company/companies")" title="Activate Company">
-                                                <span data-localize="sidebar.nav.table.STANDARD">Activate Company</span>
+                                                <span >Activate Company</span>
                                             </a>
                                         </li>
 
@@ -345,117 +328,117 @@
                                 </li>
                             }
 
-                            <li class=" ">
+
+
+                        <li class=" ">
+                            @if (usertypeid <= 4)
+                            {
                                 <a href="#charts" title="Accounts" data-toggle="collapse">
                                     <em class="icon-graph"></em>
-                                    <span data-localize="sidebar.nav.chart.CHART">Accounts</span>
+                                    <span>Accounts</span>
                                 </a>
-                                <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
-                                    <li class="sidebar-subnav-header">Setting</li>
-                                    @if (usertypeid == 1 || usertypeid == 2)
-                                    {
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Account Activity">
-                                                <span data-localize="sidebar.nav.chart.FLOT">Account Activity</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Account Heads">
-                                                <span data-localize="sidebar.nav.chart.RADIAL">Account Heads</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Financial Years">
-                                                <span>Financial Years</span>
-                                            </a>
-                                        </li>
-                                    }
-                                    @if (usertypeid > 2)
-                                    {
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Accounts/AllAccountControls")" title="All Account Control">
-                                                <span>Account Control</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Accounts/AllAccountSubControls")" title="All Account Control">
-                                                <span>Account Sub Control</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/AccountsSettiing/BranchAccountSetting")" title="Account Flow Setting">
-                                                <span>Account Flow Setting</span>
-                                            </a>
-                                        </li>
+                            }
+                            <ul class="sidebar-nav sidebar-subnav collapse" id="charts">
+                                <li class="sidebar-subnav-header">Setting</li>
+                                @if (usertypeid == 1 || usertypeid == 2)
+                                {
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/AdminConfig/AllAccountActivity")" title="Account Activity">
+                                            <span>Account Activity</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/AdminConfig/AllAccountHeads")" title="Account Heads">
+                                            <span>Account Heads</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/AdminConfig/AllFinancialYears")" title="Financial Years">
+                                            <span>Financial Years</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (usertypeid == 3 || usertypeid == 4)
+                                {
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/Accounts/AllAccountControls")" title="All Account Control">
+                                            <span>Account Control</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/Accounts/AllAccountSubControls")" title="All Account Control">
+                                            <span>Account Sub Control</span>
+                                        </a>
+                                    </li>
+                                    <li class=" ">
+                                        <a href="@Url.Content("~/AccountsSettiing/BranchAccountSetting")" title="Account Flow Setting">
+                                            <span>Account Flow Setting</span>
+                                        </a>
+                                    </li>
 
-                                    }
-                                </ul>
-                            </li>
+                                }
+                            </ul>
+                        </li>
 
 
-                            @if (usertypeid >= 3)
+                            @if (usertypeid > 1)
                             {
                                 <li class=" ">
                                     <a href="#maps" title="Stock" data-toggle="collapse">
                                         <em class="icon-map"></em>
-                                        <span data-localize="sidebar.nav.map.MAP">Stock</span>
+                                        <span >Stock</span>
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="maps">
                                         <li class="sidebar-subnav-header">Stock</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Stock/AllCategories")" title="Stock Categories">
-                                                <span data-localize="sidebar.nav.map.GOOGLE">Categories</span>
+                                                <span >Categories</span>
                                             </a>
                                         </li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Stock/StockProducts")" title="Product item's">
-                                                <span data-localize="sidebar.nav.map.VECTOR">Products</span>
+                                                <span >Products</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
                             }
-                            @if (usertypeid > 2)
+                            @if (usertypeid > 1 && usertypeid <= 4)
                             {
                                 <li class="nav-heading ">
-                                    <span data-localize="sidebar.heading.MORE">Customer</span>
+                                    <span >Customer</span>
                                 </li>
                                 <li class=" ">
                                     <a href="#pages" title="Customer" data-toggle="collapse">
                                         <em class="icon-doc"></em>
-                                        <span data-localize="sidebar.nav.pages.PAGES">Customer</span>
+                                        <span >Customer</span>
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="pages">
                                         <li class="sidebar-subnav-header">Customer</li>
                                         <li class=" ">
                                             <a href="@Url.Content("~/Customer/AllBranchCustomer")" title="Login">
-                                                <span data-localize="sidebar.nav.pages.LOGIN">Customer</span>
+                                                <span >Customer</span>
                                             </a>
                                         </li>
-
-
-
-
-
                                     </ul>
                                 </li>
                             }
                                 <li class="nav-heading ">
-                                    <span data-localize="sidebar.heading.MORE">Supplier</span>
+                                    <span >Supplier</span>
                                 </li>
                                 <li class=" ">
                                     <a href="#pages1" title="Customer" data-toggle="collapse">
                                         <em class="icon-doc"></em>
-                                        <span data-localize="sidebar.nav.pages.PAGES">Supplier</span>
+                                        <span >Supplier</span>
                                     </a>
                                     <ul class="sidebar-nav sidebar-subnav collapse" id="pages1">
-                                        @if (usertypeid == 1 || usertypeid == 2 || usertypeid >= 2)
+                                        @if (usertypeid >=1)
                                         {
                                             <li class="sidebar-subnav-header">Supplier</li>
 
                                             <li class=" ">
                                                 <a href="@Url.Content("~/Supplier/AllBranchSupplier")" title="Supplier">
-                                                    <span data-localize="sidebar.nav.pages.REGISTER">Supplier</span>
+                                                    <span >Supplier</span>
                                                 </a>
                                             </li>
 
@@ -465,12 +448,12 @@
 
 
 
-                                @if (usertypeid >= 3)
+                                @if (usertypeid >=3)
                                 {
                                     <li class=" ">
                                         <a href="#extras" title="Supplier" data-toggle="collapse">
                                             <em class="icon-cup"></em>
-                                            <span data-localize="sidebar.nav.extra.EXTRA">Purchase</span>
+                                            <span >Purchase</span>
                                         </a>
                                         <ul class="sidebar-nav sidebar-subnav collapse" id="extras">
                                             <li class="sidebar-subnav-header">Manage Purchase</li>
@@ -484,36 +467,42 @@
                                         </ul>
                                     </li>
                                 }
-                                <li class=" ">
-                                    <a href="#extras1" title="Supplier" data-toggle="collapse">
-                                        <em class="icon-cup"></em>
-                                        <span data-localize="sidebar.nav.extra.EXTRA">Reports</span>
-                                    </a>
-                                    <ul class="sidebar-nav sidebar-subnav collapse" id="extras1">
-                                        <li class="sidebar-subnav-header">Reports</li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Purchase/AllPurchases")" title="All Purchases">
-                                                <span>All Purchases Report</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Purchase/AllSales")" title="All Sales">
-                                                <span>All Sales Report</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Purchase/ProfitAndLossReport")" title="Profit and Loss Report">
-                                                <span>Profit and Loss Reports</span>
-                                            </a>
-                                        </li>
-                                        <li class=" ">
-                                            <a href="@Url.Content("~/Purchase/StockReport")" title="Stock Report">
-                                                <span>Stock Report</span>
-                                            </a>
-                                        </li>
+                                @{ 
+                                    if(usertypeid > 1 )
+            {
+                                                            <li class=" ">
+                                                                <a href="#extras1" title="Supplier" data-toggle="collapse">
+                                                                    <em class="icon-cup"></em>
+                                                                    <span>Reports</span>
+                                                                </a>
+                                                                <ul class="sidebar-nav sidebar-subnav collapse" id="extras1">
+                                                                    <li class="sidebar-subnav-header">Reports</li>
+                                                                    <li class=" ">
+                                                                        <a href="@Url.Content("~/Purchase/AllPurchases")" title="All Purchases">
+                                                                            <span>All Purchases Report</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class=" ">
+                                                                        <a href="@Url.Content("~/Purchase/AllSales")" title="All Sales">
+                                                                            <span>All Sales Report</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class=" ">
+                                                                        <a href="@Url.Content("~/Purchase/ProfitAndLossReport")" title="Profit and Loss Report">
+                                                                            <span>Profit and Loss Reports</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class=" ">
+                                                                        <a href="@Url.Content("~/Purchase/StockReport")" title="Stock Report">
+                                                                            <span>Stock Report</span>
+                                                                        </a>
+                                                                    </li>
 
-                                    </ul>
-                                </li>
+                                                                </ul>
+                                                            </li>
+            }
+                                }
+                                
                             </ul>
                         <!-- END sidebar nav-->
                     </nav>
@@ -876,17 +865,17 @@
                     <div class="content-heading">
                         <div>
                             Dashboard
-                            <small data-localize="dashboard.WELCOME"></small>
+                            <small></small>
                         </div>
                         <!-- START Language list-->
-                        <div class="ml-auto">
+                        @*<div class="ml-auto">
                             <div class="btn-group">
                                 <button class="btn btn-secondary dropdown-toggle dropdown-toggle-nocaret" type="button" data-toggle="dropdown">English</button>
                                 <div class="dropdown-menu dropdown-menu-right-forced animated fadeInUpShort" role="menu">
                                     <a class="dropdown-item" href="#" data-set-lang="en">English</a><a class="dropdown-item" href="#" data-set-lang="es">Spanish</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                         <!-- END Language list-->
                     </div>
                     @RenderBody()
